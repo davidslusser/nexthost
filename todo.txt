@@ -1,0 +1,32 @@
+to-do list
+
+
+
+
+
+create (custom) functional APIs:
+  - get next available hostname for project
+    - allow multiple hosts
+    - option to get consecutive names
+  - release hostname
+  - extend hostname (expire time)
+
+ create demo script
+  - populate dev/demo data
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+eof
