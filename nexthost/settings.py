@@ -40,14 +40,14 @@ INSTALLED_APPS = [
 
     # 3rd party apps
     'auditlog',
+    'debug_toolbar',
     'django_extensions',
     'django_filters',
+    'djangohelpers',
     'rest_framework',
     'rest_framework_swagger',
     'rest_framework.authtoken',
     'rest_framework_filters',
-    'djangohelpers',
-    'debug_toolbar',
     'userextensions',
 
     # project apps
@@ -63,7 +63,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'debug_toolbar.middleware.DebugToolbarMiddleware',
-    # 'userextensions.middleware.UserRecentsMiddleware',
+    'userextensions.middleware.UserRecentsMiddleware',
 ]
 
 ROOT_URLCONF = 'nexthost.urls'
@@ -71,7 +71,7 @@ ROOT_URLCONF = 'nexthost.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, 'nexthost', 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -124,6 +124,25 @@ USE_TZ = True
 
 
 # Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/1.10/howto/static-files/
+# https://docs.djangoproject.com/en/2.0/howto/static-files/
 
+STATIC_ROOT = os.path.join(str(BASE_DIR), 'staticroot')
 STATIC_URL = '/static/'
+
+# See: https://docs.djangoproject.com/en/dev/ref/contrib/staticfiles/#std:setting-STATICFILES_DIRS
+STATICFILES_DIRS = (
+    os.path.join(str(BASE_DIR), 'nexthost/static'),
+)
+
+# See: https://docs.djangoproject.com/en/dev/ref/contrib/staticfiles/#staticfiles-finders
+STATICFILES_FINDERS = [
+    'django.contrib.staticfiles.finders.FileSystemFinder',
+    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+]
+
+LOGIN_URL = '/login/'
+LOGIN_REDIRECT_URL = '/'
+SESSION_COOKIE_AGE = 28800
+
+
+SKIP_FIXED_URL_LIST = ["/list_recents/"]

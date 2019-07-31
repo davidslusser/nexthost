@@ -1,0 +1,25 @@
+<table class="table table-condensed table-bordered table-striped" data-toggle="table" data-search="true"
+       data-flat="true" data-pagination="true" data-show-pagination-switch="true" data-show-columns="true"
+       data-show-export="true" data-reorderable-columns="true" data-resizable="false" data-export-types="['excel','csv','txt','sql']">
+    <thead>
+    <tr>
+        <th data-field="name" data-sortable="true">Name</th>
+        <th data-field="owner" data-sortable="true">Owner</th>
+        <th data-field="project_count" data-sortable="true">Pattern Count</th>
+        <th>Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for row in queryset %}
+        <tr>
+            <td>{{ row.name }}</td>
+            <td>{{ row.owner }}</td>
+            <td>{{ row.hostnamepattern_set.count }}</td>
+            <!-- actions -->
+            <td>
+
+            </td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>

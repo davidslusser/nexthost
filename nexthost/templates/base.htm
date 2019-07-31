@@ -75,9 +75,8 @@
 <body>
 
 {% block mainnavbar %}
-    {#        <nav class="navbar navbar-expand-md navbar-dark bg-primary" style="height: 45px">#}
     <nav class="navbar navbar-expand-md navbar-dark bg-primary">
-        <a class="navbar-brand mr-5" href="{% url 'hostlock:home' %}"><b>NextHost</b></a>
+        <a class="navbar-brand mr-5" href="{% url 'index' %}"><b>Next<span class="text-secondary">Host</span></b></a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -85,53 +84,7 @@
         <div class="collapse navbar-collapse" id="navbarNavDropdown">
             <ul class="navbar-nav mr-auto">
 
-{#                <!-- hostlock -->#}
-{#                <li class="nav-item dropdown">#}
-{#                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">#}
-{#                        HostLock#}
-{#                    </a>#}
-{#                    <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">#}
-{#                        <li><a class="dropdown-item" href="{% url 'hostlock:hostlock_dashboard' %}">Dashboard</a></li>#}
-{#                        <li class="dropdown-submenu"><a class="dropdown-item dropdown-toggle" href="#">Locks</a>#}
-{#                            <ul class="dropdown-menu">#}
-{#                                <li><a class="dropdown-item" href="{% url 'hostlock:list_locks' %}?status=granted&page_description=currently granted">Current Locks</a></li>#}
-{#                                <li><a class="dropdown-item" href="{% url 'hostlock:list_expired_locks' %}">Expired Locks</a></li>#}
-{#                                <li><a class="dropdown-item" href="{% url 'hostlock:list_locks' %}?status=granted&requester__username={{ user }}&page_description=granted by me">My Locks</a></li>#}
-{#                            </ul>#}
-{#                        </li>#}
-{#                        <li class="dropdown-submenu"><a class="dropdown-item dropdown-toggle" href="#">Hosts</a>#}
-{#                            <ul class="dropdown-menu">#}
-{#                                <li><a class="dropdown-item" href="{% url 'hostlock:list_hosts' %}?is_locked=True&page_description=locked">Locked Hosts</a></li>#}
-{#                                <li><a class="dropdown-item" href="{% url 'hostlock:list_my_hosts' %}">My Hosts</a></li>#}
-{#                            </ul>#}
-{#                        </li>#}
-{#                    </ul>#}
-{#                </li>#}
-{##}
-{#                <!-- apis -->#}
-{#                <li class="nav-item dropdown">#}
-{#                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">#}
-{#                        APIs#}
-{#                    </a>#}
-{#                    <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">#}
-{#                        <a class="dropdown-item" href="/hostlock/api/v1/">Developer Tools</a>#}
-{#                        <a class="dropdown-item" href="/swagger">Documentation <small>(Swagger)</small></a>#}
-{#                        <a class="dropdown-item" href="{% url 'hostlock:hostlock_api_guide' %}">API Guide</a>#}
-{#                    </ul>#}
-{#                </li>#}
-{##}
-{#                <!-- self-service -->#}
-{#                <li class="nav-item dropdown">#}
-{#                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">#}
-{#                        Self-Service#}
-{#                    </a>#}
-{#                    <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">#}
-{#                        <a class="dropdown-item" href="#">Request Lock</a>#}
-{#                        <a class="dropdown-item" href="#">Release Lock</a>#}
-{#                        <a class="dropdown-item" href="#">Create Service Account</a>#}
-{#                        <a class="dropdown-item" href="#">Refresh API Token</a>#}
-{#                    </ul>#}
-{#                </li>#}
+                {% include 'custom/hostmgr_nav.htm' %}
 
             </ul>
 
@@ -148,8 +101,8 @@
                             <div class="dropdown-divider"></div>
                             <a class="dropdown-item" href="{% url 'detail_user' %}"><i class="fa fa-address-card fw mr-3"></i>Profile</a>
                             <a class="dropdown-item" href="#"><b class="fa fa-cogs fw mr-3 text-greyout"></b>Settings</a>
-                            <a class="dropdown-item" href="{% url '_common:list_recents' %}"><b class="far fa-clock fw mr-3"></b>Recents</a>
-                            <a class="dropdown-item" href="{% url '_common:list_favorites' %}"><i class="far fa-heart mr-3"></i>Favorites</a>
+                            <a class="dropdown-item" href="{% url 'list_recents' %}"><b class="far fa-clock fw mr-3"></b>Recents</a>
+                            <a class="dropdown-item" href="{% url 'list_favorites' %}"><i class="far fa-heart mr-3"></i>Favorites</a>
                             <div class="dropdown-divider"></div>
                             <div class="dropdown-item">
                                 {% is_favorite request as favorite_id %}
