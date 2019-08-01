@@ -1,0 +1,118 @@
+{% extends base_template|default:"base.htm" %}
+{% load staticfiles %}
+
+{% block content %}
+<div class="container-fluid mb-4 animated fadeIn">
+    <h1><span class="text-primary"><b>Project: </b></span><span class="text-secondary"><small>{{ object.name }}</small></span></h1><br/>
+</div>
+
+<section><!-- summary -->
+    <div class="container-fluid mb-5">
+
+        <div class="card-deck">
+            <div class="card bg-light shadow1">
+                <div class="card-body text-center">
+                    <div class="btn-group float-right">
+                        <div class="h1"><i class="fas fa-stop-circle"></i></div>
+                    </div>
+                    <div class="text-left"><h1><b>{{ object.get_assigned_hosts.count }}</b></h1></div>
+                    <div class="text-left mt-3 mb-n3"><small>Assigned Hostnames</small></div>
+                </div>
+            </div>
+
+            <div class="card bg-light shadow1">
+                <div class="card-body text-center">
+                    <div class="btn-group float-right">
+                        <div class="h1"><i class="fas fa-pause-circle"></i></div>
+                    </div>
+                    <div class="text-left"><h1><b>{{ object.get_reserved_hosts.count }}</b></h1></div>
+                    <div class="text-left mt-3 mb-n3"><small>Reserved Hostnames</small></div>
+                </div>
+            </div>
+
+            <div class="card bg-light shadow1">
+                <div class="card-body text-center">
+                    <div class="btn-group float-right">
+                        <div class="h1"><i class="fas fa-check-circle"></i></div>
+                    </div>
+                    <div class="text-left"><h1><b>{{ object.get_available_hosts.count }}</b></h1></div>
+                    <div class="text-left mt-3 mb-n3"><small>Available Hostnames</small></div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <div class="mb-3">&nbsp;</div>
+</section>
+
+
+<section>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-6">
+            <!-- search card -->
+            <div class="card mb-4 shadow1" style="background-color: whitesmoke;">
+                <div class="card-body text-center" style="height: 200px">
+                    <!-- search bar -->
+                    <div class="mt-3 mb-3">
+                        <form action="" class="w-100">
+                            <input type="text" placeholder="Search..." name="search" style="width: 80%">
+                            <button type="submit"><i class="fa fa-search"></i></button>
+                        </form>
+                    </div>
+
+                    <!-- search options -->
+                    <div class="row mt-4 mb-3">
+                        <div class="col-sm-12">- filters -</div>
+                    </div>
+
+                    <div class="row mt-3">
+                        <div class="col-4">
+                            <h5><i class="fas fa-project-diagram"></i><br/></h5>
+                            <span class="text-sm-center" style="font-size: x-small">by name</span>
+                        </div>
+                        <div class="col-4 border-left">
+                            <h5><i class="fas fa-user"></i><br/></h5>
+                            <span class="text-sm-center" style="font-size: x-small">by owner</span>
+                        </div>
+                        <div class="col-4 border-left">
+                            <h5><i class="fas fa-code"></i><br/></h5>
+                            <span class="text-sm-center" style="font-size: x-small">by pattern</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- patterns card -->
+            <div class="card mb-4 shadow1" style="background-color: whitesmoke;">
+                <div class="card-header text-primary font-weight-bold text-lg-left">Patterns {{ object.hostnamepattern_set.count }}</div>
+                <div class="card-body" style="overflow-y: auto; overflow-x: hidden; height: 200px">
+                    {% for pattern in object.hostnamepattern_set.all %}
+                        {{ pattern }}<br/>
+                    {% endfor %}
+                </div>
+            </div>
+
+        </div>
+
+        <div class="col-sm-6">
+            <!-- my hosts card -->
+            <div class="card mb-4 shadow1" style="background-color: whitesmoke;">
+                <div class="card-header text-primary font-weight-bold text-lg-left">Hosts</div>
+                <div class="card-body" style="overflow-y: auto; overflow-x: hidden; height: 426px;">
+                    {% for pattern in object.hostnamepattern_set.all %}
+                        {% for host in pattern.hostname_set.all %}
+                            {{ host }}<br/>
+                        {% endfor %}
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+</section>
+
+<div class="m-4">&nbsp;</div>
+{% include 'component/modals.htm' %}
+{% endblock %}

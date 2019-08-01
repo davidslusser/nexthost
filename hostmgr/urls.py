@@ -17,6 +17,9 @@ urlpatterns = [
     path('list_projects/', gui.ListProjects.as_view(), name='list_projects'),
     path('list_patterns/', gui.ListPatterns.as_view(), name='list_patterns'),
 
+    # detail views
+    path('detail_project/<int:pk>/', gui.DetailProject.as_view(), name='detail_project'),
+
     # ajax views
 
 ]

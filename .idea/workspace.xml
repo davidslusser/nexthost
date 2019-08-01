@@ -2,50 +2,25 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="4b04c030-7501-4b19-ab47-7286115342d3" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/hostmgr/templates/table/table_owners.htm" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/hostmgr/templates/table/table_patterns.htm" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/hostmgr/templates/table/table_projects.htm" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/hostmgr/views/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/hostmgr/views/views_ajax.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/hostmgr/views/views_api.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/hostmgr/views/views_gui.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/nexthost/static/default.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/nexthost/static/fresca.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/nexthost/static/greyson.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/nexthost/static/nexthost_base.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/nexthost/templates/ajax/show_audit_log.htm" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/nexthost/templates/ajax/show_object_details.htm" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/nexthost/templates/base.htm" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/nexthost/templates/component/chart_components.htm" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/nexthost/templates/component/modals.htm" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/nexthost/templates/component/show_messages.htm" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/nexthost/templates/component/table_components.htm" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/nexthost/templates/detail/detail_current_user.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/nexthost/templates/generic/generic_list.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/nexthost/templates/index.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/nexthost/templates/registration/logged_out.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/nexthost/templates/registration/login.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/nexthost/templates/table/table_favorites.htm" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/nexthost/templates/table/table_recents.htm" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/nexthost/views.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/nexthost.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/nexthost.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/admin_tmp.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/db.sqlite3" beforeDir="false" afterPath="$PROJECT_DIR$/db.sqlite3" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/hostmgr/signals.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/hostmgr/templates/detail/detail_project.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dictionaries/dslusser.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/nexthost.iml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/db.sqlite3" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hostmgr/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/hostmgr/__init__.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/hostmgr/admin.py" beforeDir="false" afterPath="$PROJECT_DIR$/hostmgr/admin.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hostmgr/management/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/hostmgr/templates/custom/hostmgr_nav.htm" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hostmgr/management/commands/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/hostmgr/templates/custom/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hostmgr/management/commands/generate_admin.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/hostmgr/management/commands/templates/admin.jinja" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hostmgr/apps.py" beforeDir="false" afterPath="$PROJECT_DIR$/hostmgr/apps.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/hostmgr/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/hostmgr/models.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hostmgr/templates/base.html" beforeDir="false" afterPath="$PROJECT_DIR$/hostmgr/templates/base.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/hostmgr/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/hostmgr/urls.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/hostmgr/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/hostmgr/templates/table/table_hosts.htm" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hostmgr/views/views_gui.py" beforeDir="false" afterPath="$PROJECT_DIR$/hostmgr/views/views_gui.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/nexthost/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/nexthost/settings.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/nexthost/static/nexthost_base.css" beforeDir="false" afterPath="$PROJECT_DIR$/nexthost/static/nexthost_base.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/nexthost/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/nexthost/urls.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/requirements.txt" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -59,7 +34,7 @@
         <entry file="file://$PROJECT_DIR$/hostmgr/urls.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="300">
-              <caret line="20" selection-start-line="20" selection-end-line="20" />
+              <caret line="20" column="34" selection-start-line="20" selection-start-column="34" selection-end-line="20" selection-end-column="34" />
               <folding>
                 <element signature="e#0#28#0" expanded="true" />
               </folding>
@@ -68,58 +43,10 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/nexthost/views.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="408">
-              <caret line="37" column="8" selection-start-line="37" selection-start-column="8" selection-end-line="37" selection-end-column="8" />
-              <folding>
-                <element signature="e#1#76#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/nexthost/templates/detail/detail_current_user.html">
-          <provider selected="true" editor-type-id="text-editor" />
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/nexthost/templates/base.htm">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1148">
-              <caret line="85" selection-start-line="85" selection-end-line="85" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/nexthost/templates/index.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="288">
-              <caret line="55" column="69" selection-start-line="55" selection-start-column="69" selection-end-line="55" selection-end-column="69" />
-              <folding>
-                <element signature="e#1433#1499#0#HTML" expanded="true" />
-                <element signature="e#2037#2103#0#HTML" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/nexthost/static/nexthost_base.css">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="459">
-              <caret line="128" lean-forward="true" selection-start-line="128" selection-end-line="128" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/hostmgr/views/views_gui.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="250">
-              <caret line="37" column="40" selection-start-line="37" selection-start-column="40" selection-end-line="37" selection-end-column="40" />
+            <state relative-caret-position="336">
+              <caret line="52" selection-start-line="52" selection-end-line="52" />
               <folding>
                 <element signature="e#0#45#0" expanded="true" />
               </folding>
@@ -128,13 +55,67 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/hostmgr/templates/detail/detail_project.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="175">
+              <caret line="12" column="47" selection-start-line="12" selection-start-column="47" selection-end-line="12" selection-end-column="47" />
+              <folding>
+                <element signature="e#1831#1837#1#HTML" expanded="true" />
+                <element signature="n#style#0;n#div#0;n#div#0;n#div#1;n#section#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#section#1;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#input#0;n#form#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#section#1;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#span#0;n#div#0;n#div#2;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#section#1;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#span#0;n#div#1;n#div#2;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#section#1;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#span#0;n#div#2;n#div#2;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#section#1;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#div#1;n#div#0;n#div#1;n#section#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#div#1;n#div#1;n#div#0;n#div#0;n#div#0;n#section#1;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#div#0;n#div#1;n#div#1;n#section#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#div#1;n#div#0;n#div#1;n#div#0;n#div#0;n#section#1;n#!!top" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/nexthost/settings.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="245">
+              <caret line="56" column="30" selection-start-line="56" selection-start-column="30" selection-end-line="56" selection-end-column="30" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/nexthost/urls.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="264">
-              <caret line="24" column="48" selection-start-line="24" selection-start-column="48" selection-end-line="24" selection-end-column="48" />
+            <state relative-caret-position="119">
+              <caret line="8" column="17" lean-forward="true" selection-start-line="8" selection-start-column="17" selection-end-line="8" selection-end-column="17" />
               <folding>
                 <element signature="e#640#677#0" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/hostmgr/models.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="292">
+              <caret line="61" column="27" selection-start-line="61" selection-start-column="8" selection-end-line="61" selection-end-column="27" />
+              <folding>
+                <element signature="e#0#31#0" expanded="true" />
+                <element signature="e#2200#4710#0" />
+                <element signature="e#4696#5124#0" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/nexthost/static/nexthost_base.css">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="122">
+              <caret line="104" column="27" selection-start-line="104" selection-start-column="27" selection-end-line="104" selection-end-column="27" />
             </state>
           </provider>
         </entry>
@@ -171,7 +152,6 @@
         <option value="$PROJECT_DIR$/hostmgr/templates/base.html" />
         <option value="$PROJECT_DIR$/admin_tmp.py" />
         <option value="$PROJECT_DIR$/hostmgr/management/commands/templates/admin.jinja" />
-        <option value="$PROJECT_DIR$/hostmgr/admin.py" />
         <option value="$PROJECT_DIR$/hostmgr/management/commands/generate_admin.py" />
         <option value="$PROJECT_DIR$/hostmgr/views/__init__.py" />
         <option value="$PROJECT_DIR$/hostmgr/templates/custom/index.html" />
@@ -180,17 +160,22 @@
         <option value="$PROJECT_DIR$/hostmgr/templates/table/table_owners.htm" />
         <option value="$PROJECT_DIR$/hostmgr/templates/table/table_projects.htm" />
         <option value="$PROJECT_DIR$/hostmgr/templates/table/table_patterns.htm" />
-        <option value="$PROJECT_DIR$/hostmgr/models.py" />
-        <option value="$PROJECT_DIR$/hostmgr/views/views_gui.py" />
-        <option value="$PROJECT_DIR$/hostmgr/urls.py" />
         <option value="$PROJECT_DIR$/hostmgr/templates/custom/hostmgr_nav.htm" />
         <option value="$PROJECT_DIR$/nexthost/views.py" />
-        <option value="$PROJECT_DIR$/nexthost/settings.py" />
         <option value="$PROJECT_DIR$/nexthost/templates/base.htm" />
         <option value="$PROJECT_DIR$/nexthost/static/default.css" />
-        <option value="$PROJECT_DIR$/nexthost/urls.py" />
-        <option value="$PROJECT_DIR$/nexthost/static/nexthost_base.css" />
         <option value="$PROJECT_DIR$/nexthost/templates/index.html" />
+        <option value="$PROJECT_DIR$/nexthost/static/nexthost_base.css" />
+        <option value="$PROJECT_DIR$/hostmgr/admin.py" />
+        <option value="$PROJECT_DIR$/hostmgr/apps.py" />
+        <option value="$PROJECT_DIR$/hostmgr/__init__.py" />
+        <option value="$PROJECT_DIR$/hostmgr/signals.py" />
+        <option value="$PROJECT_DIR$/hostmgr/urls.py" />
+        <option value="$PROJECT_DIR$/hostmgr/models.py" />
+        <option value="$PROJECT_DIR$/hostmgr/views/views_gui.py" />
+        <option value="$PROJECT_DIR$/hostmgr/templates/detail/detail_project.html" />
+        <option value="$PROJECT_DIR$/nexthost/urls.py" />
+        <option value="$PROJECT_DIR$/nexthost/settings.py" />
       </list>
     </option>
   </component>
@@ -198,10 +183,10 @@
     <servers />
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="18" />
-    <option name="y" value="143" />
-    <option name="width" value="1732" />
-    <option name="height" value="973" />
+    <option name="x" value="363" />
+    <option name="y" value="166" />
+    <option name="width" value="1604" />
+    <option name="height" value="992" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectView">
@@ -209,7 +194,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="PackagesPane" />
       <pane id="ProjectPane">
         <subPane>
@@ -228,35 +212,17 @@
               <item name="nexthost" type="462c0819:PsiDirectoryNode" />
               <item name="nexthost" type="462c0819:PsiDirectoryNode" />
             </path>
-            <path>
-              <item name="nexthost" type="b2602c69:ProjectViewProjectNode" />
-              <item name="nexthost" type="462c0819:PsiDirectoryNode" />
-              <item name="nexthost" type="462c0819:PsiDirectoryNode" />
-              <item name="static" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="nexthost" type="b2602c69:ProjectViewProjectNode" />
-              <item name="nexthost" type="462c0819:PsiDirectoryNode" />
-              <item name="nexthost" type="462c0819:PsiDirectoryNode" />
-              <item name="templates" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="nexthost" type="b2602c69:ProjectViewProjectNode" />
-              <item name="nexthost" type="462c0819:PsiDirectoryNode" />
-              <item name="nexthost" type="462c0819:PsiDirectoryNode" />
-              <item name="templates" type="462c0819:PsiDirectoryNode" />
-              <item name="table" type="462c0819:PsiDirectoryNode" />
-            </path>
           </expand>
           <select />
         </subPane>
       </pane>
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1564548652716" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1564638632357" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
     <property name="project.structure.last.edited" value="Modules" />
@@ -392,18 +358,22 @@
       <workItem from="1564518962561" duration="1951000" />
       <workItem from="1564524074768" duration="758000" />
       <workItem from="1564529829265" duration="3805000" />
-      <workItem from="1564544748316" duration="3631000" />
+      <workItem from="1564544748316" duration="4174000" />
+      <workItem from="1564587074059" duration="1467000" />
+      <workItem from="1564590396402" duration="4129000" />
+      <workItem from="1564609437391" duration="298000" />
+      <workItem from="1564615969034" duration="14690000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="40495000" />
+    <option name="totallyTimeSpent" value="61622000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="18" y="143" width="1732" height="973" extended-state="0" />
+    <frame x="363" y="166" width="1604" height="992" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.1597633" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.18501921" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Image Layers" order="2" />
       <window_info id="Designer" order="3" />
@@ -412,7 +382,7 @@
       <window_info id="Favorites" order="6" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32908162" />
-      <window_info anchor="bottom" id="Run" order="2" visible="true" weight="0.323496" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.27444443" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -438,15 +408,6 @@
     <option name="version" value="1" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/hostmgr/serializers.py">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/hostmgr/forms.py">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/hostmgr/apps.py">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
     <entry file="file://$PROJECT_DIR$/hostmgr/tests.py">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
@@ -466,19 +427,8 @@
     <entry file="file://$PROJECT_DIR$/local_test/management/__init__.py">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/.gitignore">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="95">
-          <caret line="44" column="4" lean-forward="true" selection-start-line="44" selection-start-column="4" selection-end-line="44" selection-end-column="4" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/hostmgr/static/css/nexthost_base.css">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/hostmgr/static/theme/fresca.css">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
+    <entry file="file://$PROJECT_DIR$/hostmgr/static/css/nexthost_base.css" />
+    <entry file="file://$PROJECT_DIR$/hostmgr/static/theme/fresca.css" />
     <entry file="file://$PROJECT_DIR$/admin_tmp.py" />
     <entry file="file://$PROJECT_DIR$/test.py" />
     <entry file="file://$PROJECT_DIR$/hostmgr/views/__init__.py">
@@ -496,15 +446,6 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/hostmgr/views/views_api.py">
       <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/hostmgr/admin.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <folding>
-            <element signature="e#0#32#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/hostmgr/templates/custom/index.html">
       <provider selected="true" editor-type-id="text-editor">
@@ -554,9 +495,6 @@
           <caret line="15" column="63" lean-forward="true" selection-start-line="15" selection-start-column="63" selection-end-line="15" selection-end-column="63" />
         </state>
       </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/hostmgr/__init__.py">
-      <provider selected="true" editor-type-id="text-editor" />
     </entry>
     <entry file="file://$USER_HOME$/virtual_envs/nexthost/lib/python3.6/site-packages/django/contrib/admin/__init__.py">
       <provider selected="true" editor-type-id="text-editor">
@@ -620,16 +558,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/hostmgr/models.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1710">
-          <caret line="120" column="17" selection-start-line="120" selection-start-column="6" selection-end-line="120" selection-end-column="17" />
-          <folding>
-            <element signature="e#0#31#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/hostmgr/templates/custom/hostmgr_nav.htm">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="420">
@@ -644,85 +572,177 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/.gitignore">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="257">
+          <caret line="47" column="15" selection-start-line="47" selection-start-column="15" selection-end-line="47" selection-end-column="15" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/nexthost/templates/base.htm">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="655">
+          <caret line="85" selection-start-line="85" selection-end-line="85" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/nexthost/views.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="225">
+          <caret line="15" column="24" lean-forward="true" selection-start-line="15" selection-start-column="24" selection-end-line="15" selection-end-column="24" />
+          <folding>
+            <element signature="e#0#75#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/nexthost/templates/detail/detail_current_user.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="550">
+          <caret line="177" selection-start-line="177" selection-end-line="179" selection-end-column="14" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/nexthost/static/default.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="172">
+          <caret line="5" column="110269" selection-start-line="5" selection-start-column="110269" selection-end-line="5" selection-end-column="110269" />
+          <folding>
+            <element signature="e#14357#14591#2" expanded="true" />
+            <element signature="e#15404#15557#1" expanded="true" />
+            <element signature="e#15597#15831#1" expanded="true" />
+            <element signature="e#18913#19189#2" expanded="true" />
+            <element signature="e#20030#20183#1" expanded="true" />
+            <element signature="e#20223#20499#1" expanded="true" />
+            <element signature="e#49120#49307#2" expanded="true" />
+            <element signature="e#49540#49676#2" expanded="true" />
+            <element signature="e#50085#50218#2" expanded="true" />
+            <element signature="e#51371#51524#1" expanded="true" />
+            <element signature="e#62304#62531#2" expanded="true" />
+            <element signature="e#63406#63639#2" expanded="true" />
+            <element signature="e#91500#91677#2" expanded="true" />
+            <element signature="e#91723#91900#2" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/nexthost/templates/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="123">
+          <caret line="11" column="17" lean-forward="true" selection-start-line="11" selection-start-column="17" selection-end-line="11" selection-end-column="17" />
+          <folding>
+            <element signature="e#1378#1444#0#HTML" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/nexthost/static/nexthost_base.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="122">
+          <caret line="104" column="27" selection-start-line="104" selection-start-column="27" selection-end-line="104" selection-end-column="27" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/hostmgr/__init__.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="15">
+          <caret line="1" lean-forward="true" selection-start-line="1" selection-end-line="1" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/hostmgr/apps.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="120">
+          <caret line="8" column="20" lean-forward="true" selection-start-line="8" selection-start-column="20" selection-end-line="8" selection-end-column="20" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/hostmgr/signals.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="180">
+          <caret line="12" selection-start-line="12" selection-end-line="12" />
+          <folding>
+            <element signature="e#0#71#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/hostmgr/admin.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="188">
+          <caret line="29" lean-forward="true" selection-start-line="29" selection-end-line="29" />
+          <folding>
+            <element signature="e#0#32#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/hostmgr/urls.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="300">
-          <caret line="20" selection-start-line="20" selection-end-line="20" />
+          <caret line="20" column="34" selection-start-line="20" selection-start-column="34" selection-end-line="20" selection-end-column="34" />
           <folding>
             <element signature="e#0#28#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/nexthost/templates/detail/detail_current_user.html">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/nexthost/views.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="408">
-          <caret line="37" column="8" selection-start-line="37" selection-start-column="8" selection-end-line="37" selection-end-column="8" />
-          <folding>
-            <element signature="e#1#76#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/nexthost/templates/base.htm">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1148">
-          <caret line="85" selection-start-line="85" selection-end-line="85" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/hostmgr/views/views_gui.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="250">
-          <caret line="37" column="40" selection-start-line="37" selection-start-column="40" selection-end-line="37" selection-end-column="40" />
+        <state relative-caret-position="336">
+          <caret line="52" selection-start-line="52" selection-end-line="52" />
           <folding>
             <element signature="e#0#45#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/hostmgr/models.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="292">
+          <caret line="61" column="27" selection-start-line="61" selection-start-column="8" selection-end-line="61" selection-end-column="27" />
+          <folding>
+            <element signature="e#0#31#0" expanded="true" />
+            <element signature="e#2200#4710#0" />
+            <element signature="e#4696#5124#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/hostmgr/templates/detail/detail_project.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="175">
+          <caret line="12" column="47" selection-start-line="12" selection-start-column="47" selection-end-line="12" selection-end-column="47" />
+          <folding>
+            <element signature="e#1831#1837#1#HTML" expanded="true" />
+            <element signature="n#style#0;n#div#0;n#div#0;n#div#1;n#section#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#section#1;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#input#0;n#form#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#section#1;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#span#0;n#div#0;n#div#2;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#section#1;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#span#0;n#div#1;n#div#2;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#section#1;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#span#0;n#div#2;n#div#2;n#div#0;n#div#0;n#div#0;n#div#0;n#div#0;n#section#1;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#1;n#div#0;n#div#1;n#section#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#1;n#div#1;n#div#0;n#div#0;n#div#0;n#section#1;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#0;n#div#1;n#div#1;n#section#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#1;n#div#0;n#div#1;n#div#0;n#div#0;n#section#1;n#!!top" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/nexthost/urls.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="264">
-          <caret line="24" column="48" selection-start-line="24" selection-start-column="48" selection-end-line="24" selection-end-column="48" />
+        <state relative-caret-position="119">
+          <caret line="8" column="17" lean-forward="true" selection-start-line="8" selection-start-column="17" selection-end-line="8" selection-end-column="17" />
           <folding>
             <element signature="e#640#677#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/nexthost/static/default.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="180">
-          <caret line="5" column="1347" selection-start-line="5" selection-start-column="1347" selection-end-line="5" selection-end-column="1347" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/nexthost/settings.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="648">
-          <caret line="148" lean-forward="true" selection-start-line="148" selection-end-line="148" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/nexthost/static/nexthost_base.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="459">
-          <caret line="128" lean-forward="true" selection-start-line="128" selection-end-line="128" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/nexthost/templates/index.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="288">
-          <caret line="55" column="69" selection-start-line="55" selection-start-column="69" selection-end-line="55" selection-end-column="69" />
-          <folding>
-            <element signature="e#1433#1499#0#HTML" expanded="true" />
-            <element signature="e#2037#2103#0#HTML" expanded="true" />
-          </folding>
+        <state relative-caret-position="245">
+          <caret line="56" column="30" selection-start-line="56" selection-start-column="30" selection-end-line="56" selection-end-column="30" />
         </state>
       </provider>
     </entry>

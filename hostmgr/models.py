@@ -59,6 +59,15 @@ class Project(HostManagerBase):
     def get_update_url(self):
         return reverse('hostmgr_project_update', args=(self.pk, ))
 
+    def get_available_hosts(self):
+        return self.hostnamepattern_set.filter(hostname__is_assigned=False)
+
+    def get_reserved_hosts(self):
+        return self.hostnamepattern_set.filter(hostname__is_reserved=True)
+
+    def get_assigned_hosts(self):
+        return self.hostnamepattern_set.filter(hostname__is_assigned=True)
+
 
 class HostnamePattern(HostManagerBase):
     """ when a pattern is added, generate all hostnames per rules of the pattern and set is_assigned = False"""
@@ -88,7 +97,8 @@ class HostnamePattern(HostManagerBase):
         for i in range(self.start_from, self.max_hosts * self.increment + 1, self.increment):
             num = "{}".format(i).zfill(len(str(self.max_hosts)))
             hostname = "{}{}{}".format(self.prefix, self.delimiter, num)
-            Hostname.objects.get_or_create(hostname=hostname, defaults=dict(hostname=hostname))
+            Hostname.objects.get_or_create(hostname=hostname, pattern=self,
+                                           defaults=dict(hostname=hostname, pattern=self))
 
     def update_hosts(self):
         """ create/remove host entries based on rule changes (max_hosts increase) """
@@ -114,7 +124,7 @@ class HostnamePattern(HostManagerBase):
 
     def save(self, *args, **kwargs):
         # if not self.pk:
-        self.create_hosts()
+        # self.create_hosts()
         super().save(*args, **kwargs)
 
 
