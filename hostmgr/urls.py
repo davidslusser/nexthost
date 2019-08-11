@@ -16,7 +16,16 @@ urlpatterns = [
     path('list_owners/', gui.ListOwners.as_view(), name='list_owners'),
     path('list_projects/', gui.ListProjects.as_view(), name='list_projects'),
     path('list_patterns/', gui.ListPatterns.as_view(), name='list_patterns'),
+    path('list_hostnames/', gui.ListHostnames.as_view(), name='list_hostnames'),
+
+    # detail views
+    path('detail_project/<int:pk>/', gui.DetailProject.as_view(), name='detail_project'),
+    path('detail_pattern/<int:pk>/', gui.DetailPattern.as_view(), name='detail_pattern'),
 
     # ajax views
+    path('get_owner_details', ajax.get_owner_details, name='get_owner_details'),
+    path('get_project_details', ajax.get_project_details, name='get_project_details'),
+    path('get_pattern_details', ajax.get_pattern_details, name='get_pattern_details'),
+    path('get_hostname_details', ajax.get_hostname_details, name='get_hostname_details'),
 
 ]

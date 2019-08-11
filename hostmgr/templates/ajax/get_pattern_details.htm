@@ -1,0 +1,66 @@
+
+<br>
+<div class="container-fluid">
+    <table class="table table-condensed table-bordered table-striped">
+        <col width="20%">
+        <col width="80%">
+        <tbody>
+        <tr>
+            <td><b>Name</b></td>
+            <td>{{ object.name }}</td>
+        </tr>
+        <tr>
+            <td><b>Description</b></td>
+            <td>{{ object.description }}</td>
+        </tr>
+        <tr>
+            <td><b>Project</b></td>
+            <td>{{ object.project }}</td>
+        </tr>
+        <tr>
+            <td><b>Prefix</b></td>
+            <td>{{ object.prefix }}</td>
+        </tr>
+        <tr>
+            <td><b>Delimiter</b></td>
+            <td>{{ object.delimiter }}</td>
+        </tr>
+        <tr>
+            <td><b>Max Hosts</b></td>
+            <td>{{ object.max_hosts }}</td>
+        </tr>
+        <tr>
+            <td><b>Increment</b></td>
+            <td>{{ object.increment }}</td>
+        </tr>
+        <tr>
+            <td><b>Start From</b></td>
+            <td>{{ object.start_from }}</td>
+        </tr>
+        <tr>
+            <td><b>Pattern regex</b></td>
+            <td>{{ object.build_regex }}</td>
+        </tr>
+        <tr>
+            <td><b>Created At</b></td>
+            <td>{{ object.created_at }}</td>
+        </tr>
+        <tr>
+            <td><b>Updated at</b></td>
+            <td>{{ object.updated_at }}</td>
+        </tr>
+        <tr>
+            <td><b>Available Hosts</b></td>
+            <td>{{ object.get_available_hostnames.count }}</td>
+        </tr>
+        <tr>
+            <td><b>Reserved Hosts</b></td>
+            <td>{{ object.get_reserved_hostnames.count }}</td>
+        </tr>
+        <tr>
+            <td><b>Assigned Hosts</b></td>
+            <td>{{ object.get_assigned_hostnames.count }}</td>
+        </tr>
+        </tbody>
+    </table>
+</div>

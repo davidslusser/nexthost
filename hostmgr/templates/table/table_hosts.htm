@@ -4,9 +4,10 @@
     <thead>
     <tr>
         <th data-field="hostname" data-sortable="true">Hostname</th>
+        <th data-field="status" data-sortable="true">Status</th>
+        <th data-field="project" data-sortable="true">Project</th>
         <th data-field="owner" data-sortable="true">Owner</th>
-        <th data-field="is_locked" data-sortable="true">Is Locked?</th>
-        <th data-field="historical" data-sortable="true">Prior Locks</th>
+        <th data-field="updated_at" data-sortable="true">Updated At</th>
         <th>Actions</th>
     </tr>
     </thead>
@@ -14,19 +15,23 @@
     {% for row in queryset %}
         <tr>
             <td>{{ row.hostname }}</td>
-            <td>{{ row.owner }}</td>
-            <td>
-                {% if row.is_locked %}
-                    <span class="text-primary"><i class="fa fa-check fa-fw"></i></span>
-                {% else %}
-                    <span class="text-danger"><i class="fa fa-times fa-fw"></i></span>
-                {% endif %}
-            </td>
-            <td>{{ row.lock_set.count }}</td>
+            <td>{{ row.status }}</td>
+            <td>{{ row.pattern.project }}</td>
+            <td>{{ row.pattern.project.owner }}</td>
+            <td>{{ row.updated_at|date:'Y-m-d H:i:s' }}</td>
+{#            <td>#}
+{#                {% if row.is_locked %}#}
+{#                    <span class="text-primary"><i class="fa fa-check fa-fw"></i></span>#}
+{#                {% else %}#}
+{#                    <span class="text-danger"><i class="fa fa-times fa-fw"></i></span>#}
+{#                {% endif %}#}
+{#            </td>#}
 
             <!-- actions -->
             <td>
-
+                <!-- view details -->
+                <!-- view audit log -->
+                <!-- reserve/assign/extend/release -->
             </td>
         </tr>
     {% endfor %}

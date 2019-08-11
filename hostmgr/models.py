@@ -59,6 +59,15 @@ class Project(HostManagerBase):
     def get_update_url(self):
         return reverse('hostmgr_project_update', args=(self.pk, ))
 
+    def get_available_hosts(self):
+        return self.hostnamepattern_set.filter(hostname__status="available")
+
+    def get_reserved_hosts(self):
+        return self.hostnamepattern_set.filter(hostname__status="reserved")
+
+    def get_assigned_hosts(self):
+        return self.hostnamepattern_set.filter(hostname__status="assigned")
+
 
 class HostnamePattern(HostManagerBase):
     """ when a pattern is added, generate all hostnames per rules of the pattern and set is_assigned = False"""
@@ -78,6 +87,10 @@ class HostnamePattern(HostManagerBase):
     def __str__(self):
         return self.name
 
+    def build_regex(self):
+        """ build the regex value for this pattern """
+        return "^\S+{}[0-9]{{1,{}}}$".format(self.delimiter, len(str(self.max_hosts)))
+
     def validate_user(self, user):
         """ Check if use is authorized to perform an action (CRUD) on a HostnamePattern. User must be a member of the
         group who owns the project or a superuser """
@@ -88,7 +101,8 @@ class HostnamePattern(HostManagerBase):
         for i in range(self.start_from, self.max_hosts * self.increment + 1, self.increment):
             num = "{}".format(i).zfill(len(str(self.max_hosts)))
             hostname = "{}{}{}".format(self.prefix, self.delimiter, num)
-            Hostname.objects.get_or_create(hostname=hostname, defaults=dict(hostname=hostname))
+            Hostname.objects.get_or_create(hostname=hostname,
+                                           defaults=dict(hostname=hostname, pattern=self))
 
     def update_hosts(self):
         """ create/remove host entries based on rule changes (max_hosts increase) """
@@ -112,10 +126,22 @@ class HostnamePattern(HostManagerBase):
     def extend_hostname(self):
         pass
 
-    def save(self, *args, **kwargs):
-        # if not self.pk:
-        self.create_hosts()
-        super().save(*args, **kwargs)
+    def get_available_hostnames(self):
+        return self.hostname_set.filter(status="available")
+
+    def get_assigned_hostnames(self):
+        return self.hostname_set.filter(status="assigned")
+
+    def get_reserved_hostnames(self):
+        return self.hostname_set.filter(status="reserved")
+
+    def get_expired_hostnames(self):
+        return self.hostname_set.filter(status="expired")
+
+    # def save(self, *args, **kwargs):
+    #     # if not self.pk:
+    #     # self.create_hosts()
+    #     super().save(*args, **kwargs)
 
 
 class AssetIdType(HostManagerBase):
@@ -130,9 +156,23 @@ class AssetIdType(HostManagerBase):
         return self.name
 
 
+# class HostStatus(HostManagerBase):
+#     """ table to track status values for a hostname """
+#     name = models.CharField(max_length=16, unique=True, help_text="name of this status option")
+#     description = models.CharField(max_length=255, blank=True, null=True, help_text="status description")
+#
+#     def __unicode__(self):
+#         return u'%s' % self.name
+#
+#     def __str__(self):
+#         return self.name
+
+
 class Hostname(HostManagerBase):
     """ A hostname is an entry of a host pattern. Hostnames are generated automatically when a host pattern is
      created or edited. """
+    HOST_STATUS_CHOICES = (('available', 'available'), ('assigned', 'assigned'),
+                           ('reserved', 'reserved'), ('expired', 'expired'))
     pattern = models.ForeignKey('hostmgr.HostnamePattern', help_text="pattern this hostname was generated from",
                                 on_delete=models.CASCADE)
     hostname = models.CharField(max_length=255, unique=True, help_text="name of host")
@@ -140,9 +180,12 @@ class Hostname(HostManagerBase):
                                 help_text="unique identifier of the asset using this hostname")
     asset_id_type = models.ForeignKey('hostmgr.AssetIdType', blank=True, null=True, help_text="type of asset ID used",
                                       on_delete=models.CASCADE)
-    is_assigned = models.BooleanField(default=False, help_text="set to True when hostname is assigned")
+    # is_assigned = models.BooleanField(default=False, help_text="set to True when hostname is assigned")
     is_eternal = models.BooleanField(default=False, help_text="select if hostname can be not reassigned or deleted")
-    is_reserved = models.BooleanField(default=False, help_text="select if hostname is reserved, but not assigned")
+    # is_reserved = models.BooleanField(default=False, help_text="select if hostname is reserved, but not assigned")
+    #TODO: change flags to status (assigned, reserved, available, expired, etc.)
+    status = models.CharField(max_length=16, choices=HOST_STATUS_CHOICES, default="available",
+                              help_text="status of this hostname")
     reservation_expires = models.DateTimeField(blank=True, null=True, help_text="time when this reservation expires")
     assignment_expires = models.DateTimeField(blank=True, null=True, help_text="time when this assignment expires")
 

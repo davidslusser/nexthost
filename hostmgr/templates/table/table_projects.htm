@@ -12,7 +12,7 @@
     <tbody>
     {% for row in queryset %}
         <tr>
-            <td>{{ row.name }}</td>
+            <td><a href="{% url 'hostmgr:detail_project' row.id %}">{{ row.name }}</a></td>
             <td>{{ row.owner }}</td>
             <td>{{ row.hostnamepattern_set.count }}</td>
             <!-- actions -->
