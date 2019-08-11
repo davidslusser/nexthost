@@ -12,7 +12,7 @@
             <br/>
             <div class="container mb-5">
                 <h1 class="text-primary"><b>Welcome to NextHost!</b></h1>
-                <h5>Select an option below to continue</h5>
+                <h5 class="text-secondary">Select an option below to continue</h5>
             </div>
         </div>
     </header>
@@ -24,31 +24,51 @@
         <div class="d-flex flex-wrap align-items-center justify-content-center">
 
             <div class="card mb-4 text-center hvr-grow m-4 div-shadow" style="background-color: whitesmoke; width: 350px; height: 180px;">
-                <a href="">
+                <a href="{% url 'dashboard' %}">
                     <div class="card-body">
                         <h2 class="card-title text-primary"><i class="fas fa-chart-line"></i></h2>
                         <h3 class="card-title text-primary">Dashboard</h3>
-                        <p class="card-text">blah</p>
+                        <p class="card-text">View counts, stats, and trends</p>
                     </div>
                 </a>
             </div>
 
             <div class="card mb-4 text-center hvr-grow m-4 div-shadow" style="background-color: whitesmoke; width: 350px; height: 180px;">
-                <a href="">
+                <a href="{% url 'hostmgr:list_owners' %}">
                     <div class="card-body">
                         <h2 class="card-title text-primary"><i class="fas fa-user"></i></h2>
                         <h3 class="card-title text-primary">Owners</h3>
-                        <p class="card-text"></p>
+                        <p class="card-text">List all owners</p>
                     </div>
                 </a>
             </div>
 
             <div class="card mb-4 text-center hvr-grow m-4 div-shadow" style="background-color: whitesmoke; width: 350px; height: 180px;">
-                <a href="">
+                <a href="{% url 'hostmgr:list_projects' %}">
                     <div class="card-body">
                         <h2 class="card-title text-primary"><i class="fas fa-project-diagram"></i></h2>
                         <h3 class="card-title text-primary">Projects</h3>
-                        <p class="card-text"></p>
+                        <p class="card-text">List all projects</p>
+                    </div>
+                </a>
+            </div>
+
+            <div class="card mb-4 text-center hvr-grow m-4 div-shadow" style="background-color: whitesmoke; width: 350px; height: 180px;">
+                <a href="{% url 'hostmgr:list_patterns' %}">
+                    <div class="card-body">
+                        <h2 class="card-title text-primary"><i class="fas fa-swatchbook"></i></h2>
+                        <h3 class="card-title text-primary">Patterns</h3>
+                        <p class="card-text">List all patterns</p>
+                    </div>
+                </a>
+            </div>
+
+            <div class="card mb-4 text-center hvr-grow m-4 div-shadow" style="background-color: whitesmoke; width: 350px; height: 180px;">
+                <a href="{% url 'hostmgr:list_patterns' %}">
+                    <div class="card-body">
+                        <h2 class="card-title text-primary"><i class="fas fa-server"></i></h2>
+                        <h3 class="card-title text-primary">Hostnames</h3>
+                        <p class="card-text">List all hostnames</p>
                     </div>
                 </a>
             </div>

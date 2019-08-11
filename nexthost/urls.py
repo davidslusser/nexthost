@@ -31,6 +31,9 @@ urlpatterns = [
     path('home', TemplateView.as_view(template_name='index.html'), name="home"),
     path('index', TemplateView.as_view(template_name='index.html'), name="index"),
 
+    # project-level
+    path('dashboard', views.ShowDashboard.as_view(), name='dashboard'),
+
     # app urls
     path('userextensions/', include('userextensions.urls'), ),
     path('hostmgr/', include('hostmgr.urls'), ),

@@ -1,0 +1,40 @@
+/* NextHost: dashboard-specific css */
+
+
+.chart-container {
+    position: relative;
+    margin: auto;
+    height: 95%;
+    width: 100%;
+}
+
+
+/* set div height on small */
+@media (min-width: 576px) {
+    .dash_card1 {
+        height: 400px;
+    }
+    .project_list_card {
+        height: 400px;
+    }
+}
+
+/* set div height on medium */
+@media (min-width: 768px) {
+    .dash_card1 {
+        height: 340px;
+    }
+    .project_list_card {
+        height: 334px;
+    }
+}
+
+/* set div height on large */
+@media (min-width: 992px) {
+    .dash_card1 {
+        height: 380px;
+    }
+    .project_list_card {
+        height: 371px;
+    }
+}

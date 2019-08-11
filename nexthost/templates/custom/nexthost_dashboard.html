@@ -1,0 +1,111 @@
+{% extends base_template|default:"base.htm" %}
+{% load staticfiles %}
+
+{% block content %}
+{#<div class="container-fluid mb-4 animated fadeIn">#}
+{#    <h1><span class="text-primary"><b>Project: </b></span><span class="text-secondary"><small>{{ object.name }}</small></span></h1><br/>#}
+{#</div>#}
+
+<!-- summary -->
+<div class="mb-4">&nbsp;</div>
+<section class="animated fadeIn">
+    <div class="container-fluid mb-5">
+        <div class="card-deck">
+
+            <div class="card shadow1 bg-light">
+                <div class="card-body text-center">
+                    <div class="btn-group float-right">
+                        <div class="h1"><i class="fas fa-project-diagram"></i></div>
+                    </div>
+                    <div class="text-left"><h1><b>{{ projects.count }}</b></h1></div>
+                    <div class="text-left mt-3 mb-n3"><small>Projects</small></div>
+                </div>
+            </div>
+
+            <div class="card shadow1 bg-light">
+                <div class="card-body text-center">
+                    <div class="btn-group float-right">
+                        <div class="h1"><i class="fas fa-swatchbook"></i></div>
+                    </div>
+                    <div class="text-left"><h1><b>{{ patterns.count }}</b></h1></div>
+                    <div class="text-left mt-3 mb-n3"><small>Patterns</small></div>
+                </div>
+            </div>
+
+            <div class="card shadow1 bg-light">
+                <div class="card-body text-center">
+                    <div class="btn-group float-right">
+                        <div class="h1"><i class="fas fa-server"></i></div>
+                    </div>
+                    <div class="text-left"><h1><b>{{ hostnames_all.count }}</b></h1></div>
+                    <div class="text-left mt-3 mb-n3"><small>Hostnames</small></div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <div class="mb-3">&nbsp;</div>
+</section>
+
+<!-- hostname counts -->
+<section class="animated fadeIn" style="animation-delay: .25s;">
+    <div class="container-fluid mb-5">
+
+        <div class="h2 text-center mb-4">Hostname Statistics</div>
+        <div class="card-deck">
+
+            <div class="card shadow1 bg-light">
+                <div class="card-body text-center">
+                    <div class="btn-group float-right">
+                        <div class="h2"><i class="fas fa-check-circle"></i></div>
+                    </div>
+                    <div class="text-left"><h1><b>{{ hostnames_available.count }}</b></h1></div>
+                    <div class="text-left mt-3 mb-n3"><small>
+                        <a href="{% url 'hostmgr:list_hostnames' %}?status=available&page_description=Available">Available</a>
+                    </small></div>
+                </div>
+            </div>
+
+            <div class="card shadow1 bg-light">
+                <div class="card-body text-center">
+                    <div class="btn-group float-right">
+                        <div class="h2"><i class="fas fa-stop-circle"></i></div>
+                    </div>
+                    <div class="text-left"><h1><b>{{ hostnames_assigned.count }}</b></h1></div>
+                    <div class="text-left mt-3 mb-n3"><small>
+                        <a href="{% url 'hostmgr:list_hostnames' %}?status=assigned&page_description=Assigned">assigned</a>
+                    </small></div>
+                </div>
+            </div>
+
+            <div class="card shadow1 bg-light">
+                <div class="card-body text-center">
+                    <div class="btn-group float-right">
+                        <div class="h2"><i class="fas fa-pause-circle"></i></div>
+                    </div>
+                    <div class="text-left"><h1><b>{{ hostnames_reserved.count }}</b></h1></div>
+                    <div class="text-left mt-3 mb-n3"><small>
+                        <a href="{% url 'hostmgr:list_hostnames' %}?status=reserved&page_description=Reserved">Reserved</a>
+                    </small></div>
+                </div>
+            </div>
+
+            <div class="card shadow1 bg-light">
+                <div class="card-body text-center">
+                    <div class="btn-group float-right">
+                        <div class="h2"><i class="fas fa-times-circle"></i></div>
+                    </div>
+                    <div class="text-left"><h1><b>{{ hostnames_expired.count }}</b></h1></div>
+                    <div class="text-left mt-3 mb-n3"><small>
+                        <a href="{% url 'hostmgr:list_hostnames' %}?status=expired&page_description=Expired">Expired</a>
+                    </small></div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <div class="mb-3">&nbsp;</div>
+</section>
+
+
+{% endblock content %}

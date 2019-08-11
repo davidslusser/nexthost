@@ -13,7 +13,7 @@
     {% for row in queryset %}
         <tr>
             <td>{{ row.name }}</td>
-            <td>{{ row.url }}</td>
+            <td><a href="{{ row.url }}">{{ row.url }}</a></td>
             <td>{{ row.updated_at }}</td>
 
             <!-- actions -->

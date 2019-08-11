@@ -22,8 +22,7 @@ class ProjectAdmin(admin.ModelAdmin):
 
 
 class HostnamePatternAdmin(admin.ModelAdmin):
-    list_display = ['id', 'created_at', 'updated_at', 'is_active', 'name', 'description', 'project', 'prefix',
-                    'delimiter', 'max_hosts', 'increment', 'start_from']
+    list_display = ['id', 'created_at', 'updated_at', 'is_active', 'name', 'description', 'project', 'prefix', 'delimiter', 'max_hosts', 'increment', 'start_from']
     search_fields = ['name', 'description', 'prefix', 'delimiter', 'max_hosts', 'increment', 'start_from']
     list_filter = ['is_active', 'project']
 
@@ -35,10 +34,9 @@ class AssetIdTypeAdmin(admin.ModelAdmin):
 
 
 class HostnameAdmin(admin.ModelAdmin):
-    list_display = ['id', 'created_at', 'updated_at', 'is_active', 'hostname', 'asset_id', 'asset_id_type',
-                    'is_assigned', 'is_eternal', 'is_reserved', 'reservation_expires', 'assignment_expires']
-    search_fields = ['hostname', 'asset_id']
-    list_filter = ['is_active', 'asset_id_type', 'is_assigned', 'is_eternal', 'is_reserved']
+    list_display = ['id', 'created_at', 'updated_at', 'is_active', 'pattern', 'hostname', 'asset_id', 'asset_id_type', 'is_eternal', 'status', 'reservation_expires', 'assignment_expires']
+    search_fields = ['hostname', 'asset_id', 'status']
+    list_filter = ['is_active', 'pattern', 'asset_id_type', 'is_eternal', 'status']
 
 
 # register models

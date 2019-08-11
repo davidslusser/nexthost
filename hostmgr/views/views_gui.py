@@ -51,10 +51,18 @@ class ListPatterns(HostmgrBaseListView):
     table = "table/table_patterns.htm"
 
 
+class ListHostnames(HostmgrBaseListView):
+    """ list available Hostname entries """
+    queryset = Hostname.objects.all().select_related('pattern', 'pattern__project', 'pattern__project__owner')
+    title = "Hostnames"
+    page_description = ""
+    table = "table/table_hosts.htm"
+
+
 class DetailProject(DetailView):
     """  """
     model = Project
-    template_name = "detail/detail_project.html"
+    template_name = "detail/detail_project2.html"
 
     # def get_context_data(self, **kwargs):
     #     context = super(DetailProject, self).get_context_data(**kwargs)
@@ -62,3 +70,10 @@ class DetailProject(DetailView):
     #     context['hosts_reserved'] = Task.objects.filter(list=self.object)
     #     context['hosts_available'] = Task.objects.filter(list=self.object)
     #     return context
+
+
+class DetailPattern(DetailView):
+    """ """
+    model = HostnamePattern
+    template_name = "detail/detail_pattern.html"
+    queryset = model.objects.all().select_related('project__owner')
