@@ -25,7 +25,7 @@
 /* set div height on medium */
 @media (min-width: 768px) {
     .dash_card1 {
-        height: 340px;
+        height: 338px;
     }
     .project_list_card {
         height: 275px;
@@ -38,7 +38,7 @@
 /* set div height on large */
 @media (min-width: 992px) {
     .dash_card1 {
-        height: 380px;
+        height: 375px;
     }
     .project_list_card {
         height: 275px;
