@@ -64,11 +64,21 @@
             </div>
 
             <div class="card mb-4 text-center hvr-grow m-4 div-shadow" style="background-color: whitesmoke; width: 350px; height: 180px;">
-                <a href="{% url 'hostmgr:list_patterns' %}">
+                <a href="{% url 'hostmgr:list_hostnames' %}">
                     <div class="card-body">
                         <h2 class="card-title text-primary"><i class="fas fa-server"></i></h2>
                         <h3 class="card-title text-primary">Hostnames</h3>
                         <p class="card-text">List all hostnames</p>
+                    </div>
+                </a>
+            </div>
+
+            <div class="card mb-4 text-center hvr-grow m-4 div-shadow" style="background-color: whitesmoke; width: 350px; height: 180px;">
+                <a href="{% url 'hostmgr:show_admin_panel' %}">
+                    <div class="card-body">
+                        <h2 class="card-title text-primary"><i class="fas fa-id-badge"></i></h2>
+                        <h3 class="card-title text-primary">Admin Panel</h3>
+                        <p class="card-text">Manage owners, projects, and patterns</p>
                     </div>
                 </a>
             </div>

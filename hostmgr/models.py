@@ -37,6 +37,30 @@ class Owner(HostManagerBase):
     def get_update_url(self):
         return reverse('hostmgr_owner_update', args=(self.pk,))
 
+    def get_projects(self):
+        """ get all projects for an owner """
+        return self.project_set.all()
+
+    def get_patterns(self):
+        """ get all patterns for an owner """
+        return HostnamePattern.objects.filter(project__owner=self)
+
+    def get_hostnames(self):
+        """ get all hostnames for an owner """
+        return Hostname.objects.filter(pattern__project__owner=self)
+
+    def get_available_hostnames(self):
+        return Hostname.objects.filter(pattern__project__owner=self, status="available")
+
+    def get_assigned_hostnames(self):
+        return Hostname.objects.filter(pattern__project__owner=self, status="assigned")
+
+    def get_reserved_hostnames(self):
+        return Hostname.objects.filter(pattern__project__owner=self, status="reserved")
+
+    def get_expired_hostnames(self):
+        return Hostname.objects.filter(pattern__project__owner=self, status="expired")
+
 
 class Project(HostManagerBase):
     """ table to track projects """
@@ -59,14 +83,23 @@ class Project(HostManagerBase):
     def get_update_url(self):
         return reverse('hostmgr_project_update', args=(self.pk, ))
 
-    def get_available_hosts(self):
-        return self.hostnamepattern_set.filter(hostname__status="available")
+    def get_patterns(self):
+        return self.hostnamepattern_set.all()
 
-    def get_reserved_hosts(self):
-        return self.hostnamepattern_set.filter(hostname__status="reserved")
+    def get_hostnames(self):
+        return Hostname.objects.filter(pattern__project=self)
 
-    def get_assigned_hosts(self):
-        return self.hostnamepattern_set.filter(hostname__status="assigned")
+    def get_available_hostnames(self):
+        return Hostname.objects.filter(pattern__project=self, status="available")
+
+    def get_reserved_hostnames(self):
+        return Hostname.objects.filter(pattern__project=self, status="reserved")
+
+    def get_assigned_hostnames(self):
+        return Hostname.objects.filter(pattern__project=self, status="assigned")
+
+    def get_expired_hostnames(self):
+        return Hostname.objects.filter(pattern__project=self, status="expired")
 
 
 class HostnamePattern(HostManagerBase):
@@ -76,7 +109,7 @@ class HostnamePattern(HostManagerBase):
     project = models.ForeignKey('hostmgr.Project', on_delete=models.CASCADE)
     prefix = models.CharField(max_length=32, help_text="prefix for this hostname patter")
     delimiter = models.CharField(max_length=8, default="", blank=True, null=True,
-                                 help_text="delimiter separating prefix to humber")
+                                 help_text="character(s) separating prefix and number")
     max_hosts = models.IntegerField(default=100, help_text="maximum number of hosts for this pattern")
     increment = models.IntegerField(default=1, help_text="increment (integer) in to increment hostnames by")
     start_from = models.IntegerField(default=1, help_text="number in to start hostnames at")
@@ -154,18 +187,6 @@ class AssetIdType(HostManagerBase):
 
     def __str__(self):
         return self.name
-
-
-# class HostStatus(HostManagerBase):
-#     """ table to track status values for a hostname """
-#     name = models.CharField(max_length=16, unique=True, help_text="name of this status option")
-#     description = models.CharField(max_length=255, blank=True, null=True, help_text="status description")
-#
-#     def __unicode__(self):
-#         return u'%s' % self.name
-#
-#     def __str__(self):
-#         return self.name
 
 
 class Hostname(HostManagerBase):

@@ -1,111 +1,207 @@
 {% extends base_template|default:"base.htm" %}
 {% load staticfiles %}
 
+{% block local_head %}
+    {% include 'component/chart_components.htm' %}
+    <link href="{% static 'nexthost_dashboard.css' %}" rel="stylesheet">
+{% endblock local_head %}
+
 {% block content %}
-{#<div class="container-fluid mb-4 animated fadeIn">#}
-{#    <h1><span class="text-primary"><b>Project: </b></span><span class="text-secondary"><small>{{ object.name }}</small></span></h1><br/>#}
-{#</div>#}
+<div class="container-fluid text-center mb-5 animated fadeIn">
+    <h1><b><span class="text-primary">Next</span><span class="text-secondary">Host</span></b></h1>
+</div>
 
-<!-- summary -->
-<div class="mb-4">&nbsp;</div>
-<section class="animated fadeIn">
-    <div class="container-fluid mb-5">
-        <div class="card-deck">
 
-            <div class="card shadow1 bg-light">
-                <div class="card-body text-center">
-                    <div class="btn-group float-right">
-                        <div class="h1"><i class="fas fa-project-diagram"></i></div>
-                    </div>
-                    <div class="text-left"><h1><b>{{ projects.count }}</b></h1></div>
-                    <div class="text-left mt-3 mb-n3"><small>Projects</small></div>
-                </div>
-            </div>
-
-            <div class="card shadow1 bg-light">
-                <div class="card-body text-center">
-                    <div class="btn-group float-right">
-                        <div class="h1"><i class="fas fa-swatchbook"></i></div>
-                    </div>
-                    <div class="text-left"><h1><b>{{ patterns.count }}</b></h1></div>
-                    <div class="text-left mt-3 mb-n3"><small>Patterns</small></div>
-                </div>
-            </div>
-
-            <div class="card shadow1 bg-light">
-                <div class="card-body text-center">
-                    <div class="btn-group float-right">
-                        <div class="h1"><i class="fas fa-server"></i></div>
-                    </div>
-                    <div class="text-left"><h1><b>{{ hostnames_all.count }}</b></h1></div>
-                    <div class="text-left mt-3 mb-n3"><small>Hostnames</small></div>
-                </div>
-            </div>
-
-        </div>
-    </div>
-    <div class="mb-3">&nbsp;</div>
-</section>
-
-<!-- hostname counts -->
 <section class="animated fadeIn" style="animation-delay: .25s;">
     <div class="container-fluid mb-5">
+        <div class="row">
+            <!-- project/pattern/hostname counts -->
+            <div class="col-sm-12 col-md-4 col-lg-4">
 
-        <div class="h2 text-center mb-4">Hostname Statistics</div>
-        <div class="card-deck">
-
-            <div class="card shadow1 bg-light">
-                <div class="card-body text-center">
-                    <div class="btn-group float-right">
-                        <div class="h2"><i class="fas fa-check-circle"></i></div>
+                <div class="row mb-3">
+                    <div class="col-sm-12">
+                        <div class="card shadow1 bg-light">
+                            <div class="card-body text-center">
+                                <div class="btn-group float-left">
+                                    <div class="h1"><i class="fas fa-user"></i></div>
+                                </div>
+                                <div class="text-right h1"><b>{{ owners.count }}</b></div>
+                                <div class="text-left mt-2 mb-n3"><small>
+                                    <a class="hvr-grow" href="{% url 'hostmgr:list_owners' %}">Owners</a>
+                                </small></div>
+                            </div>
+                        </div>
                     </div>
-                    <div class="text-left"><h1><b>{{ hostnames_available.count }}</b></h1></div>
-                    <div class="text-left mt-3 mb-n3"><small>
-                        <a href="{% url 'hostmgr:list_hostnames' %}?status=available&page_description=Available">Available</a>
-                    </small></div>
+                </div>
+
+                <div class="row mb-3">
+                    <div class="col-sm-12">
+                        <div class="card shadow1 bg-light">
+                            <div class="card-body text-center">
+                                <div class="btn-group float-left">
+                                    <div class="h1"><i class="fas fa-project-diagram"></i></div>
+                                </div>
+                                <div class="text-right h1"><b>{{ projects.count }}</b></div>
+                                <div class="text-left mt-2 mb-n3"><small>
+                                    <a class="hvr-grow" href="{% url 'hostmgr:list_projects' %}">Projects</a>
+                                </small></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <div class="col-sm-12">
+                        <div class="card shadow1 bg-light">
+                            <div class="card-body text-center">
+                                <div class="btn-group float-left">
+                                    <div class="h1"><i class="fas fa-swatchbook"></i></div>
+                                </div>
+                                <div class="text-right h1"><b>{{ patterns.count }}</b></div>
+                                <div class="text-left mt-2 mb-n3"><small>
+                                    <a class="hvr-grow" href="{% url 'hostmgr:list_patterns' %}">Patterns</a>
+                                </small></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <div class="col-sm-12">
+                        <div class="card shadow1">
+                            <div class="card-body text-center">
+                                <div class="btn-group float-left">
+                                    <div class="h1"><i class="fas fa-server"></i></div>
+                                </div>
+                                <div class="text-right h1"><b>{{ hostnames_all.count }}</b></div>
+                                <div class="text-left mt-2 mb-n3"><small>
+                                    <a class="hvr-grow" href="{% url 'hostmgr:list_hostnames' %}">Hostnames</a>
+                                </small></div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
 
-            <div class="card shadow1 bg-light">
-                <div class="card-body text-center">
-                    <div class="btn-group float-right">
-                        <div class="h2"><i class="fas fa-stop-circle"></i></div>
+            <!-- hostname usage break-down -->
+            <div class="col-sm-12 col-md-8 col-lg-8">
+                <div class="row mb-3">
+                    <div class="col-12">
+                        <div class="card shadow1 dash_card1 bg-light">
+                            <div class="card-body text-center">
+                                <div class="chart-container">
+                                    <canvas id="project_activity_chart"></canvas>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <div class="text-left"><h1><b>{{ hostnames_assigned.count }}</b></h1></div>
-                    <div class="text-left mt-3 mb-n3"><small>
-                        <a href="{% url 'hostmgr:list_hostnames' %}?status=assigned&page_description=Assigned">assigned</a>
-                    </small></div>
                 </div>
-            </div>
+                <div class="row pt-sm-0">
+                    <div class="col-12">
+                        <div class="card-deck">
 
-            <div class="card shadow1 bg-light">
-                <div class="card-body text-center">
-                    <div class="btn-group float-right">
-                        <div class="h2"><i class="fas fa-pause-circle"></i></div>
-                    </div>
-                    <div class="text-left"><h1><b>{{ hostnames_reserved.count }}</b></h1></div>
-                    <div class="text-left mt-3 mb-n3"><small>
-                        <a href="{% url 'hostmgr:list_hostnames' %}?status=reserved&page_description=Reserved">Reserved</a>
-                    </small></div>
-                </div>
-            </div>
+                            <div class="card shadow1 bg-light">
+                                <div class="card-body text-center mt-n2">
+                                    <div class="btn-group float-left">
+                                        <div class="h4 ml-n2"><i class="fas fa-check-circle"></i></div>
+                                    </div>
+                                    <div class="text-right mr-n2"><h5><b>{{ hostnames_available.count }}</b></h5></div>
+                                    <div class="text-left mt-3 mb-n3 ml-n2 mr-n3" style="font-size: smaller"><small>
+                                        <a class="hvr-grow" href="{% url 'hostmgr:list_hostnames' %}?status=available&page_description=Available">Hosts Available</a>
+                                    </small></div>
+                                </div>
+                            </div>
 
-            <div class="card shadow1 bg-light">
-                <div class="card-body text-center">
-                    <div class="btn-group float-right">
-                        <div class="h2"><i class="fas fa-times-circle"></i></div>
+                            <div class="card shadow1 bg-light">
+                                <div class="card-body text-center mt-n2">
+                                    <div class="btn-group float-left">
+                                        <div class="h4 ml-n2"><i class="fas fa-stop-circle"></i></div>
+                                    </div>
+                                    <div class="text-right mr-n2"><h5><b>{{ hostnames_assigned.count }}</b></h5></div>
+                                    <div class="text-left mt-3 mb-n3 ml-n2 mr-n3" style="font-size: smaller"><small>
+                                        <a class="hvr-grow" href="{% url 'hostmgr:list_hostnames' %}?status=assigned&page_description=Assigned">Hosts Assigned</a>
+                                    </small></div>
+                                </div>
+                            </div>
+
+                            <div class="card shadow1 bg-light">
+                                <div class="card-body text-center mt-n2">
+                                    <div class="btn-group float-left">
+                                        <div class="h4 ml-n2"><i class="fas fa-pause-circle"></i></div>
+                                    </div>
+                                    <div class="text-right mr-n2"><h5><b>{{ hostnames_reserved.count }}</b></h5></div>
+                                    <div class="text-left mt-3 mb-n3 ml-n2 mr-n3" style="font-size: smaller"><small>
+                                        <a class="hvr-grow" href="{% url 'hostmgr:list_hostnames' %}?status=reserved&page_description=Reserved">Hosts Reserved</a>
+                                    </small></div>
+                                </div>
+                            </div>
+
+                            <div class="card shadow1 bg-light">
+                                <div class="card-body text-center mt-n2">
+                                    <div class="btn-group float-left">
+                                        <div class="h4 ml-n2"><i class="fas fa-times-circle"></i></div>
+                                    </div>
+                                    <div class="text-right mr-n2"><h5><b>{{ hostnames_expired.count }}</b></h5></div>
+                                    <div class="text-left mt-3 mb-n3 ml-n2 mr-n3" style="font-size: smaller"><small>
+                                        <a class="hvr-grow" href="{% url 'hostmgr:list_hostnames' %}?status=expired&page_description=Expired">Hosts Expired</a>
+                                    </small></div>
+                                </div>
+                            </div>
+
+                        </div>
                     </div>
-                    <div class="text-left"><h1><b>{{ hostnames_expired.count }}</b></h1></div>
-                    <div class="text-left mt-3 mb-n3"><small>
-                        <a href="{% url 'hostmgr:list_hostnames' %}?status=expired&page_description=Expired">Expired</a>
-                    </small></div>
                 </div>
             </div>
 
         </div>
     </div>
-    <div class="mb-3">&nbsp;</div>
 </section>
+
+
+<!-- chartjs script -->
+<script>
+    new Chart(document.getElementById("project_activity_chart"), {
+        type: 'line',
+        data: {
+            labels: [1500,1600,1700,1750,1800,1850,1900,1950,1999,2050],
+            datasets: [{
+                data: [86,114,106,106,107,111,133,221,783,2478],
+                label: "Africa",
+                borderColor: "#3e95cd",
+                fill: false
+            }, {
+                data: [282,350,411,502,635,809,947,1402,3700,5267],
+                label: "Asia",
+                borderColor: "#8e5ea2",
+                fill: false
+            }, {
+                data: [168,170,178,190,203,276,408,547,675,734],
+                label: "Europe",
+                borderColor: "#3cba9f",
+                fill: false
+            }, {
+                data: [40,20,10,16,24,38,74,167,508,784],
+                label: "Latin America",
+                borderColor: "#e8c3b9",
+                fill: false
+            }, {
+                data: [6,3,2,2,7,26,82,172,312,433],
+                label: "North America",
+                borderColor: "#c45850",
+                fill: false
+            }
+            ]
+        },
+        options: {
+            title: {
+                display: true,
+                text: 'World population per region (in millions)'
+            },
+            maintainAspectRatio: false
+        }
+    });
+</script>
+
 
 
 {% endblock content %}

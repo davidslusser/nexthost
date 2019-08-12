@@ -1,6 +1,7 @@
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
+*.pyc
 
 # C extensions
 *.so
@@ -20,6 +21,7 @@ var/
 *.egg-info/
 .installed.cfg
 *.egg
+
 
 # PyInstaller
 #  Usually these files are written by a python script from a template
@@ -57,11 +59,11 @@ docs/_build/
 target/
 
 # Project Specific
-*.idea
-local_settings.ini
+.idea
 local_test
 *.iml
-*.pkl
 
 # Apple garbage
 *.DS_Store
+hostmgr/templates/list/
+hostmgr/templates/registration/

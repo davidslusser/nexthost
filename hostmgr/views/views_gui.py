@@ -46,23 +46,30 @@ class ListProjects(HostmgrBaseListView):
 class ListPatterns(HostmgrBaseListView):
     """ list available HostnamePattern entries """
     queryset = HostnamePattern.objects.all().select_related('project').prefetch_related('hostname_set')
-    title = "Hostname Patterns"
+    title = "Patterns"
     page_description = ""
     table = "table/table_patterns.htm"
 
 
 class ListHostnames(HostmgrBaseListView):
     """ list available Hostname entries """
-    queryset = Hostname.objects.all().select_related('pattern', 'pattern__project', 'pattern__project__owner')
+    queryset = Hostname.objects.all().select_related('pattern', 'pattern__project', 'pattern__project__owner'
+                                                     ).order_by('hostname')
     title = "Hostnames"
     page_description = ""
     table = "table/table_hosts.htm"
 
 
+class DetailOwner(DetailView):
+    """  """
+    model = Owner
+    template_name = "detail/detail_owner.html"
+
+
 class DetailProject(DetailView):
     """  """
     model = Project
-    template_name = "detail/detail_project2.html"
+    template_name = "detail/detail_project.html"
 
     # def get_context_data(self, **kwargs):
     #     context = super(DetailProject, self).get_context_data(**kwargs)
@@ -77,3 +84,11 @@ class DetailPattern(DetailView):
     model = HostnamePattern
     template_name = "detail/detail_pattern.html"
     queryset = model.objects.all().select_related('project__owner')
+
+
+class ShowAdminPanel(LoginRequiredMixin, View):
+    """ """
+    def get(self, request, *args, **kwargs):
+        template = "custom/admin_panel.html"
+        context = dict()
+        return render(request, template, context=context)

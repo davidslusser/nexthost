@@ -16,17 +16,9 @@
         <tr>
             <td>{{ row.hostname }}</td>
             <td>{{ row.status }}</td>
-            <td>{{ row.pattern.project }}</td>
+            <td><a data-value={{ row.pattern.project.name }} href="{% url 'hostmgr:detail_project' row.pattern.project.id %}">{{ row.pattern.project }}</a></td>
             <td>{{ row.pattern.project.owner }}</td>
             <td>{{ row.updated_at|date:'Y-m-d H:i:s' }}</td>
-{#            <td>#}
-{#                {% if row.is_locked %}#}
-{#                    <span class="text-primary"><i class="fa fa-check fa-fw"></i></span>#}
-{#                {% else %}#}
-{#                    <span class="text-danger"><i class="fa fa-times fa-fw"></i></span>#}
-{#                {% endif %}#}
-{#            </td>#}
-
             <!-- actions -->
             <td>
                 <!-- view details -->

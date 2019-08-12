@@ -66,7 +66,7 @@ class ShowDashboard(LoginRequiredMixin, View):
     """ display project-level dashboard that includes: total count of projects, hostname patterns, hostnames,
     break down of hostname usage (available, assigned, reserved, expired) and 24hr activity """
     def get(self, request, *args, **kwargs):
-        template = "custom/nexthost_dashboard2.html"
+        template = "custom/nexthost_dashboard.html"
         context = dict()
         context['projects'] = Project.objects.all()
         context['patterns'] = HostnamePattern.objects.all()

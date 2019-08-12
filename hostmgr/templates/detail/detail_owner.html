@@ -1,0 +1,161 @@
+{% extends base_template|default:"base.htm" %}
+{% load staticfiles %}
+
+{% block local_head %}
+    {% include 'component/chart_components.htm' %}
+    {% include 'component/table_components.htm' %}
+    <link href="{% static 'nexthost_dashboard.css' %}" rel="stylesheet">
+{% endblock local_head %}
+
+
+{% block content %}
+<div class="container-fluid mb-4 animated fadeIn">
+    <h1><span class="text-primary"><b>Owner: </b></span><span class="text-secondary"><small>{{ object.name }}</small></span></h1><br/>
+</div>
+
+
+<section class="animated fadeIn" style="animation-delay: .25s;">
+    <div class="container-fluid mb-3">
+        <div class="row">
+            <!-- owner details -->
+            <div class="col-sm-12 col-md-5 col-lg-6">
+                <div class="card mb-4 bg-light shadow1 project_list_card">
+                    <div class="card-header text-primary font-weight-bold text-lg-left">Owner Details</div>
+                    <div class="card-body" style="overflow-y: auto; overflow-x: hidden; height: 200px">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-4 col-lg-4"><b class="text-primary">Name:</b></div>
+                                <div class="col-8 col-lg-8">{{ object.name }}</div>
+                            </div>
+                            <div class="row">
+                                <div class="col-4 col-lg-4"><b class="text-primary">Email:</b></div>
+                                <div class="col-8 col-lg-8">blah.blah.blah</div>
+                            </div>
+                            <div class="row">
+                                <div class="col-4 col-lg-4"><b class="text-primary">Group:</b></div>
+                                <div class="col-8 col-lg-8">{{ object.group }}</div>
+                            </div>
+                            <div class="row">&nbsp;</div>
+                            <div class="row">
+                                <div class="col-4 col-sm-4 col-md-6 col-lg-4"><b class="text-primary">Projects:</b></div>
+                                <div class="col-8 col-sm-8 col-md-6 col-lg-8">
+                                    <a class="hvr-grow" href="{% url 'hostmgr:list_projects' %}?owner__id={{ object.id }}">{{ object.get_projects.count }}</a>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-4 col-sm-4 col-md-6 col-lg-4"><b class="text-primary">Patterns:</b></div>
+                                <div class="col-8 col-sm-8 col-md-6 col-lg-8">
+                                    <a class="hvr-grow" href="{% url 'hostmgr:list_patterns' %}?project__owner__id={{ object.id }}">{{ object.get_patterns.count }}</a>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-4 col-sm-4 col-md-6 col-lg-4"><b class="text-primary">Hostnames:</b></div>
+                                <div class="col-8 col-sm-8 col-md-6 col-lg-8">
+                                    <a class="hvr-grow" href="{% url 'hostmgr:list_hostnames' %}?pattern__project__owner__id={{ object.id }}">{{ object.get_hostnames.count }}</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- project list -->
+            <div class="col-sm-12 col-md-7 col-lg-6">
+
+                <div class="card mb-4 bg-light shadow1 project_list_card">
+                    <div class="card-header text-primary font-weight-bold text-lg-left">Projects</div>
+                    <div class="card-body" style="overflow-y: auto; overflow-x: hidden; height: 200px">
+                        <ul class="list-group mx-auto justify-content-center" style="max-width: 95%; margin-top: .5%; margin-bottom: .5%">
+                            {% for project in object.project_set.all|dictsort:"name" %}
+                                <li class="list-group-item hvr-grow m-1" style="background-color: white;">
+                                    <div class="row flex-nowrap" style="height: 25px;">
+                                        <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8 text-left">
+                                            <a href="{% url 'hostmgr:detail_project' project.id %}"><b>{{ project.name }}</b></a>
+                                        </div>
+                                        <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 text-right">
+                                            <a href="#" title="view pattern details"
+                                               onClick="showInfo('{% url "hostmgr:get_project_details" %}', '{{ project.id }}', 'Details: <small><i>{{ project.name }}</i></small>', true);"
+                                               role="button" data-toggle="tooltip" data-placement="left">
+                                                <i class="fa fa-info-circle fa-fw text-secondary"></i>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<!-- project list -->
+<section class="animated fadeIn" style="animation-delay: .50s;">
+    <div class="container-fluid mb-5">
+        <div class="text-center text-secondary mb-3">hostname breakdown</div>
+
+        <!-- hostname usage break-down -->
+        <div class="row pt-sm-0">
+            <div class="col-12">
+                <div class="card-deck">
+
+                    <div class="card shadow1 bg-light text-primary">
+                        <div class="card-body text-center mt-n2">
+                            <div class="btn-group float-left">
+                                <div class="h4 ml-n2"><i class="fas fa-check-circle"></i></div>
+                            </div>
+                            <div class="text-right mr-n2"><h5><b>{{ object.get_available_hostnames.count }}</b></h5></div>
+                            <div class="text-left mt-3 mb-n3 ml-n2 mr-n3" style="font-size: smaller"><small>
+                                <a class="hvr-grow" href="{% url 'hostmgr:list_hostnames' %}?pattern__project__owner__id={{ object.id }}&status=available&page_description=Available">Hosts Available</a>
+                            </small></div>
+                        </div>
+                    </div>
+
+                    <div class="card shadow1 bg-light text-primary">
+                        <div class="card-body text-center mt-n2">
+                            <div class="btn-group float-left">
+                                <div class="h4 ml-n2"><i class="fas fa-stop-circle"></i></div>
+                            </div>
+                            <div class="text-right mr-n2"><h5><b>{{ object.get_assigned_hostnames.count }}</b></h5></div>
+                            <div class="text-left mt-3 mb-n3 ml-n2 mr-n3" style="font-size: smaller"><small>
+                                <a class="hvr-grow" href="{% url 'hostmgr:list_hostnames' %}?pattern__project__owner__id={{ object.id }}&status=assigned&page_description=Assigned">Hosts Assigned</a>
+                            </small></div>
+                        </div>
+                    </div>
+
+                    <div class="card shadow1 bg-light text-primary">
+                        <div class="card-body text-center mt-n2">
+                            <div class="btn-group float-left">
+                                <div class="h4 ml-n2"><i class="fas fa-pause-circle"></i></div>
+                            </div>
+                            <div class="text-right mr-n2"><h5><b>{{ object.get_reserved_hostnames.count }}</b></h5></div>
+                            <div class="text-left mt-3 mb-n3 ml-n2 mr-n3" style="font-size: smaller"><small>
+                                <a class="hvr-grow" href="{% url 'hostmgr:list_hostnames' %}?pattern__project__owner__id={{ object.id }}&status=reserved&page_description=Reserved">Hosts Reserved</a>
+                            </small></div>
+                        </div>
+                    </div>
+
+                    <div class="card shadow1 bg-light text-primary">
+                        <div class="card-body text-center mt-n2">
+                            <div class="btn-group float-left">
+                                <div class="h4 ml-n2"><i class="fas fa-times-circle"></i></div>
+                            </div>
+                            <div class="text-right mr-n2"><h5><b>{{ object.get_expired_hostnames.count }}</b></h5></div>
+                            <div class="text-left mt-3 mb-n3 ml-n2 mr-n3" style="font-size: smaller"><small>
+                                <a class="hvr-grow" href="{% url 'hostmgr:list_hostnames' %}?pattern__project__owner__id={{ object.id }}&status=expired&page_description=Expired">Hosts Expired</a>
+                            </small></div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+    {% include 'component/modals.htm' %}
+{% endblock content %}
