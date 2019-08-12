@@ -10,11 +10,11 @@
     </tr>
     </thead>
     <tbody>
-    {% for row in queryset %}
+    {% for row in queryset|dictsort:"name" %}
         <tr>
             <td><a href="{% url 'hostmgr:detail_project' row.id %}">{{ row.name }}</a></td>
             <td>{{ row.owner }}</td>
-            <td>{{ row.hostnamepattern_set.count }}</td>
+            <td><a href="{% url 'hostmgr:list_patterns' %}?project__name={{ row.name }}&page_description={{ row.name }}">{{ row.hostnamepattern_set.count }}</a></td>
             <!-- actions -->
             <td>
 

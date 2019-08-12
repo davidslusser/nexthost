@@ -1,0 +1,46 @@
+
+<br>
+<div class="container-fluid">
+    <table class="table table-condensed table-bordered table-striped">
+        <col width="40%">
+        <col width="60%">
+        <tbody>
+            <tr>
+                <td><b>Name</b></td>
+                <td>{{ object.name }}</td>
+            </tr>
+            <tr>
+                <td><b>Description</b></td>
+                <td>{{ object.description }}</td>
+            </tr>
+            <tr>
+                <td><b>owner</b></td>
+                <td>{{ object.owner }}</td>
+            </tr>
+            <tr>
+                <td><b>Patterns</b></td>
+                <td>{{ object.get_patterns.count }}</td>
+            </tr>
+            <tr>
+                <td><b>Total Hostnames</b></td>
+                <td>{{ object.get_hostnames.count }}</td>
+            </tr>
+            <tr>
+                <td><b>Available Hostnames</b></td>
+                <td>{{ object.get_available_hostnames.count }}</td>
+            </tr>
+            <tr>
+                <td><b>Assigned Hostnames</b></td>
+                <td>{{ object.get_assigned_hostnames.count }}</td>
+            </tr>
+            <tr>
+                <td><b>Reserved Hostnames</b></td>
+                <td>{{ object.get_reserved_hostnames.count }}</td>
+            </tr>
+            <tr>
+                <td><b>Expired Hostnames</b></td>
+                <td>{{ object.get_expired_hostnames.count }}</td>
+            </tr>
+        </tbody>
+    </table>
+</div>

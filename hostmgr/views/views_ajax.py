@@ -54,7 +54,7 @@ def get_project_details(request):
             object_id = request.GET['client_response']
             obj = Project.objects.get(id=object_id)
             template = loader.get_template('ajax/get_project_details.htm')
-            return HttpResponse(json.dumps({"server_response": template.render({'queryset': queryset})}),
+            return HttpResponse(json.dumps({"server_response": template.render({'object': obj})}),
                                 content_type='application/javascript')
         else:
             return HttpResponse("Invalid request inputs", status=400)

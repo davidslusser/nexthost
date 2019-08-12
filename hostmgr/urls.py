@@ -19,8 +19,12 @@ urlpatterns = [
     path('list_hostnames/', gui.ListHostnames.as_view(), name='list_hostnames'),
 
     # detail views
+    path('detail_owner/<int:pk>/', gui.DetailOwner.as_view(), name='detail_owner'),
     path('detail_project/<int:pk>/', gui.DetailProject.as_view(), name='detail_project'),
     path('detail_pattern/<int:pk>/', gui.DetailPattern.as_view(), name='detail_pattern'),
+
+    # custom views
+    path('show_admin_panel/', gui.ShowAdminPanel.as_view(), name='show_admin_panel'),
 
     # ajax views
     path('get_owner_details', ajax.get_owner_details, name='get_owner_details'),

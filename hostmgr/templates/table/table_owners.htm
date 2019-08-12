@@ -12,12 +12,12 @@
     </tr>
     </thead>
     <tbody>
-    {% for row in queryset %}
+    {% for row in queryset|dictsort:"name" %}
         <tr>
-            <td>{{ row.name }}</td>
+            <td><a data-value={{ row.name }} href="{% url 'hostmgr:detail_owner' row.id %}">{{ row.name }}</a></td>
             <td>{{ row.group }}</td>
             <td>{{ row.email }}</td>
-            <td>{{ row.project_set.count }}</td>
+            <td><a data-value={{ row.project_set.count }} href="{% url 'hostmgr:list_projects' %}?owner__id={{ row.id }}&page_description={{ row.project.name }}">{{ row.project_set.count }}</a></td>
             <td>{{ row.project.hostname_set.count }}</td>
             <!-- actions -->
             <td>

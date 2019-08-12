@@ -2,24 +2,30 @@
        data-flat="true" data-pagination="true" data-show-pagination-switch="true" data-show-columns="true"
        data-show-export="true" data-reorderable-columns="true" data-resizable="false" data-export-types="['excel','csv','txt','sql']">
     <thead>
-    <tr>
-        <th data-field="name" data-sortable="true">Name</th>
-        <th data-field="description" data-sortable="true">Description</th>
-        <th data-field="project" data-sortable="true">Project</th>
-        <th data-field="hostname_count" data-sortable="true">Hostname Count</th>
-        <th>Actions</th>
-    </tr>
+        <tr>
+            <th data-field="name" data-sortable="true">Name</th>
+            <th data-field="description" data-sortable="true">Description</th>
+            <th data-field="project" data-sortable="true">Project</th>
+            <th data-field="hostname_count" data-sortable="true" data-sorter="dataValueInt">Hostname Count</th>
+            <th>Actions</th>
+        </tr>
     </thead>
     <tbody>
     {% for row in queryset %}
         <tr>
-            <td>{{ row.name }}</td>
+            <td><a data-value={{ row.name }} href="{% url 'hostmgr:detail_pattern' row.id %}">{{ row.name }}</a></td>
             <td>{{ row.description }}</td>
             <td>{{ row.project }}</td>
-            <td>{{ row.hostname_set.count }}</td>
+            {% with row.hostname_set.count as count %}
+                <td><a data-value={{ count }} href="{% url 'hostmgr:list_hostnames' %}?pattern__id={{ row.id }}&page_description={{ row.name }}">{{ count }}</a></td>
+            {% endwith %}
             <!-- actions -->
             <td>
-
+                <a href="#" title="view audit log"
+                   onClick="showInfo('{% url "hostmgr:get_pattern_details" %}', '{{ row.id }}', 'Details: <small><i>{{ row.name }}</i></small>', true);"
+                   role="button" data-toggle="tooltip" data-placement="left">
+                    <i class="fa fa-info-circle fa-fw text-primary"></i>
+                </a>
             </td>
         </tr>
     {% endfor %}
