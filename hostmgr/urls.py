@@ -4,12 +4,19 @@ from rest_framework.routers import DefaultRouter
 
 # import views
 import hostmgr.views.views_gui as gui
-import hostmgr.views.views_api as api
+import hostmgr.views.views_api as apis
 import hostmgr.views.views_ajax as ajax
 
 app_name = 'hostmgr'
 
 router = DefaultRouter()
+
+# hostmgr API Endpoints
+router.register(r'owner', apis.OwnerViewSet, "owner")
+router.register(r'project', apis.ProjectViewSet, "project")
+router.register(r'pattern', apis.PatternViewSet, "pattern")
+router.register(r'assetidtype', apis.AssetIdTypeViewSet, "assetidtype")
+router.register(r'hostname', apis.HostnameViewSet, "hostname")
 
 urlpatterns = [
     # list views
@@ -31,5 +38,9 @@ urlpatterns = [
     path('get_project_details', ajax.get_project_details, name='get_project_details'),
     path('get_pattern_details', ajax.get_pattern_details, name='get_pattern_details'),
     path('get_hostname_details', ajax.get_hostname_details, name='get_hostname_details'),
+
+    # API views
+    path('api/', include(router.urls)),
+    path('api/v1/', include(router.urls)),
 
 ]

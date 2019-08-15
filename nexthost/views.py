@@ -4,11 +4,21 @@ from django.contrib import messages
 from djangohelpers.views import FilterByQueryParamsMixin
 from rest_framework.authtoken.models import Token
 from braces.views import LoginRequiredMixin, GroupRequiredMixin
+from rest_framework import response, schemas
+from rest_framework.decorators import api_view, renderer_classes
+from rest_framework_swagger.renderers import OpenAPIRenderer, SwaggerUIRenderer
 
 
 # import models
 from userextensions.models import (UserRecent, UserFavorite)
 from hostmgr.models import (Owner, Project, Pattern, Hostname)
+
+
+@api_view()
+@renderer_classes([OpenAPIRenderer, SwaggerUIRenderer])
+def schema_view(request):
+    generator = schemas.SchemaGenerator(title='PadLock APIs')
+    return response.Response(generator.get_schema(request=request))
 
 
 class ShowUserProfile(LoginRequiredMixin, View):

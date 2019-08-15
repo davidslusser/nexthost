@@ -4,7 +4,8 @@
         Host Manager
     </a>
     <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-        <li><a class="dropdown-item" href="">Dashboard</a></li>
+        <li><a class="dropdown-item" href="{% url 'dashboard' %}">Dashboard</a></li>
+        <div class="dropdown-divider"></div>
         <li class="dropdown-submenu"><a class="dropdown-item dropdown-toggle" href="#">Projects</a>
             <ul class="dropdown-menu">
                 <li><a class="dropdown-item" href="{% url 'hostmgr:list_projects' %}">List Projects</a></li>
