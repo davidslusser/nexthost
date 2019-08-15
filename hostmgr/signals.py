@@ -4,12 +4,12 @@ from django.dispatch import receiver
 import sys
 
 # import models
-from hostmgr.models import (HostnamePattern)
+from hostmgr.models import (Pattern)
 
 
-@receiver(post_save, sender=HostnamePattern, dispatch_uid="add hostnames to pattern")
+@receiver(post_save, sender=Pattern, dispatch_uid="add hostnames to pattern")
 def add_hostnames_for_patterm(sender, instance, created, **kwargs):
-    """ create hostnames for a given HostnamePattern """
+    """ create hostnames for a given Pattern """
     # do not execute signal when running tests
     if 'manage.py' in sys.argv[0] and 'test' in sys.argv:
         return

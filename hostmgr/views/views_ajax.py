@@ -12,7 +12,7 @@ from django.views.decorators.http import require_GET
 
 # import models
 from auditlog.models import LogEntry
-from hostmgr.models import (Owner, Project, HostnamePattern, Hostname)
+from hostmgr.models import (Owner, Project, Pattern, Hostname)
 
 
 @require_GET
@@ -66,7 +66,7 @@ def get_project_details(request):
 def get_pattern_details(request):
     """
     Description:
-        Get details for a given HostnamePattern.
+        Get details for a given Pattern.
     Args:
         request: AJAX request object.
     Returns:
@@ -75,7 +75,7 @@ def get_pattern_details(request):
     if (request.is_ajax()) and (request.method == 'GET'):
         if 'client_response' in request.GET:
             object_id = request.GET['client_response']
-            obj = HostnamePattern.objects.get(id=object_id)
+            obj = Pattern.objects.get(id=object_id)
             template = loader.get_template('ajax/get_pattern_details.htm')
             return HttpResponse(json.dumps({"server_response": template.render({'object': obj})}),
                                 content_type='application/javascript')
@@ -100,7 +100,7 @@ def get_hostname_details(request):
             object_id = request.GET['client_response']
             obj = Hostname.objects.get(id=object_id)
             template = loader.get_template('ajax/get_hostname_details.htm')
-            return HttpResponse(json.dumps({"server_response": template.render({'queryset': obj})}),
+            return HttpResponse(json.dumps({"server_response": template.render({'object': obj})}),
                                 content_type='application/javascript')
         else:
             return HttpResponse("Invalid request inputs", status=400)

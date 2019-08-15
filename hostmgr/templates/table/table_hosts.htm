@@ -16,14 +16,43 @@
         <tr>
             <td>{{ row.hostname }}</td>
             <td>{{ row.status }}</td>
-            <td><a data-value={{ row.pattern.project.name }} href="{% url 'hostmgr:detail_project' row.pattern.project.id %}">{{ row.pattern.project }}</a></td>
-            <td>{{ row.pattern.project.owner }}</td>
+            <td>
+                <a data-value={{ row.pattern.project.name }} href="{% url 'hostmgr:detail_project' row.pattern.project.id %}">{{ row.pattern.project }}</a>
+            </td>
+            <td>
+                <a data-value="{{ row.pattern.project.owner }}" href="{% url 'hostmgr:detail_owner' row.pattern.project.owner.id %}">{{ row.pattern.project.owner }}</a>
+            </td>
             <td>{{ row.updated_at|date:'Y-m-d H:i:s' }}</td>
             <!-- actions -->
             <td>
+                <!-- view host details -->
+                <a href="#" title="view hostname details"
+                   onClick="showInfo('{% url "hostmgr:get_hostname_details" %}', '{{ row.id }}', 'Details: <small><i>{{ row.name }}</i></small>', true);"
+                   role="button" data-toggle="tooltip" data-placement="left">
+                    <i class="fa fa-info-circle fa-fw text-primary ml-1"></i>
+                </a>
+
                 <!-- view details -->
                 <!-- view audit log -->
                 <!-- reserve/assign/extend/release -->
+                {% if row.status  == 'available' %}
+                    <a href="#" title="assign hostname" role="button" data-toggle="tooltip" data-placement="left">
+                        <i class="fas fa-stop-circle text-primary ml-1"></i>
+                    </a>
+                {% elif row.status  == 'assigned' %}
+                    <a href="#" title="release hostname" role="button" data-toggle="tooltip" data-placement="left">
+                        <i class="fas fa-times-circle text-primary ml-1"></i>
+                    </a>
+                {% elif row.status  == 'reserved' %}
+{#                    <a href="#" title="assign hostname" role="button" data-toggle="tooltip" data-placement="left">#}
+{#                        <i class="fas fa-check-circle text-primary ml-1"></i>#}
+{#                    </a>#}
+                    <a href="#" title="assign hostname" role="button" data-toggle="tooltip" data-placement="left">
+                        <i class="fas fa-stop-circle text-primary ml-1"></i>
+                    </a>
+                {% endif %}
+{#                <i class="fas fa-pause-circle text-primary ml-1"></i>#}
+
             </td>
         </tr>
     {% endfor %}
