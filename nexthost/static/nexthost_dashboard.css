@@ -12,6 +12,9 @@
 /* set div height on small */
 @media (min-width: 576px) {
     .dash_card1 {
+        height: 401px;
+    }
+    .hostname_activity_card {
         height: 400px;
     }
     .project_list_card {
@@ -27,6 +30,9 @@
     .dash_card1 {
         height: 338px;
     }
+    .hostname_activity_card {
+        height: 340px;
+    }
     .project_list_card {
         height: 275px;
     }
@@ -38,7 +44,10 @@
 /* set div height on large */
 @media (min-width: 992px) {
     .dash_card1 {
-        height: 375px;
+        height: 380px;
+    }
+    .hostname_activity_card {
+        height: 380px;
     }
     .project_list_card {
         height: 275px;

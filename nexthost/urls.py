@@ -43,6 +43,9 @@ urlpatterns = [
     path('list_favorites/', views.ListFavorites.as_view(), name='list_favorites'),
     path('detail_user/', views.ShowUserProfile.as_view(), name='detail_user'),
 
+    # swagger API docs
+    path('swagger', views.schema_view, name="swagger"),
+
 ]
 
 
