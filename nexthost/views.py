@@ -8,7 +8,7 @@ from braces.views import LoginRequiredMixin, GroupRequiredMixin
 
 # import models
 from userextensions.models import (UserRecent, UserFavorite)
-from hostmgr.models import (Owner, Project, HostnamePattern, Hostname)
+from hostmgr.models import (Owner, Project, Pattern, Hostname)
 
 
 class ShowUserProfile(LoginRequiredMixin, View):
@@ -69,7 +69,7 @@ class ShowDashboard(LoginRequiredMixin, View):
         template = "custom/nexthost_dashboard.html"
         context = dict()
         context['projects'] = Project.objects.all()
-        context['patterns'] = HostnamePattern.objects.all()
+        context['patterns'] = Pattern.objects.all()
         context['owners'] = Owner.objects.all()
         hostnames = Hostname.objects.all()
         context['hostnames_all'] = hostnames

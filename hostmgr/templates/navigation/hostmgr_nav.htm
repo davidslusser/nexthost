@@ -7,15 +7,22 @@
         <li><a class="dropdown-item" href="">Dashboard</a></li>
         <li class="dropdown-submenu"><a class="dropdown-item dropdown-toggle" href="#">Projects</a>
             <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="{% url 'hostmgr:list_projects' %}">All Projects</a></li>
-                <li><a class="dropdown-item" href="">My Projects</a></li>
+                <li><a class="dropdown-item" href="{% url 'hostmgr:list_projects' %}">List Projects</a></li>
+{#                <li><a class="dropdown-item" href="">My Projects</a></li>#}
+            </ul>
+        </li>
+
+        <li class="dropdown-submenu"><a class="dropdown-item dropdown-toggle" href="#">Patterns</a>
+            <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="{% url 'hostmgr:list_patterns' %}">List Patterns</a></li>
+{#                <li><a class="dropdown-item" href="">My Patterns</a></li>#}
             </ul>
         </li>
 
         <li class="dropdown-submenu"><a class="dropdown-item dropdown-toggle" href="#">Hosts</a>
             <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="">Locked Hosts</a></li>
-                <li><a class="dropdown-item" href="">My Hosts</a></li>
+                <li><a class="dropdown-item" href="">List Hosts</a></li>
+{#                <li><a class="dropdown-item" href="">My Hosts</a></li>#}
             </ul>
         </li>
 

@@ -9,7 +9,7 @@ from django.db.models import Q, Count, Sum
 import datetime
 
 # import models
-from hostmgr.models import (Owner, Project, HostnamePattern, AssetIdType, Hostname)
+from hostmgr.models import (Owner, Project, Pattern, AssetIdType, Hostname)
 
 
 class HostmgrBaseListView(FilterByQueryParamsMixin, ListView):
@@ -37,15 +37,15 @@ class ListOwners(HostmgrBaseListView):
 
 class ListProjects(HostmgrBaseListView):
     """ list available Project entries """
-    queryset = Project.objects.all().select_related('owner').prefetch_related('hostnamepattern_set')
+    queryset = Project.objects.all().select_related('owner').prefetch_related('pattern_set')
     title = "Projects"
     page_description = ""
     table = "table/table_projects.htm"
 
 
 class ListPatterns(HostmgrBaseListView):
-    """ list available HostnamePattern entries """
-    queryset = HostnamePattern.objects.all().select_related('project').prefetch_related('hostname_set')
+    """ list available Pattern entries """
+    queryset = Pattern.objects.all().select_related('project').prefetch_related('hostname_set')
     title = "Patterns"
     page_description = ""
     table = "table/table_patterns.htm"
@@ -61,33 +61,26 @@ class ListHostnames(HostmgrBaseListView):
 
 
 class DetailOwner(DetailView):
-    """  """
+    """ display details of a specific owner """
     model = Owner
     template_name = "detail/detail_owner.html"
 
 
 class DetailProject(DetailView):
-    """  """
+    """ display details of a specific project """
     model = Project
     template_name = "detail/detail_project.html"
 
-    # def get_context_data(self, **kwargs):
-    #     context = super(DetailProject, self).get_context_data(**kwargs)
-    #     context['hosts_assigned'] = Task.objects.filter(list=self.object)
-    #     context['hosts_reserved'] = Task.objects.filter(list=self.object)
-    #     context['hosts_available'] = Task.objects.filter(list=self.object)
-    #     return context
-
 
 class DetailPattern(DetailView):
-    """ """
-    model = HostnamePattern
+    """ display details of a specific pattern """
+    model = Pattern
     template_name = "detail/detail_pattern.html"
     queryset = model.objects.all().select_related('project__owner')
 
 
 class ShowAdminPanel(LoginRequiredMixin, View):
-    """ """
+    """ display actions only provided to admins """
     def get(self, request, *args, **kwargs):
         template = "custom/admin_panel.html"
         context = dict()

@@ -12,7 +12,7 @@ class HostManagerBase(models.Model):
     objects = HandyHelperModelManager()
     created_at = models.DateTimeField(auto_now_add=True, editable=False, help_text="date/time when this row was added")
     updated_at = models.DateTimeField(auto_now=True, editable=False, help_text="date/time when this row was updated")
-    is_active = models.BooleanField(default=True, help_text="select if this record is currently active")
+    active = models.BooleanField(default=True, help_text="select if this record is currently active")
 
     class Meta:
         abstract = True
@@ -43,7 +43,7 @@ class Owner(HostManagerBase):
 
     def get_patterns(self):
         """ get all patterns for an owner """
-        return HostnamePattern.objects.filter(project__owner=self)
+        return Pattern.objects.filter(project__owner=self)
 
     def get_hostnames(self):
         """ get all hostnames for an owner """
@@ -84,7 +84,7 @@ class Project(HostManagerBase):
         return reverse('hostmgr_project_update', args=(self.pk, ))
 
     def get_patterns(self):
-        return self.hostnamepattern_set.all()
+        return self.pattern_set.all()
 
     def get_hostnames(self):
         return Hostname.objects.filter(pattern__project=self)
@@ -102,17 +102,20 @@ class Project(HostManagerBase):
         return Hostname.objects.filter(pattern__project=self, status="expired")
 
 
-class HostnamePattern(HostManagerBase):
+class Pattern(HostManagerBase):
     """ when a pattern is added, generate all hostnames per rules of the pattern and set is_assigned = False"""
-    name = models.CharField(max_length=16, blank=True, null=True, help_text="name/reference for this hostname pattern")
+    name = models.CharField(max_length=16, unique=True, blank=True, null=True, help_text="name/reference for this hostname pattern")
     description = models.CharField(max_length=255, blank=True, null=True, help_text="description for this pattern")
     project = models.ForeignKey('hostmgr.Project', on_delete=models.CASCADE)
     prefix = models.CharField(max_length=32, help_text="prefix for this hostname patter")
     delimiter = models.CharField(max_length=8, default="", blank=True, null=True,
                                  help_text="character(s) separating prefix and number")
-    max_hosts = models.IntegerField(default=100, help_text="maximum number of hosts for this pattern")
+    host_count = models.IntegerField(default=100, help_text="maximum number of hosts for this pattern")
     increment = models.IntegerField(default=1, help_text="increment (integer) in to increment hostnames by")
     start_from = models.IntegerField(default=1, help_text="number in to start hostnames at")
+
+    class Meta:
+        unique_together = (("prefix", "delimiter"), )
 
     def __unicode__(self):
         return u'%s' % self.name
@@ -122,23 +125,23 @@ class HostnamePattern(HostManagerBase):
 
     def build_regex(self):
         """ build the regex value for this pattern """
-        return "^\S+{}[0-9]{{1,{}}}$".format(self.delimiter, len(str(self.max_hosts)))
+        return "^{}{}[0-9]{{{}}}$".format(self.prefix, self.delimiter, len(str(self.host_count)))
 
     def validate_user(self, user):
-        """ Check if use is authorized to perform an action (CRUD) on a HostnamePattern. User must be a member of the
+        """ Check if use is authorized to perform an action (CRUD) on a Pattern. User must be a member of the
         group who owns the project or a superuser """
         pass
 
     def create_hosts(self):
         """ create hosts entries based on the rules of this hostname pattern """
-        for i in range(self.start_from, self.max_hosts * self.increment + 1, self.increment):
-            num = "{}".format(i).zfill(len(str(self.max_hosts)))
+        for i in range(self.start_from, self.host_count * self.increment + 1, self.increment):
+            num = "{}".format(i).zfill(len(str(self.host_count)))
             hostname = "{}{}{}".format(self.prefix, self.delimiter, num)
             Hostname.objects.get_or_create(hostname=hostname,
                                            defaults=dict(hostname=hostname, pattern=self))
 
     def update_hosts(self):
-        """ create/remove host entries based on rule changes (max_hosts increase) """
+        """ create/remove host entries based on rule changes (host_counts increase) """
         pass
 
     def request_hostname(self, count=1, consecutive=False):
@@ -194,17 +197,14 @@ class Hostname(HostManagerBase):
      created or edited. """
     HOST_STATUS_CHOICES = (('available', 'available'), ('assigned', 'assigned'),
                            ('reserved', 'reserved'), ('expired', 'expired'))
-    pattern = models.ForeignKey('hostmgr.HostnamePattern', help_text="pattern this hostname was generated from",
+    pattern = models.ForeignKey('hostmgr.Pattern', help_text="pattern this hostname was generated from",
                                 on_delete=models.CASCADE)
     hostname = models.CharField(max_length=255, unique=True, help_text="name of host")
     asset_id = models.CharField(max_length=255, blank=True, null=True,
                                 help_text="unique identifier of the asset using this hostname")
     asset_id_type = models.ForeignKey('hostmgr.AssetIdType', blank=True, null=True, help_text="type of asset ID used",
                                       on_delete=models.CASCADE)
-    # is_assigned = models.BooleanField(default=False, help_text="set to True when hostname is assigned")
-    is_eternal = models.BooleanField(default=False, help_text="select if hostname can be not reassigned or deleted")
-    # is_reserved = models.BooleanField(default=False, help_text="select if hostname is reserved, but not assigned")
-    #TODO: change flags to status (assigned, reserved, available, expired, etc.)
+    persistent = models.BooleanField(default=False, help_text="select if hostname can be not reassigned or deleted")
     status = models.CharField(max_length=16, choices=HOST_STATUS_CHOICES, default="available",
                               help_text="status of this hostname")
     reservation_expires = models.DateTimeField(blank=True, null=True, help_text="time when this reservation expires")
@@ -223,5 +223,5 @@ class Hostname(HostManagerBase):
 # Models to register with AuditLog
 auditlog.register(Owner)
 auditlog.register(Project)
-auditlog.register(HostnamePattern)
+auditlog.register(Pattern)
 auditlog.register(Hostname)

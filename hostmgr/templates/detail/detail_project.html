@@ -76,7 +76,7 @@
                     <div class="card-header text-primary font-weight-bold text-lg-left">Patterns</div>
                     <div class="card-body" style="overflow-y: auto; overflow-x: hidden; height: 200px">
                         <ul class="list-group mx-auto justify-content-center" style="max-width: 95%; margin-top: .5%; margin-bottom: .5%">
-                            {% for pattern in object.hostnamepattern_set.all|dictsort:"name" %}
+                            {% for pattern in object.pattern_set.all|dictsort:"name" %}
                                 <li class="list-group-item hvr-grow m-1" style="background-color: white;">
                                     <div class="row flex-nowrap" style="height: 25px;">
                                         <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 text-left">
@@ -133,42 +133,53 @@
 
 <!-- chartjs script -->
 <script>
+    var style = getComputedStyle(document.body);
+    var theme = {};
+    theme.primary = style.getPropertyValue('--primary');
+    theme.secondary = style.getPropertyValue('--secondary');
+    theme.success = style.getPropertyValue('--success');
+    theme.info = style.getPropertyValue('--info');
+    theme.warning = style.getPropertyValue('--warning');
+    theme.danger = style.getPropertyValue('--danger');
+    theme.light = style.getPropertyValue('--light');
+    theme.dark = style.getPropertyValue('--dark');
+
     new Chart(document.getElementById("project_activity_chart"), {
         type: 'line',
         data: {
-            labels: [1500,1600,1700,1750,1800,1850,1900,1950,1999,2050],
+            labels: [0,1,2,3,4,5,6,7,8,9,10,11,12],
             datasets: [{
-                data: [86,114,106,106,107,111,133,221,783,2478],
-                label: "Africa",
-                borderColor: "#3e95cd",
-                fill: false
+                data: [345,23,86,114,106,106,213,107,111,133,221,378,247],
+                label: "Assigned",
+                borderColor: theme.primary,
+                fill: true
             }, {
-                data: [282,350,411,502,635,809,947,1402,3700,5267],
-                label: "Asia",
-                borderColor: "#8e5ea2",
-                fill: false
+                data: [282,106,213,107,350,411,348,324,423,327,309,278,255],
+                label: "Reserved",
+                borderColor: theme.warning,
+                fill: true
             }, {
-                data: [168,170,178,190,203,276,408,547,675,734],
-                label: "Europe",
-                borderColor: "#3cba9f",
-                fill: false
+                data: [168,170,178,106,213,107,190,203,276,408,447,475,434],
+                label: "Released",
+                borderColor: theme.secondary,
+                fill: true
             }, {
-                data: [40,20,10,16,24,38,74,167,508,784],
-                label: "Latin America",
-                borderColor: "#e8c3b9",
-                fill: false
-            }, {
-                data: [6,3,2,2,7,26,82,172,312,433],
-                label: "North America",
-                borderColor: "#c45850",
-                fill: false
+                data: [40,20,10,16,24,38,74,106,213,107,167,408,484],
+                label: "Expired",
+                borderColor: theme.danger,
+                fill: true
             }
             ]
         },
         options: {
             title: {
                 display: true,
-                text: 'World population per region (in millions)'
+                text: 'Hostname Activity (past 12hrs)',
+                position: 'top'
+            },
+            maintainAspectRatio: false,
+            legend: {
+                position: 'bottom'
             }
         }
     });
