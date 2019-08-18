@@ -1,0 +1,138 @@
+{% block page_javascript %}
+    <script language="Javascript">
+
+        function AssignHostname(url, title, button, method){
+            /*
+             Description:
+             Launch modal to confirm actions
+
+             Parameters:
+             title	- modal window title
+             button	- action button label
+             url     - url to access on confirmation
+             method  - changes the way this confirmation works to send a dummyform post with a DeleteView redirect.
+             */
+            if (url === undefined){
+                return;
+            }
+            if (title === undefined){
+                var title = "Confirm";
+            }
+            if (confirm === undefined){
+                var confirm = "Do you wish to continue?";
+            }
+            if (button === undefined){
+                var button = "Continue";
+            }
+            if (method === undefined){
+                var method = "Not POST";
+            }
+            document.getElementById("id_modalAssignHostnameHeader").innerHTML = "<b>"+title+"</b>";
+            document.getElementById("id_modalAssignHostname_OK").innerHTML = button;
+            var okbutton = document.getElementById("id_modalAssignHostname_OK");
+
+            if(method === 'POST'){
+                document.getElementById("id_modalAssignHostname_OK").onclick = function(){doThePost(url);};
+                $("#id_modalAssignHostname_OK").attr('class', 'btn btn-primary text-light');
+                $("#id_modalAssignHostname").modal({show:true});
+            } else {
+                $("#id_modalAssignHostname_OK").attr('href', url);
+                $("#id_modalAssignHostname_OK").attr('class', 'btn btn-primary text-light');
+                $("#id_modalAssignHostname").modal({show:true});
+            }
+            showModal('id_modalAssignHostname');
+        }
+
+        function doThePost(url){
+            /*
+             Description:
+             Send a POST using #modalsubmitform down below.  Updates action to input url.
+
+             Parameters:
+             url   - url to POST a blank form to.
+             */
+            var dummyform = $('#modalsubmitform');
+            var asset_id = document.getElementById("asset_id").value;
+            var asset_id_type = document.getElementById("asset_id_type").value;
+            var persistent = document.getElementById("persistent").checked;
+            dummyform.attr('action', url+"&asset_id="+asset_id+"&persistent="+persistent+"&asset_id_type="+asset_id_type);
+            dummyform.attr('method', 'POST');
+            dummyform.submit();
+        }
+{##}
+{#        /* document ready */#}
+{#        $(document).ready(function() {#}
+{#        });#}
+{##}
+{##}
+    </script>
+{% endblock %}
+{##}
+{#<div class="hidden" aria-hidden="true" tabindex="-1" style="display: none">#}
+{#    <form id="modalsubmitform">#}
+{#        {% csrf_token %}#}
+{#        <input type="submit" value="Submit" />#}
+{#    </form>#}
+{#</div>#}
+
+
+<!-- MODAL: confirmation -->
+<div id="id_modalAssignHostnameationWrapper">
+    <div class="modal fade" id="id_modalAssignHostname" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-md">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="id_modalAssignHostnameHeader"></h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                </div>
+                <div class="modal-body" id="id_modalAssignHostnameBody">
+
+                    <form class="form-horizontal" role="form" action="">
+                        <!-- Modal Body -->
+                        <div class="modal-body">
+                            <div class="form-group">
+                                <div class="form-group">
+                                    <div class="row text-left">
+                                        <div class="col-sm-5">
+                                            <label class="control-label" for="asset_id"><b>Asset ID:</b></label>
+                                        </div>
+                                        <div class="col-sm-7">
+                                            <input type="text" class="form-control" id="asset_id" name="asset_id"/>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row text-left">
+                                    <div class="col-sm-5">
+                                        <label class="control-label" for="asset_id_type"><b>Asset ID Type:</b></label>
+                                    </div>
+                                    <div class="col-sm-7">
+                                        <select class="form-control" id="asset_id_type" name="asset_id_type">
+                                            <option value="asset tag">asset tag</option>
+                                            <option value="serial number">serial number</option>
+                                            <option value="mac address">mac address</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="row text-left">
+                                    <div class="col-sm-4">
+                                        <label class="control-label" for="persistent"><b>Persistent:</b></label>
+                                    </div>
+                                    <div class="col-sm-8">
+                                        <input type="checkbox" class="form-control" id="persistent" name="persistent" value="true"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+
+                </div>
+                <div class="modal-footer" id="id_modalAssignHostnameFooter">
+                    <button class="btn btn-light" data-dismiss="modal" aria-hidden="true">Cancel</button>
+                    <a class="btn btn-primary text-light" id="id_modalAssignHostname_OK"></a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,70 @@
+<!-- Modal -->
+<div class="modal fade" id="modal_export_openstack" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">
+                    <span aria-hidden="true">&times;</span>
+                    <span class="sr-only">Close</span>
+                </button>
+                <h4 class="modal-title" id="myModalLabel">Export Openstack Data</h4>
+            </div>
+
+            <form class="form-horizontal" role="form" action="{% url 'hostmgr:assign_hostname' %}">
+                <!-- Modal Body -->
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label  class="col-sm-4 control-label" for="select_cloud">Cloud:</label>
+                        <div class="col-sm-8">
+                            <select class="form-control" id="select_cloud" name="cloud">
+                                <option value="all clouds">all clouds</option>
+                                {% for cloud in cloud_list %}
+                                    <option value="{{ cloud }}">{{ cloud }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label" for="select_component">Component:</label>
+                        <div class="col-sm-8">
+                            <select class="form-control" id="select_component" name="component">
+                                <option value="cloud">clouds</option>
+                                <option value="hypervisor">hypervisors</option>
+                                <option value="project">projects</option>
+                                <option value="instance">instances</option>
+                                <option value="network">networks</option>
+                                <option value="subnetwork">subnetworks</option>
+                                <option value="zone">availability zones</option>
+                                <option value="port">ports</option>
+                                <option value="service">services</option>
+                                <option value="compute_service">compute services</option>
+                                <option value="image">images</option>
+                                <option value="flavor">flavors</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label" for="include_inactive">Include Inactive:</label>
+                        <div class="col-sm-8">
+                            <input type="checkbox" class="form-control" id="include_inactive" name="include_inactive"/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label" for="file_name">File Name:</label>
+                        <div class="col-sm-8">
+                            <input type="text" class="form-control" id="file_name" name="file_name"/>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Modal Footer -->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <!-- Submit Button-->
+                    <button type="submit" class="btn btn-primary">Export</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

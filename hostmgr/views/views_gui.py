@@ -85,3 +85,54 @@ class ShowAdminPanel(LoginRequiredMixin, View):
         template = "custom/admin_panel.html"
         context = dict()
         return render(request, template, context=context)
+
+
+class ReserveHostname(LoginRequiredMixin, View):
+    """ request reservation of a hostname """
+    def post(self, request, *args, **kwargs):
+        """ process POST request """
+        redirect_url = self.request.META.get('HTTP_REFERER')
+        obj_id = self.request.GET.dict().get('id', None)
+        hostname = Hostname.objects.get_object_or_none(id=obj_id)
+        try:
+            hostname.reserve_hostname(user=request.user)
+        except Exception as err:
+            messages.add_message(request, messages.ERROR, err, extra_tags='alert-danger')
+        return redirect(redirect_url)
+
+
+class AssignHostname(LoginRequiredMixin, View):
+    """ assign reservation of a hostname """
+    def post(self, request, *args, **kwargs):
+        """ process POST request """
+        redirect_url = self.request.META.get('HTTP_REFERER')
+        obj_id = self.request.GET.dict().get('id', None)
+        asset_id = self.request.GET.dict().get('asset_id', None)
+        asset_id_type_name = self.request.GET.dict().get('asset_id_type', None)
+        persistent = self.request.GET.dict().get('persistent', None)
+
+        hostname = Hostname.objects.get_object_or_none(id=obj_id)
+        try:
+            hostname.assign_hostname(user=request.user, asset_id=asset_id,
+                                     asset_id_type_name=asset_id_type_name, persistent=persistent)
+            messages.add_message(request, messages.INFO, "{} set to 'assigned'".format(hostname.hostname),
+                                 extra_tags='alert-success')
+        except Exception as err:
+            messages.add_message(request, messages.ERROR, err, extra_tags='alert-danger')
+        return redirect(redirect_url)
+
+
+class ReleaseHostname(LoginRequiredMixin, View):
+    """ release reservation of a hostname """
+    def post(self, request, *args, **kwargs):
+        """ process POST request """
+        redirect_url = self.request.META.get('HTTP_REFERER')
+        obj_id = self.request.GET.dict().get('id', None)
+        hostname = Hostname.objects.get_object_or_none(id=obj_id)
+        try:
+            hostname.release_hostname(user=request.user)
+            messages.add_message(request, messages.INFO, "assignment on {} has been released".format(hostname.hostname),
+                                 extra_tags='alert-success')
+        except Exception as err:
+            messages.add_message(request, messages.ERROR, err, extra_tags='alert-danger')
+        return redirect(redirect_url)
