@@ -25,6 +25,11 @@ urlpatterns = [
     path('list_patterns/', gui.ListPatterns.as_view(), name='list_patterns'),
     path('list_hostnames/', gui.ListHostnames.as_view(), name='list_hostnames'),
 
+    # action views
+    path('reserve_hostname/', gui.ReserveHostname.as_view(), name='reserve_hostname'),
+    path('assign_hostname/', gui.AssignHostname.as_view(), name='assign_hostname'),
+    path('release_hostname/', gui.ReleaseHostname.as_view(), name='release_hostname'),
+
     # detail views
     path('detail_owner/<int:pk>/', gui.DetailOwner.as_view(), name='detail_owner'),
     path('detail_project/<int:pk>/', gui.DetailProject.as_view(), name='detail_project'),

@@ -27,34 +27,46 @@
             <td>
                 <!-- view host details -->
                 <a href="#" title="view hostname details"
-                   onClick="showInfo('{% url "hostmgr:get_hostname_details" %}', '{{ row.id }}', 'Details: <small><i>{{ row.name }}</i></small>', true);"
+                   onClick="showInfo('{% url "hostmgr:get_hostname_details" %}', '{{ row.id }}', 'Details: <small><i>{{ row.hostname }}</i></small>', true);"
                    role="button" data-toggle="tooltip" data-placement="left">
                     <i class="fa fa-info-circle fa-fw text-primary ml-1"></i>
                 </a>
 
-                <!-- view details -->
-                <!-- view audit log -->
                 <!-- reserve/assign/extend/release -->
                 {% if row.status  == 'available' %}
-                    <a href="#" title="assign hostname" role="button" data-toggle="tooltip" data-placement="left">
+                    <!-- reserve hostname -->
+                    <a href="#" title="reserve hostname" role="button" data-toggle="tooltip" data-placement="left"
+                       onClick="confirmAction('{% url 'hostmgr:reserve_hostname' %}?id={{ row.id }}', 'Reserve Hostname', 'This will set <b><i>{{ row.hostname }}</i></b> to reserved. Do you wish to continue?', 'Continue', 'POST');">
+                        <i class="fas fa-pause-circle text-primary ml-1"></i>
+                    </a>
+                    <!-- assign hostname -->
+                    <a href="#" title="assign hostname" role="button" data-toggle="tooltip" data-placement="left"
+                       onClick="AssignHostname('{% url 'hostmgr:assign_hostname' %}?id={{ row.id }}', 'Assign Hostname: {{ row.hostname }} ', 'Assign', 'POST');">
                         <i class="fas fa-stop-circle text-primary ml-1"></i>
                     </a>
+
                 {% elif row.status  == 'assigned' %}
-                    <a href="#" title="release hostname" role="button" data-toggle="tooltip" data-placement="left">
-                        <i class="fas fa-times-circle text-primary ml-1"></i>
+                    <!-- release hostname -->
+                    <a href="#" title="release hostname" role="button" data-toggle="tooltip" data-placement="left"
+                       onClick="confirmAction('{% url 'hostmgr:release_hostname' %}?id={{ row.id }}', 'Release Hostname', 'This will release the assignment on <b><i>{{ row.hostname }}</i></b>. Do you wish to continue?', 'Continue', 'POST');">
+                        <i class="fas fa-check-circle text-primary ml-1"></i>
                     </a>
+
                 {% elif row.status  == 'reserved' %}
-{#                    <a href="#" title="assign hostname" role="button" data-toggle="tooltip" data-placement="left">#}
-{#                        <i class="fas fa-check-circle text-primary ml-1"></i>#}
-{#                    </a>#}
+                    <!-- assign hostname -->
                     <a href="#" title="assign hostname" role="button" data-toggle="tooltip" data-placement="left">
                         <i class="fas fa-stop-circle text-primary ml-1"></i>
+                    </a>
+                    <!-- release hostname -->
+                    <a href="#" title="release hostname" role="button" data-toggle="tooltip" data-placement="left"
+                       onClick="confirmAction('{% url 'hostmgr:release_hostname' %}?id={{ row.id }}', 'Release Hostname', 'This will release the assignment on <b><i>{{ row.hostname }}</i></b>. Do you wish to continue?', 'Continue', 'POST');">
+                        <i class="fas fa-check-circle text-primary ml-1"></i>
                     </a>
                 {% endif %}
-{#                <i class="fas fa-pause-circle text-primary ml-1"></i>#}
 
             </td>
         </tr>
     {% endfor %}
     </tbody>
 </table>
+{#{% include 'forms/hostmgr_modals.htm' %}#}
