@@ -1,6 +1,9 @@
 from rest_framework import viewsets
 from django_filters.rest_framework import DjangoFilterBackend
-from django_filters.rest_framework import FilterSet, filters
+from rest_framework.decorators import action
+from rest_framework.response import Response
+from rest_framework import status
+
 
 # import models
 from hostmgr.models import (Owner,
@@ -80,14 +83,32 @@ class HostnameViewSet(viewsets.ReadOnlyModelViewSet):
                      "persistent", "status", "reservation_expires", "assignment_expires", ]
     search_fields = filter_fields
 
+    @action(detail=True, methods=['patch'])
+    def assign(self):
+        """ set a hostname to assigned """
+        try:
+            hostname = self.get_object()
+            hostname.assign_hostname(user=self.request.user)
+            return Response(self.serializer_class.data, status.HTTP_200_OK)
+        except Exception as err:
+            return Response({'messages': err}, status.HTTP_400_BAD_REQUEST)
 
+    @action(detail=True, methods=['patch'])
+    def release(self):
+        """ release the assignment on a hostname """
+        try:
+            hostname = self.get_object()
+            hostname.release_hostname(user=self.request.user)
+            return Response(self.serializer_class.data, status.HTTP_200_OK)
+        except Exception as err:
+            return Response({'messages': err}, status.HTTP_400_BAD_REQUEST)
 
-
-
-
-
-
-
-
-
-
+    @action(detail=True, methods=['patch'])
+    def reserve(self):
+        """ set a hostname to status='reserved' """
+        try:
+            hostname = self.get_object()
+            hostname.reserve_hostname(user=self.request.user)
+            return Response(self.serializer_class.data, status.HTTP_200_OK)
+        except Exception as err:
+            return Response({'messages': err}, status.HTTP_400_BAD_REQUEST)

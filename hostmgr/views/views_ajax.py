@@ -106,3 +106,99 @@ def get_hostname_details(request):
             return HttpResponse("Invalid request inputs", status=400)
     else:
         return HttpResponse("Invalid request", status=400)
+
+
+@require_GET
+def get_hostname_auditlog(request):
+    """
+    Description:
+        get AuditLog for a given Hostname.
+    Args:
+        request: AJAX request object.
+    Returns:
+        HttpResponse: JSON formatted response.
+    """
+    if (request.is_ajax()) and (request.method == 'GET'):
+        if 'client_response' in request.GET:
+            hostname = request.GET['client_response']
+            queryset = LogEntry.objects.filter(content_type__model="hostname",
+                                               object_repr__icontains=hostname)
+            template = loader.get_template('ajax/show_audit_log.htm')
+            return HttpResponse(json.dumps({"server_response": template.render({'queryset': queryset})}),
+                                content_type='application/javascript')
+        else:
+            return HttpResponse("Invalid request inputs", status=400)
+    else:
+        return HttpResponse("Invalid request", status=400)
+
+
+@require_GET
+def get_pattern_auditlog(request):
+    """
+    Description:
+        get AuditLog for a given Pattern.
+    Args:
+        request: AJAX request object.
+    Returns:
+        HttpResponse: JSON formatted response.
+    """
+    if (request.is_ajax()) and (request.method == 'GET'):
+        if 'client_response' in request.GET:
+            name = request.GET['client_response']
+            queryset = LogEntry.objects.filter(content_type__model="pattern",
+                                               object_repr__icontains=name)
+            template = loader.get_template('ajax/show_audit_log.htm')
+            return HttpResponse(json.dumps({"server_response": template.render({'queryset': queryset})}),
+                                content_type='application/javascript')
+        else:
+            return HttpResponse("Invalid request inputs", status=400)
+    else:
+        return HttpResponse("Invalid request", status=400)
+
+
+@require_GET
+def get_project_auditlog(request):
+    """
+    Description:
+        get AuditLog for a given Project.
+    Args:
+        request: AJAX request object.
+    Returns:
+        HttpResponse: JSON formatted response.
+    """
+    if (request.is_ajax()) and (request.method == 'GET'):
+        if 'client_response' in request.GET:
+            name = request.GET['client_response']
+            queryset = LogEntry.objects.filter(content_type__model="project",
+                                               object_repr__icontains=name)
+            template = loader.get_template('ajax/show_audit_log.htm')
+            return HttpResponse(json.dumps({"server_response": template.render({'queryset': queryset})}),
+                                content_type='application/javascript')
+        else:
+            return HttpResponse("Invalid request inputs", status=400)
+    else:
+        return HttpResponse("Invalid request", status=400)
+
+
+@require_GET
+def get_owner_auditlog(request):
+    """
+    Description:
+        get AuditLog for a given Owner.
+    Args:
+        request: AJAX request object.
+    Returns:
+        HttpResponse: JSON formatted response.
+    """
+    if (request.is_ajax()) and (request.method == 'GET'):
+        if 'client_response' in request.GET:
+            name = request.GET['client_response']
+            queryset = LogEntry.objects.filter(content_type__model="owner",
+                                               object_repr__icontains=name)
+            template = loader.get_template('ajax/show_audit_log.htm')
+            return HttpResponse(json.dumps({"server_response": template.render({'queryset': queryset})}),
+                                content_type='application/javascript')
+        else:
+            return HttpResponse("Invalid request inputs", status=400)
+    else:
+        return HttpResponse("Invalid request", status=400)

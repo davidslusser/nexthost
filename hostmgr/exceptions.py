@@ -27,6 +27,12 @@ class AssetIdRequired(Exception):
     """ Asset ID is required for hostname assignment """
     pass
 
+
 class HostnamePersistent(Exception):
     """ This hostname is persistent and can not be modified """
+    pass
+
+
+class InsufficientHostnames(Exception):
+    """ There are not enough available hostnames to complete this request """
     pass
