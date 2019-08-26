@@ -32,6 +32,13 @@
                     <i class="fa fa-info-circle fa-fw text-primary ml-1"></i>
                 </a>
 
+                <!-- view audit log -->
+                <a href="#" class="" title="view audit log"
+                   onClick="showInfo('{% url "hostmgr:get_hostname_auditlog" %}', '{{ row.hostname }}', 'Audit Log: <small><i>{{ row.hostname }}</i></small>', 'xl');"
+                   role="button" data-toggle="tooltip" data-placement="left">
+                    <i class="fa fa-history fa-fw"></i>
+                </a>
+
                 <!-- reserve/assign/extend/release -->
                 {% if row.status  == 'available' %}
                     <!-- reserve hostname -->
@@ -54,7 +61,8 @@
 
                 {% elif row.status  == 'reserved' %}
                     <!-- assign hostname -->
-                    <a href="#" title="assign hostname" role="button" data-toggle="tooltip" data-placement="left">
+                    <a href="#" title="assign hostname" role="button" data-toggle="tooltip" data-placement="left"
+                       onClick="AssignHostname('{% url 'hostmgr:assign_hostname' %}?id={{ row.id }}', 'Assign Hostname: {{ row.hostname }} ', 'Assign', 'POST');">
                         <i class="fas fa-stop-circle text-primary ml-1"></i>
                     </a>
                     <!-- release hostname -->

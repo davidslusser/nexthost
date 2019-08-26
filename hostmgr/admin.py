@@ -22,8 +22,8 @@ class ProjectAdmin(admin.ModelAdmin):
 
 
 class PatternAdmin(admin.ModelAdmin):
-    list_display = ['id', 'created_at', 'updated_at', 'active', 'name', 'description', 'project', 'prefix', 'delimiter', 'host_count', 'increment', 'start_from']
-    search_fields = ['name', 'description', 'prefix', 'delimiter', 'host_count', 'increment', 'start_from']
+    list_display = ['id', 'created_at', 'updated_at', 'active', 'name', 'description', 'project', 'prefix', 'prefix_delimiter', 'suffix', 'suffix_delimiter', 'host_count', 'increment', 'start_from']
+    search_fields = ['name', 'description', 'prefix', 'prefix_delimiter', 'suffix', 'suffix_delimiter', 'host_count', 'increment', 'start_from']
     list_filter = ['active', 'project']
 
 

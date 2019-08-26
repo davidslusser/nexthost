@@ -44,6 +44,11 @@ urlpatterns = [
     path('get_pattern_details', ajax.get_pattern_details, name='get_pattern_details'),
     path('get_hostname_details', ajax.get_hostname_details, name='get_hostname_details'),
 
+    path('get_owner_auditlog', ajax.get_owner_auditlog, name='get_owner_auditlog'),
+    path('get_project_auditlog', ajax.get_project_auditlog, name='get_project_auditlog'),
+    path('get_pattern_auditlog', ajax.get_pattern_auditlog, name='get_pattern_auditlog'),
+    path('get_hostname_auditlog', ajax.get_hostname_auditlog, name='get_hostname_auditlog'),
+
     # API views
     path('api/', include(router.urls)),
     path('api/v1/', include(router.urls)),
