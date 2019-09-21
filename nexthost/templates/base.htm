@@ -72,81 +72,82 @@
     </head>
 {% endblock mainheader %}
 
-<body>
+    <body>
 
-{% block mainnavbar %}
-    <nav class="navbar navbar-expand-md navbar-dark bg-primary">
-        <a class="navbar-brand mr-5" href="{% url 'index' %}"><b>Next<span class="text-secondary">Host</span></b></a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
+    {% block mainnavbar %}
+        <nav class="navbar navbar-expand-md navbar-dark bg-primary">
+            <a class="navbar-brand mr-5" href="{% url 'index' %}"><b>Next<span class="text-secondary">Host</span></b></a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
 
-        <div class="collapse navbar-collapse" id="navbarNavDropdown">
-            <ul class="navbar-nav mr-auto">
+            <div class="collapse navbar-collapse" id="navbarNavDropdown">
+                <ul class="navbar-nav mr-auto">
 
-                {% include 'navigation/hostmgr_nav.htm' %}
-                {% include 'navigation/hostmgr_apis.htm' %}
-                {% include 'navigation/hostmgr_selfservice.htm' %}
+                    {% include 'navigation/hostmgr_nav.htm' %}
+                    {% include 'navigation/hostmgr_apis.htm' %}
+                    {% include 'navigation/hostmgr_selfservice.htm' %}
 
-            </ul>
+                </ul>
 
-            <!-- login -->
-            <ul class="navbar-nav mr-4">
+                <!-- login -->
+                <ul class="navbar-nav mr-4">
 
-                {% if user.is_authenticated %}
-                    <li class="nav-item dropdown align-right">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <b class="fa fa-user fw mr-3"></b><span class="hidden-sm">{{ user }}</span>
-                        </a>
-                        <div class="dropdown-menu ml-md-n5 ml-lg-n5 ml-sm-0" aria-labelledby="navbarDropdown">
-                            <a class="dropdown-item" href="{% url 'logout' %}"><b class="fa fa-sign-out-alt fw mr-3"></b>Log out</a>
-                            <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="{% url 'detail_user' %}"><i class="fa fa-address-card fw mr-3"></i>Profile</a>
-                            <a class="dropdown-item" href="#"><b class="fa fa-cogs fw mr-3 text-greyout"></b>Settings</a>
-                            <a class="dropdown-item" href="{% url 'list_recents' %}"><b class="far fa-clock fw mr-3"></b>Recents</a>
-                            <a class="dropdown-item" href="{% url 'list_favorites' %}"><i class="far fa-heart mr-3"></i>Favorites</a>
-                            <div class="dropdown-divider"></div>
-                            <div class="dropdown-item">
-                                {% is_favorite request as favorite_id %}
-                                {% if favorite_id %}
-                                    <form name="submitForm" method="POST" action="{% url 'userextensions:delete_favorite' favorite_id %}">
-                                        {% csrf_token %}
-                                        <input type="hidden" name="name" value="">
-                                        <a href="javascript:document.submitForm.submit()"><i class="fas fa-heart-broken mr-3"></i></b>Remove Favorite</a>
-                                    </form>
-                                {% else %}
-                                    <form name="submitForm" method="POST" action="{% url 'userextensions:add_favorite' %}">
-                                        {% csrf_token %}
-                                        <input type="hidden" name="name" value="">
-                                        <a href="javascript:document.submitForm.submit()"><b class="fas fa-heart mr-3"></b>Add Favorite</a>
-                                    </form>
-                                {% endif %}
+                    {% if user.is_authenticated %}
+                        <li class="nav-item dropdown align-right">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <b class="fa fa-user fw mr-3"></b><span class="hidden-sm">{{ user }}</span>
+                            </a>
+                            <div class="dropdown-menu ml-md-n5 ml-lg-n5 ml-sm-0" aria-labelledby="navbarDropdown">
+                                <a class="dropdown-item" href="{% url 'logout' %}"><b class="fa fa-sign-out-alt fw mr-3"></b>Log out</a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="{% url 'detail_user' %}"><i class="fa fa-address-card fw mr-3"></i>Profile</a>
+                                <a class="dropdown-item" href="#"><b class="fa fa-cogs fw mr-3 text-greyout"></b>Settings</a>
+                                <a class="dropdown-item" href="{% url 'list_recents' %}"><b class="far fa-clock fw mr-3"></b>Recents</a>
+                                <a class="dropdown-item" href="{% url 'list_favorites' %}"><i class="far fa-heart mr-3"></i>Favorites</a>
+                                <div class="dropdown-divider"></div>
+                                <div class="dropdown-item">
+                                    {% is_favorite request as favorite_id %}
+                                    {% if favorite_id %}
+                                        <form name="submitForm" method="POST" action="{% url 'userextensions:delete_favorite' favorite_id %}">
+                                            {% csrf_token %}
+                                            <input type="hidden" name="name" value="">
+                                            <a href="javascript:document.submitForm.submit()"><i class="fas fa-heart-broken mr-3"></i></b>Remove Favorite</a>
+                                        </form>
+                                    {% else %}
+                                        <form name="submitForm" method="POST" action="{% url 'userextensions:add_favorite' %}">
+                                            {% csrf_token %}
+                                            <input type="hidden" name="name" value="">
+                                            <a href="javascript:document.submitForm.submit()"><b class="fas fa-heart mr-3"></b>Add Favorite</a>
+                                        </form>
+                                    {% endif %}
+                                </div>
                             </div>
-                        </div>
-                    </li>
-                {% else %}
-                    <li class="nav-item">
-                        <a class="nav-link" href="{% url 'login' %}"><b class="fa fa-sign-in fw margin-right-20"></b> Log In </a>
-                    </li>
-                {% endif %}
-            </ul>
-        </div>
-    </nav>
-    <br/>
+                        </li>
+                    {% else %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'login' %}"><b class="fa fa-sign-in fw margin-right-20"></b> Log In </a>
+                        </li>
+                    {% endif %}
+                </ul>
+            </div>
+        </nav>
+        <br/>
 
-{% endblock mainnavbar %}
+    {% endblock mainnavbar %}
 
-{% block messages %}
-    {% include 'component/show_messages.htm' %}
-{% endblock messages %}
+    {% block messages %}
+        {% include 'component/show_messages.htm' %}
+    {% endblock messages %}
 
-<div id='page-container' class="container-fluid"> <!-- start "page-container" -->
-    <!-- main content loads here-->
-    {% block content %} Default Content - Local page should overwrite this {% endblock content %}
-</div>  <!-- end "page-container" -->
+    <div id='page-container' class="container-fluid"> <!-- start "page-container" -->
+        <!-- main content loads here-->
+        {% block content %} Default Content - Local page should overwrite this {% endblock content %}
+    {#    {% block modals %} {% endblock %}#}
+    </div>  <!-- end "page-container" -->
 
-{% block mainfooter %}
-{% endblock mainfooter%}
+    {% block mainfooter %}
+    {% endblock mainfooter%}
 
-</body>
+    </body>
 </html>

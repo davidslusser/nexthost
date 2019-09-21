@@ -15,6 +15,14 @@ class OwnerSerializer(serializers.ModelSerializer):
         depth = 0
 
 
+class HostnameSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Hostname
+        fields = ["id", "created_at", "updated_at", "active", "pattern", "hostname", "asset_id", "asset_id_type",
+                  "persistent", "status", "reservation_expires", "assignment_expires", ]
+        depth = 0
+
+
 class ProjectSerializer(serializers.ModelSerializer):
     class Meta:
         model = Project
@@ -25,8 +33,11 @@ class ProjectSerializer(serializers.ModelSerializer):
 class PatternSerializer(serializers.ModelSerializer):
     class Meta:
         model = Pattern
-        fields = ["id", "created_at", "updated_at", "active", "name", "description", "project", "prefix", "delimiter",
-                  "host_count", "increment", "start_from", ]
+        # myfield = serializers.SerializerMethodField(read_only=True, source='myfield')
+
+        fields = ["id", "name", "description", "project", "prefix", "prefix_delimiter", "suffix", "suffix_delimiter",
+                  "host_count", "increment", "start_from", "created_at", "updated_at", "myfield"]
+        # read_only_fields = ["myfield"]
         depth = 0
 
 
@@ -34,12 +45,4 @@ class AssetIdTypeSerializer(serializers.ModelSerializer):
     class Meta:
         model = AssetIdType
         fields = ["id", "created_at", "updated_at", "active", "name", "description", ]
-        depth = 0
-
-
-class HostnameSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Hostname
-        fields = ["id", "created_at", "updated_at", "active", "pattern", "hostname", "asset_id", "asset_id_type",
-                  "persistent", "status", "reservation_expires", "assignment_expires", ]
         depth = 0

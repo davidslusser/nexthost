@@ -16,6 +16,7 @@ class HostmgrBaseListView(FilterByQueryParamsMixin, ListView):
     """ base view for hostmgr list pages """
     title = None
     table = None
+    modals = None
 
     def get(self, request, *args, **kwargs):
         context = dict()
@@ -24,6 +25,7 @@ class HostmgrBaseListView(FilterByQueryParamsMixin, ListView):
         context['title'] = self.title
         context['sub_title'] = self.page_description
         context['table'] = self.table
+        context['modals'] = self.modals
         return render(request, template, context=context)
 
 
@@ -57,7 +59,8 @@ class ListHostnames(HostmgrBaseListView):
                                                      ).order_by('hostname')
     title = "Hostnames"
     page_description = ""
-    table = "table/table_hosts.htm"
+    table = "table/table_hostnames.htm"
+    modals = "forms/hostmgr_modals_test.htm"
 
 
 class DetailOwner(DetailView):
@@ -84,6 +87,18 @@ class ShowAdminPanel(LoginRequiredMixin, View):
     def get(self, request, *args, **kwargs):
         template = "custom/admin_panel.html"
         context = dict()
+        return render(request, template, context=context)
+
+
+class ShowApiGuide(LoginRequiredMixin, View):
+    """ display help docs for apis """
+    @staticmethod
+    def get(request):
+        template = "custom/api_guide.html"
+        context = dict()
+        context['title'] = 'API Guide'
+        context['sub_title'] = "Hostname endpoints"
+        context['token'] = str(Token.objects.get_or_create(user=request.user)[0])
         return render(request, template, context=context)
 
 
