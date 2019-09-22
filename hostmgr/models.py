@@ -192,7 +192,7 @@ class Pattern(HostManagerBase):
     def disable_pattern(self, user):
         """ set this pattern to active = False """
         if not self.get_manageability(user):
-            raise UserNotAuthorized("{} is not authorized to manage this lock".format(user))
+            raise UserNotAuthorized("{} is not authorized to disable this pattern".format(user))
         self.active = False
         self.save()
 
@@ -233,6 +233,10 @@ class Pattern(HostManagerBase):
             diff = hostname_count - self.host_count
             qs = self.hostname_set.filter(status="available").order_by('-update_at')[:diff]
             qs.delete()
+
+    def myfield(self):
+        # return "test"
+        return self.hostname_set.all()
 
     def get_available_hostnames(self):
         """ return a queryset of all hostnames for this project with status = 'available' """
@@ -280,13 +284,15 @@ class Pattern(HostManagerBase):
         else:
             return available_hostnames[:count]
 
-    def reserve_next_hostname(self, count=1, consecutive=False):
+    def reserve_next_hostname(self, user, count=1, consecutive=False):
         """
         get and reserve the next available hostname(s) for this pattern
         :param count: (int) number of hostnames to find and return
         :param consecutive: (bool) set True if hostnames must be consecutive
         :return: (list) list of hostname objects
         """
+        if not self.get_manageability():
+            raise UserNotAuthorized("user '{}' is not authorized to reserve this hostname".format(user))
         hostname_list = self.get_next_hostname(count=count, consecutive=consecutive)
         hostname_list.update(status="reserved")
 

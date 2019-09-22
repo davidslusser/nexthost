@@ -83,56 +83,7 @@
         </button>
 
         <div class="collapse navbar-collapse" id="navbarNavDropdown">
-            <ul class="navbar-nav mr-auto">
-
-{#                <!-- hostlock -->#}
-{#                <li class="nav-item dropdown">#}
-{#                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">#}
-{#                        HostLock#}
-{#                    </a>#}
-{#                    <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">#}
-{#                        <li><a class="dropdown-item" href="{% url 'hostlock:hostlock_dashboard' %}">Dashboard</a></li>#}
-{#                        <li class="dropdown-submenu"><a class="dropdown-item dropdown-toggle" href="#">Locks</a>#}
-{#                            <ul class="dropdown-menu">#}
-{#                                <li><a class="dropdown-item" href="{% url 'hostlock:list_locks' %}?status=granted&page_description=currently granted">Current Locks</a></li>#}
-{#                                <li><a class="dropdown-item" href="{% url 'hostlock:list_expired_locks' %}">Expired Locks</a></li>#}
-{#                                <li><a class="dropdown-item" href="{% url 'hostlock:list_locks' %}?status=granted&requester__username={{ user }}&page_description=granted by me">My Locks</a></li>#}
-{#                            </ul>#}
-{#                        </li>#}
-{#                        <li class="dropdown-submenu"><a class="dropdown-item dropdown-toggle" href="#">Hosts</a>#}
-{#                            <ul class="dropdown-menu">#}
-{#                                <li><a class="dropdown-item" href="{% url 'hostlock:list_hosts' %}?is_locked=True&page_description=locked">Locked Hosts</a></li>#}
-{#                                <li><a class="dropdown-item" href="{% url 'hostlock:list_my_hosts' %}">My Hosts</a></li>#}
-{#                            </ul>#}
-{#                        </li>#}
-{#                    </ul>#}
-{#                </li>#}
-{##}
-{#                <!-- apis -->#}
-{#                <li class="nav-item dropdown">#}
-{#                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">#}
-{#                        APIs#}
-{#                    </a>#}
-{#                    <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">#}
-{#                        <a class="dropdown-item" href="/hostlock/api/v1/">Developer Tools</a>#}
-{#                        <a class="dropdown-item" href="/swagger">Documentation <small>(Swagger)</small></a>#}
-{#                        <a class="dropdown-item" href="{% url 'hostlock:hostlock_api_guide' %}">API Guide</a>#}
-{#                    </ul>#}
-{#                </li>#}
-{##}
-{#                <!-- self-service -->#}
-{#                <li class="nav-item dropdown">#}
-{#                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">#}
-{#                        Self-Service#}
-{#                    </a>#}
-{#                    <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">#}
-{#                        <a class="dropdown-item" href="#">Request Lock</a>#}
-{#                        <a class="dropdown-item" href="#">Release Lock</a>#}
-{#                        <a class="dropdown-item" href="#">Create Service Account</a>#}
-{#                        <a class="dropdown-item" href="#">Refresh API Token</a>#}
-{#                    </ul>#}
-{#                </li>#}
-
+            <ul class="navbar-nav mr-auto"> <!-- main navbar headers go here -->
             </ul>
 
             <!-- login -->
@@ -188,6 +139,7 @@
 <div id='page-container' class="container-fluid"> <!-- start "page-container" -->
     <!-- main content loads here-->
     {% block content %} Default Content - Local page should overwrite this {% endblock content %}
+    {% block modals %} {% endblock modals %}
 </div>  <!-- end "page-container" -->
 
 {% block mainfooter %}

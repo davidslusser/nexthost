@@ -1,0 +1,72 @@
+{% extends "base.htm" %}
+{% load staticfiles %}
+
+{% block local_head %}
+    {% include "component/table_components.htm" %}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.min.css" integrity="sha256-HtCCUh9Hkh//8U1OwcbD8epVEUdBvuI8wj1KtqMhNkI=" crossorigin="anonymous" />
+{% endblock %}
+
+{% block content %}
+    <div class="container-fluid">
+        <h1 class="text-primary"><b>{{ title }}:</b> {% if sub_title %}<small><small><span class="text-secondary">{{ sub_title }}</span></small></small>{% endif %}</h1>
+    </div>
+
+    <section class="mt-5 animated fadeIn">
+        <div class="container-fluid">
+
+            <div id="accordion">
+
+                <!-- assign hostname-->
+                <div class="card mb-2">
+                    <div class="card-header">
+                        <a class="card-link" data-toggle="collapse" href="#assign">
+                            <b>Assign Hostname API</b>
+                        </a>
+                    </div>
+                    <div id="assign" class="collapse" data-parent="#accordion">
+                        <div class="card-body">
+                            <div class="row m-2 boarder border-bottom boarder-secondary">
+                                <div class="col-sm-3 col-md-2 col-lg-2 text-primary"><b>Description: </b></div>
+                                <div class="col-sm-9 col-md-10 col-lg-10">Sets a provided hostname to a status of 'assigned.'
+                                </div>
+                            </div>
+                            <div class="row">&nbsp;</div>
+                            <div class="row m-2 boarder border-bottom boarder-secondary">
+                                <div class="col-sm-3 col-md-2 col-lg-2 text-primary"><b>Method(s): </b></div>
+                                <div class="col-sm-9 col-md-10 col-lg-10">PATCH</div>
+                            </div>
+                            <div class="row m-2 boarder border-bottom boarder-secondary">
+                                <div class="col-sm-3 col-md-2 col-lg-2 text-primary"><b>Required Fields: </b></div>
+                                <div class="col-sm-9 col-md-10 col-lg-10">asset_id <small>(char)</small>, asset_id_type <small>(int)</small></div>
+
+                            </div>
+                            <div class="row m-2 boarder border-bottom boarder-secondary">
+                                <div class="col-sm-3 col-md-2 col-lg-2 text-primary"><b>Optional Fields: </b></div>
+                                <div class="col-sm-9 col-md-10 col-lg-10">persistent <small>(char)</small>, assignment_expires <small>(date/time)</small></div>
+                            </div>
+                            <div class="row">&nbsp;</div>
+                            <div class="row m-2 boarder border-bottom boarder-secondary">
+                                <div class="col-sm-3 col-md-2 col-lg-2 text-primary"><b>Example Call: </b></div>
+                                <div class="col-sm-9 col-md-10 col-lg-10">curl -X PATCH http://{{ request.META.HTTP_HOST }}/hostmgr/api/v1/hostname/123/assign -H 'Authorization: Token {{ token }}' -d '{"asset_id":"12345", "asset_id_type":"serial number"}'</div>
+                            </div>
+                            <div class="row">&nbsp;</div>
+                            <div class="row m-2">
+                                <div class="col-sm-3 col-md-2 col-lg-2 text-primary"><b>Example Responses: </b></div>
+                                <div class="col-sm-9 col-md-10 col-lg-10">
+                                    <span class="text-primary">{"id":8,"created_at":"2019-05-19T21:39:40.918408Z","updated_at":"2019-05-19T21:39:40.918452Z","host":"host4","requester":"david","source":null,"request_details":null,"purpose":"test","notes":null,"expires_at":"2019-05-19T21:54:40.875809Z","status":"granted"}</span><br/>
+                                    <br/>
+                                    <span class="text-danger">{"host":["this host is currently locked"]}</span><br/>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+
+        </div>
+    </section>
+
+{% endblock content %}
