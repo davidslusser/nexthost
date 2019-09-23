@@ -2,6 +2,7 @@ from django.urls import reverse
 from django.db import models as models
 from django.contrib.auth.models import Group
 from django.core.exceptions import ValidationError
+from django.utils import timezone
 
 from itertools import groupby
 from operator import itemgetter
@@ -67,7 +68,7 @@ class Owner(HostManagerBase):
         return Hostname.objects.filter(pattern__project__owner=self, status="reserved")
 
     def get_expired_hostnames(self):
-        return Hostname.objects.filter(pattern__project__owner=self, status="expired")
+        return Hostname.objects.filter(pattern__project__owner=self, assignment_expires__lte=timezone.now())
 
 
 class Project(HostManagerBase):
@@ -128,20 +129,7 @@ class Project(HostManagerBase):
         return Hostname.objects.filter(pattern__project=self, status="assigned")
 
     def get_expired_hostnames(self):
-        return Hostname.objects.filter(pattern__project=self, status="expired")
-
-
-# class Domain(HostManagerBase):
-#     """ domain table """
-#     name = models.CharField(max_length=32, unique=True, help_text="name of this domain")
-#     value = models.CharField(max_length=32, unique=True, help_text="name of this domain")
-#     description = models.CharField(max_length=255, blank=True, null=True, help_text="description of this domain")
-#
-#     def __unicode__(self):
-#         return u'%s' % self.name
-#
-#     def __str__(self):
-#         return self.name
+        return Hostname.objects.filter(pattern__project=self, assignment_expires__lte=timezone.now())
 
 
 class Pattern(HostManagerBase):
@@ -238,6 +226,10 @@ class Pattern(HostManagerBase):
         # return "test"
         return self.hostname_set.all()
 
+    def get_hostnames(self):
+        """ return a queryset of all hostnames for this pattern """
+        return self.hostname_set.all()
+
     def get_available_hostnames(self):
         """ return a queryset of all hostnames for this project with status = 'available' """
         return self.hostname_set.filter(status="available")
@@ -252,7 +244,9 @@ class Pattern(HostManagerBase):
 
     def get_expired_hostnames(self):
         """ return a queryset of all hostnames for this project that are expired """
-        return self.hostname_set.filter(status="expired")
+        # return self.hostname_set.filter(status="expired")
+        # print("NOW: ", timezone.now())
+        return self.hostname_set.filter(assignment_expires__lte=timezone.now())
 
     def get_next_hostname(self, count=1, consecutive=False):
         """

@@ -62,3 +62,5 @@ local_test
 
 # Apple garbage
 *.DS_Store
+/db.sqlite3
+!/db.sqlite3
