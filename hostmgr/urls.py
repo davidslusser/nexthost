@@ -14,7 +14,7 @@ router = DefaultRouter()
 # hostmgr API Endpoints
 router.register(r'owner', apis.OwnerViewSet, "owner")
 router.register(r'project', apis.ProjectViewSet, "project")
-# router.register(r'pattern', apis.PatternViewSet, "pattern")
+router.register(r'pattern', apis.PatternViewSet, "pattern")
 router.register(r'assetidtype', apis.AssetIdTypeViewSet, "assetidtype")
 router.register(r'hostname', apis.HostnameViewSet, "hostname")
 

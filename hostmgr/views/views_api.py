@@ -33,6 +33,104 @@ class OwnerViewSet(viewsets.ReadOnlyModelViewSet):
     filter_fields = ["id", "created_at", "updated_at", "active", "name", "group", "email", ]
     search_fields = filter_fields
 
+    @action(detail=True, methods=['get'])
+    def projects(self, request, pk=None):
+        """ get the a list of all projects for this owner """
+        try:
+            data = self.get_object().get_projects()
+            page = self.paginate_queryset(data)
+            if page is not None:
+                serializer = ProjectSerializer(page, many=True)
+                return self.get_paginated_response(serializer.data)
+            serializer = ProjectSerializer(data, many=True)
+            return Response(serializer.data)
+        except Exception as err:
+            return Response({'messages': err}, status.HTTP_400_BAD_REQUEST)
+
+    @action(detail=True, methods=['get'])
+    def patterns(self, request, pk=None):
+        """ get the a list of all patterns for this owner """
+        try:
+            data = self.get_object().get_patterns()
+            page = self.paginate_queryset(data)
+            if page is not None:
+                serializer = PatternSerializer(page, many=True)
+                return self.get_paginated_response(serializer.data)
+            serializer = PatternSerializer(data, many=True)
+            return Response(serializer.data)
+        except Exception as err:
+            return Response({'messages': err}, status.HTTP_400_BAD_REQUEST)
+
+    @action(detail=True, methods=['get'])
+    def hostnames(self, request, pk=None):
+        """ get the a list of all hostnames for this owner """
+        try:
+            data = self.get_object().get_hostnames()
+            page = self.paginate_queryset(data)
+            if page is not None:
+                serializer = HostnameSerializer(page, many=True)
+                return self.get_paginated_response(serializer.data)
+            serializer = HostnameSerializer(data, many=True)
+            return Response(serializer.data)
+        except Exception as err:
+            return Response({'messages': err}, status.HTTP_400_BAD_REQUEST)
+
+    @action(detail=True, methods=['get'])
+    def available_hostnames(self, request, pk=None):
+        """ get the a list of all 'available' hostnames for this project """
+        try:
+            data = self.get_object().get_available_hostnames()
+            page = self.paginate_queryset(data)
+            if page is not None:
+                serializer = HostnameSerializer(page, many=True)
+                return self.get_paginated_response(serializer.data)
+            serializer = HostnameSerializer(data, many=True)
+            return Response(serializer.data)
+        except Exception as err:
+            return Response({'messages': err}, status.HTTP_400_BAD_REQUEST)
+
+    @action(detail=True, methods=['get'])
+    def reserved_hostnames(self, request, pk=None):
+        """ get the a list of all 'reserved' hostnames for this project """
+        try:
+            data = self.get_object().get_reserved_hostnames()
+            page = self.paginate_queryset(data)
+            if page is not None:
+                serializer = HostnameSerializer(page, many=True)
+                return self.get_paginated_response(serializer.data)
+            serializer = HostnameSerializer(data, many=True)
+            return Response(serializer.data)
+        except Exception as err:
+            return Response({'messages': err}, status.HTTP_400_BAD_REQUEST)
+
+    @action(detail=True, methods=['get'])
+    def assigned_hostnames(self, request, pk=None):
+        """ get the a list of all 'assigned' hostnames for this project """
+        try:
+            data = self.get_object().get_assigned_hostnames()
+            page = self.paginate_queryset(data)
+            if page is not None:
+                serializer = HostnameSerializer(page, many=True)
+                return self.get_paginated_response(serializer.data)
+            serializer = HostnameSerializer(data, many=True)
+            return Response(serializer.data)
+        except Exception as err:
+            return Response({'messages': err}, status.HTTP_400_BAD_REQUEST)
+
+    @action(detail=True, methods=['get'])
+    def expired_hostnames(self, request, pk=None):
+        """ get the a list of all 'expired' hostnames for this project """
+        try:
+            data = self.get_object().get_expired_hostnames()
+            page = self.paginate_queryset(data)
+            if page is not None:
+                serializer = HostnameSerializer(page, many=True)
+                return self.get_paginated_response(serializer.data)
+            serializer = HostnameSerializer(data, many=True)
+            return Response(serializer.data)
+        except Exception as err:
+            return Response({'messages': err}, status.HTTP_400_BAD_REQUEST)
+
 
 class ProjectViewSet(viewsets.ReadOnlyModelViewSet):
     """
@@ -121,47 +219,87 @@ class ProjectViewSet(viewsets.ReadOnlyModelViewSet):
             return Response({'messages': err}, status.HTTP_400_BAD_REQUEST)
 
 
-# class PatternViewSet(viewsets.ReadOnlyModelViewSet):
-#     """
-#     API endpoint that allows Patterns to be viewed or edited.
-#     """
-#     filter_backends = (DjangoFilterBackend, )
-#     model = Pattern
-#     queryset = model.objects.all().select_related()
-#     serializer_class = PatternSerializer
-#     filter_fields = ["id", "name", "description", "project", "prefix", "prefix_delimiter", "suffix", "suffix_delimiter",
-#                      "host_count", "increment", "start_from", "created_at", "updated_at"]
-#     search_fields = filter_fields
+class PatternViewSet(viewsets.ReadOnlyModelViewSet):
+    """
+    API endpoint that allows Patterns to be viewed or edited.
+    """
+    filter_backends = (DjangoFilterBackend, )
+    model = Pattern
+    queryset = model.objects.all().select_related()
+    serializer_class = PatternSerializer
+    filter_fields = ["id", "name", "description", "project", "prefix", "prefix_delimiter", "suffix", "suffix_delimiter",
+                     "host_count", "increment", "start_from", "created_at", "updated_at"]
+    search_fields = filter_fields
 
-    # @action(detail=True, methods=['get'])
-    # def get_next(self):
-    #     """ get the next available hostname(s) for this pattern """
-    #     try:
-    #         print("HERE I AM!!!")
-    #         data = json.loads(self.request.body)
-    #         count = data.get('count', 1)
-    #         consecutive = data.get('consecutive', None)
-    #         pattern = self.get_object()
-    #         return Response(json.dumps({"result": "it works!"}))
-    #         # return Response(json.dumps({'hostnames': pattern.get_next_hostname(user=self.request.user,
-    #         #                                                                    count=count,
-    #         #                                                                    consecutive=consecutive)}))
-    #     except Exception as err:
-    #         return Response({'messages': err}, status.HTTP_400_BAD_REQUEST)
-    #
-    # @action(detail=True, methods=['patch'])
-    # def reserve_next(self):
-    #     """ reserve the next available hostname(s) for this pattern """
-    #     try:
-    #         data = json.loads(self.request.body)
-    #         count = data.get('count', 1)
-    #         consecutive = data.get('consecutive', None)
-    #         pattern = self.get_object()
-    #         return Response(json.dumps({'hostnames': pattern.reserve_next_hostname(count=count,
-    #                                                                                consecutive=consecutive)},
-    #                                    status.HTTP_200_OK))
-    #     except Exception as err:
-    #         return Response({'messages': err}, status.HTTP_400_BAD_REQUEST)
+    @action(detail=True, methods=['get'])
+    def hostnames(self, request, pk=None):
+        """ get the a list of all hostnames for this project """
+        try:
+            data = self.get_object().get_hostnames()
+            page = self.paginate_queryset(data)
+            if page is not None:
+                serializer = HostnameSerializer(page, many=True)
+                return self.get_paginated_response(serializer.data)
+            serializer = HostnameSerializer(data, many=True)
+            return Response(serializer.data)
+        except Exception as err:
+            return Response({'messages': err}, status.HTTP_400_BAD_REQUEST)
+
+    @action(detail=True, methods=['get'])
+    def available_hostnames(self, request, pk=None):
+        """ get the a list of all 'available' hostnames for this project """
+        try:
+            data = self.get_object().get_available_hostnames()
+            page = self.paginate_queryset(data)
+            if page is not None:
+                serializer = HostnameSerializer(page, many=True)
+                return self.get_paginated_response(serializer.data)
+            serializer = HostnameSerializer(data, many=True)
+            return Response(serializer.data)
+        except Exception as err:
+            return Response({'messages': err}, status.HTTP_400_BAD_REQUEST)
+
+    @action(detail=True, methods=['get'])
+    def reserved_hostnames(self, request, pk=None):
+        """ get the a list of all 'reserved' hostnames for this project """
+        try:
+            data = self.get_object().get_reserved_hostnames()
+            page = self.paginate_queryset(data)
+            if page is not None:
+                serializer = HostnameSerializer(page, many=True)
+                return self.get_paginated_response(serializer.data)
+            serializer = HostnameSerializer(data, many=True)
+            return Response(serializer.data)
+        except Exception as err:
+            return Response({'messages': err}, status.HTTP_400_BAD_REQUEST)
+
+    @action(detail=True, methods=['get'])
+    def assigned_hostnames(self, request, pk=None):
+        """ get the a list of all 'assigned' hostnames for this project """
+        try:
+            data = self.get_object().get_assigned_hostnames()
+            page = self.paginate_queryset(data)
+            if page is not None:
+                serializer = HostnameSerializer(page, many=True)
+                return self.get_paginated_response(serializer.data)
+            serializer = HostnameSerializer(data, many=True)
+            return Response(serializer.data)
+        except Exception as err:
+            return Response({'messages': err}, status.HTTP_400_BAD_REQUEST)
+
+    @action(detail=True, methods=['get'])
+    def expired_hostnames(self, request, pk=None):
+        """ get the a list of all 'expired' hostnames for this project """
+        try:
+            data = self.get_object().get_expired_hostnames()
+            page = self.paginate_queryset(data)
+            if page is not None:
+                serializer = HostnameSerializer(page, many=True)
+                return self.get_paginated_response(serializer.data)
+            serializer = HostnameSerializer(data, many=True)
+            return Response(serializer.data)
+        except Exception as err:
+            return Response({'messages': err}, status.HTTP_400_BAD_REQUEST)
 
 
 class AssetIdTypeViewSet(viewsets.ReadOnlyModelViewSet):
