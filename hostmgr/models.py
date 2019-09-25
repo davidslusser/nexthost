@@ -9,6 +9,7 @@ from operator import itemgetter
 # import third party modules
 from auditlog.registry import auditlog
 from djangohelpers.managers import HandyHelperModelManager
+from auditlog.models import AuditlogHistoryField
 
 # import project modules
 from hostmgr.exceptions import (UserNotAuthorized, HostnameInactive, InvalidStateTransition, InvalidAssetIdType,
@@ -18,6 +19,7 @@ from hostmgr.exceptions import (UserNotAuthorized, HostnameInactive, InvalidStat
 class HostManagerBase(models.Model):
     """ abstract model for common hostmgr db fields """
     objects = HandyHelperModelManager()
+    logentry_set = AuditlogHistoryField()
     created_at = models.DateTimeField(auto_now_add=True, editable=False, help_text="date/time when this row was added")
     updated_at = models.DateTimeField(auto_now=True, editable=False, help_text="date/time when this row was updated")
     active = models.BooleanField(default=True, help_text="select if this record is currently active")
@@ -234,8 +236,8 @@ class Pattern(HostManagerBase):
             qs = self.hostname_set.filter(status="available").order_by('-update_at')[:diff]
             qs.delete()
 
-    def myfield(self):
-        # return "test"
+    def get_hostnames(self):
+        """ return a queryset of all hostnames for this project """
         return self.hostname_set.all()
 
     def get_available_hostnames(self):

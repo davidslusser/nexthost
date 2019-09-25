@@ -33,11 +33,8 @@ class ProjectSerializer(serializers.ModelSerializer):
 class PatternSerializer(serializers.ModelSerializer):
     class Meta:
         model = Pattern
-        # myfield = serializers.SerializerMethodField(read_only=True, source='myfield')
-
         fields = ["id", "name", "description", "project", "prefix", "prefix_delimiter", "suffix", "suffix_delimiter",
-                  "host_count", "increment", "start_from", "created_at", "updated_at", "myfield"]
-        # read_only_fields = ["myfield"]
+                  "host_count", "increment", "start_from", "created_at", "updated_at"]
         depth = 0
 
 
