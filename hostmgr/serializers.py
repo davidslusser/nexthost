@@ -1,4 +1,6 @@
 from rest_framework import serializers
+from drf_dynamic_fields import DynamicFieldsMixin
+
 # import models
 from hostmgr.models import (Owner,
                             Project,
@@ -8,7 +10,7 @@ from hostmgr.models import (Owner,
                             )
 
 
-class OwnerSerializer(serializers.ModelSerializer):
+class OwnerSerializer(DynamicFieldsMixin, serializers.ModelSerializer):
     project_count = serializers.SerializerMethodField()
     pattern_count = serializers.SerializerMethodField()
     hostname_count = serializers.SerializerMethodField()
@@ -40,7 +42,7 @@ class HostnameSerializer(serializers.ModelSerializer):
         depth = 0
 
 
-class ProjectSerializer(serializers.ModelSerializer):
+class ProjectSerializer(DynamicFieldsMixin, serializers.ModelSerializer):
     pattern_count = serializers.SerializerMethodField()
     hostname_count = serializers.SerializerMethodField()
     available_hostname_count = serializers.SerializerMethodField()
@@ -80,7 +82,7 @@ class ProjectSerializer(serializers.ModelSerializer):
         return obj.get_expired_hostnames().count()
 
 
-class PatternSerializer(serializers.ModelSerializer):
+class PatternSerializer(DynamicFieldsMixin, serializers.ModelSerializer):
     hostname_count = serializers.SerializerMethodField()
     available_hostname_count = serializers.SerializerMethodField()
     assigned_hostname_count = serializers.SerializerMethodField()
@@ -117,7 +119,7 @@ class PatternSerializer(serializers.ModelSerializer):
         return obj.get_expired_hostnames().count()
 
 
-class AssetIdTypeSerializer(serializers.ModelSerializer):
+class AssetIdTypeSerializer(DynamicFieldsMixin, serializers.ModelSerializer):
     class Meta:
         model = AssetIdType
         fields = ["id", "created_at", "updated_at", "active", "name", "description", ]

@@ -32,6 +32,7 @@ class OwnerViewSet(viewsets.ReadOnlyModelViewSet):
     serializer_class = OwnerSerializer
     filter_fields = ["id", "created_at", "updated_at", "active", "name", "group", "email", ]
     search_fields = filter_fields
+    lookup_field = 'name'
 
     @action(detail=True, methods=['get'])
     def projects(self, request, pk=None):
@@ -45,7 +46,7 @@ class OwnerViewSet(viewsets.ReadOnlyModelViewSet):
             serializer = ProjectSerializer(data, many=True)
             return Response(serializer.data)
         except Exception as err:
-            return Response({'messages': err}, status.HTTP_400_BAD_REQUEST)
+            return Response({'error': 'no data available for requested owner'}, status.HTTP_400_BAD_REQUEST)
 
     @action(detail=True, methods=['get'])
     def patterns(self, request, pk=None):
@@ -59,7 +60,7 @@ class OwnerViewSet(viewsets.ReadOnlyModelViewSet):
             serializer = PatternSerializer(data, many=True)
             return Response(serializer.data)
         except Exception as err:
-            return Response({'messages': err}, status.HTTP_400_BAD_REQUEST)
+            return Response({'error': 'no data available for requested owner'}, status.HTTP_400_BAD_REQUEST)
 
     @action(detail=True, methods=['get'])
     def hostnames(self, request, pk=None):
@@ -73,7 +74,7 @@ class OwnerViewSet(viewsets.ReadOnlyModelViewSet):
             serializer = HostnameSerializer(data, many=True)
             return Response(serializer.data)
         except Exception as err:
-            return Response({'messages': err}, status.HTTP_400_BAD_REQUEST)
+            return Response({'messages': 'no data available for requested owner'}, status.HTTP_400_BAD_REQUEST)
 
     @action(detail=True, methods=['get'])
     def available_hostnames(self, request, pk=None):
@@ -87,7 +88,7 @@ class OwnerViewSet(viewsets.ReadOnlyModelViewSet):
             serializer = HostnameSerializer(data, many=True)
             return Response(serializer.data)
         except Exception as err:
-            return Response({'messages': err}, status.HTTP_400_BAD_REQUEST)
+            return Response({'messages': 'no data available for requested owner'}, status.HTTP_400_BAD_REQUEST)
 
     @action(detail=True, methods=['get'])
     def reserved_hostnames(self, request, pk=None):
@@ -101,7 +102,7 @@ class OwnerViewSet(viewsets.ReadOnlyModelViewSet):
             serializer = HostnameSerializer(data, many=True)
             return Response(serializer.data)
         except Exception as err:
-            return Response({'messages': err}, status.HTTP_400_BAD_REQUEST)
+            return Response({'messages': 'no data available for requested owner'}, status.HTTP_400_BAD_REQUEST)
 
     @action(detail=True, methods=['get'])
     def assigned_hostnames(self, request, pk=None):
@@ -115,7 +116,7 @@ class OwnerViewSet(viewsets.ReadOnlyModelViewSet):
             serializer = HostnameSerializer(data, many=True)
             return Response(serializer.data)
         except Exception as err:
-            return Response({'messages': err}, status.HTTP_400_BAD_REQUEST)
+            return Response({'messages': 'no data available for requested owner'}, status.HTTP_400_BAD_REQUEST)
 
     @action(detail=True, methods=['get'])
     def expired_hostnames(self, request, pk=None):
@@ -129,7 +130,7 @@ class OwnerViewSet(viewsets.ReadOnlyModelViewSet):
             serializer = HostnameSerializer(data, many=True)
             return Response(serializer.data)
         except Exception as err:
-            return Response({'messages': err}, status.HTTP_400_BAD_REQUEST)
+            return Response({'messages': 'no data available for requested owner'}, status.HTTP_400_BAD_REQUEST)
 
 
 class ProjectViewSet(viewsets.ReadOnlyModelViewSet):
@@ -142,6 +143,7 @@ class ProjectViewSet(viewsets.ReadOnlyModelViewSet):
     serializer_class = ProjectSerializer
     filter_fields = ["id", "created_at", "updated_at", "active", "name", "owner", "description", ]
     search_fields = filter_fields
+    lookup_field = 'name'
 
     @action(detail=True, methods=['get'])
     def hostnames(self, request, pk=None):
@@ -230,6 +232,7 @@ class PatternViewSet(viewsets.ReadOnlyModelViewSet):
     filter_fields = ["id", "name", "description", "project", "prefix", "prefix_delimiter", "suffix", "suffix_delimiter",
                      "host_count", "increment", "start_from", "created_at", "updated_at"]
     search_fields = filter_fields
+    lookup_field = 'name'
 
     @action(detail=True, methods=['get'])
     def hostnames(self, request, pk=None):
@@ -312,6 +315,7 @@ class AssetIdTypeViewSet(viewsets.ReadOnlyModelViewSet):
     serializer_class = AssetIdTypeSerializer
     filter_fields = ["id", "created_at", "updated_at", "active", "name", "description", ]
     search_fields = filter_fields
+    lookup_field = 'name'
 
 
 class HostnameViewSet(viewsets.ReadOnlyModelViewSet):
@@ -325,17 +329,17 @@ class HostnameViewSet(viewsets.ReadOnlyModelViewSet):
     filter_fields = ["id", "created_at", "updated_at", "active", "pattern", "hostname", "asset_id", "asset_id_type",
                      "persistent", "status", "reservation_expires", "assignment_expires", ]
     search_fields = filter_fields
+    lookup_field = 'hostname'
 
     @action(detail=True, methods=['patch'])
     def assign(self):
         """ set a hostname to assigned; requires fields: asset_id, asset_id_type; optional fields: persistent"""
-        print("TEST: trying to assign...")
-        # try:
-        #     hostname = self.get_object()
-        #     hostname.assign_hostname(user=self.request.user)
-        #     return Response(self.serializer_class.data, status.HTTP_200_OK)
-        # except Exception as err:
-        #     return Response({'messages': err}, status.HTTP_400_BAD_REQUEST)
+        try:
+            hostname = self.get_object()
+            hostname.assign_hostname(user=self.request.user)
+            return Response(self.serializer_class.data, status.HTTP_200_OK)
+        except Exception as err:
+            return Response({'messages': err}, status.HTTP_400_BAD_REQUEST)
 
     @action(detail=True, methods=['patch'])
     def release(self):

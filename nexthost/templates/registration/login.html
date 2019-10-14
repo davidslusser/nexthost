@@ -7,7 +7,7 @@
 {% endblock %}
 
 {% block content %}
-<div class="container animated fadeIn">
+<div class="container animated fadeIn mb-5">
     <h1 class="text-center">Welcome to NextHost!</h1>
     <h4 class="text-center">Please sign in to continue.</h4>
     <br/>
@@ -57,8 +57,12 @@
                 <br>
                 <button class="btn btn-lg btn-info btn-block" type="submit">Login</button>
             </form>
-
         </div>
+    </div>
+</div>
+<div class="container animated fadeIn">
+    <div class="row align-items-center justify-content-center">
+        <a href="{% url 'register' %}">Register new user</a>
     </div>
 </div>
 
