@@ -1,3 +1,7 @@
+"""
+Description: this file provides project-level views
+"""
+
 from django.views.generic import (View, ListView, TemplateView, DeleteView)
 from django.shortcuts import render, redirect
 from django.contrib import messages
@@ -7,7 +11,9 @@ from braces.views import LoginRequiredMixin, GroupRequiredMixin
 from rest_framework import response, schemas
 from rest_framework.decorators import api_view, renderer_classes
 from rest_framework_swagger.renderers import OpenAPIRenderer, SwaggerUIRenderer
-
+from django.contrib.auth.forms import UserCreationForm
+from django.urls import reverse_lazy
+from django.views import generic
 
 # import models
 from userextensions.models import (UserRecent, UserFavorite)
@@ -70,6 +76,13 @@ class UpdateApiToken(LoginRequiredMixin, View):
             messages.add_message(request, messages.ERROR, "Could not complete requested action",
                                  extra_tags='alert-danger')
         return redirect(redirect_url)
+
+
+class RegisterUser(generic.CreateView):
+    """ add a new user to NextHost """
+    form_class = UserCreationForm
+    success_url = reverse_lazy('login')
+    template_name = 'registration/register_user.html'
 
 
 class ShowDashboard(LoginRequiredMixin, View):

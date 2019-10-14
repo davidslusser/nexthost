@@ -1,0 +1,33 @@
+{% extends base_template|default:"base.htm" %}
+{% load staticfiles %}
+
+
+{% block content %}
+<div class="container-fluid text-center mb-5 animated fadeIn">
+    <h1><b><span class="text-primary">Next</span><span class="text-secondary">Host</span></b></h1>
+</div>
+
+<section class="animated fadeIn" style="animation-delay: .25s;">
+    <div class="container-fluid mb-5">
+        <div>
+            NextHost is a service created to manage hostnames.
+
+            Hostnames are added automatically when a new pattern is created. The pattern parameters determine the
+            format of the hostnames. When initially created, hostnames have a status of 'available.' A hostname
+            can have a status available, reserved, assigned, or expired. Status for a hostname can be changed via RESTful API
+            or via web interface. Full roll based access controls limits changes to applicable project owners.
+
+            All hostnames reside under a pattern, each pattern resides in a project, and very project has an owner. Owners
+            can have multiple projects, and projects can have multiple patterns.
+
+            NextHost includes views and APIs to show hostnames of any or all status by pattern, project, or owner.
+
+            example: An owner, named ops, has a project named redis. This project has three patterns:
+            aws_redis_(\d[3]), azr_redis_(\d[3]), and gcp_redis_(\d[3]), with each pattern allowing upto ten hosts. Hostnames
+            for this project would include: aws_redis_001, aws_redis_002, aws_redis_003, azr_redis_001, azr_redis_002, azr_redis_003,
+            gcp_redis_001, gcp_redis_002, gcp_redis_003, etc.
+
+        </div>
+    </div>
+</section>
+{% endblock content %}

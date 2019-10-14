@@ -90,14 +90,62 @@ class ShowAdminPanel(LoginRequiredMixin, View):
         return render(request, template, context=context)
 
 
-class ShowApiGuide(LoginRequiredMixin, View):
-    """ display help docs for apis """
+class ShowApiGuideIndex(LoginRequiredMixin, View):
+    """ display index page for api help docs """
     @staticmethod
     def get(request):
-        template = "custom/api_guide.html"
+        template = "custom/api_guide_index.html"
         context = dict()
         context['title'] = 'API Guide'
         context['sub_title'] = "Hostname endpoints"
+        context['token'] = str(Token.objects.get_or_create(user=request.user)[0])
+        return render(request, template, context=context)
+
+
+class ShowApiGuideV1Owner(LoginRequiredMixin, View):
+    """ display api documentation for Owner apis (v1) """
+    @staticmethod
+    def get(request):
+        template = "custom/api_guide_v1_owner.html"
+        context = dict()
+        context['title'] = 'Owner APIs'
+        context['sub_title'] = "v1"
+        context['token'] = str(Token.objects.get_or_create(user=request.user)[0])
+        return render(request, template, context=context)
+
+
+class ShowApiGuideV1Project(LoginRequiredMixin, View):
+    """ display api documentation for Project apis (v1) """
+    @staticmethod
+    def get(request):
+        template = "custom/api_guide_v1_project.html"
+        context = dict()
+        context['title'] = 'Project APIs'
+        context['sub_title'] = "v1"
+        context['token'] = str(Token.objects.get_or_create(user=request.user)[0])
+        return render(request, template, context=context)
+
+
+class ShowApiGuideV1Pattern(LoginRequiredMixin, View):
+    """ display api documentation for Pattern apis (v1) """
+    @staticmethod
+    def get(request):
+        template = "custom/api_guide_v1_pattern.html"
+        context = dict()
+        context['title'] = 'Pattern APIs'
+        context['sub_title'] = "v1"
+        context['token'] = str(Token.objects.get_or_create(user=request.user)[0])
+        return render(request, template, context=context)
+
+
+class ShowApiGuideV1Hostname(LoginRequiredMixin, View):
+    """ display api documentation for Hostname apis (v1) """
+    @staticmethod
+    def get(request):
+        template = "custom/api_guide_v1_hostname.html"
+        context = dict()
+        context['title'] = 'Hostname APIs'
+        context['sub_title'] = "v1"
         context['token'] = str(Token.objects.get_or_create(user=request.user)[0])
         return render(request, template, context=context)
 

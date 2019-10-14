@@ -1,0 +1,433 @@
+{% extends "base.htm" %}
+{% load staticfiles %}
+
+{% block local_head %}
+    {% include "component/table_components.htm" %}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.min.css" integrity="sha256-HtCCUh9Hkh//8U1OwcbD8epVEUdBvuI8wj1KtqMhNkI=" crossorigin="anonymous" />
+{% endblock %}
+
+{% block content %}
+    <div class="container-fluid">
+        <h1 class="text-primary"><b>{{ title }}:</b> {% if sub_title %}<small><small><span class="text-secondary">{{ sub_title }}</span></small></small>{% endif %}</h1>
+    </div>
+
+    <section class="mt-5 animated fadeIn">
+        <div class="container-fluid">
+
+            <div id="accordion">
+
+                <!-- list owners -->
+                <div class="card mb-2">
+                    <div class="card-header">
+                        <a class="card-link" data-toggle="collapse" href="#list_owners">
+                            <b>List all owners</b>
+                        </a>
+                    </div>
+                    <div id="list_owners" class="collapse" data-parent="#accordion">
+                        <div class="card-body">
+                            <div class="row m-2 boarder border-bottom boarder-secondary">
+                                <div class="col-sm-3 col-md-2 col-lg-2 text-primary"><b>Description: </b></div>
+                                <div class="col-sm-9 col-md-10 col-lg-10">This endpoint lists all owners. Results can be filtered by using any combination of the filter fields listed below.
+                                </div>
+                            </div>
+                            <div class="row">&nbsp;</div>
+                            <div class="row m-2 boarder border-bottom boarder-secondary">
+                                <div class="col-sm-3 col-md-2 col-lg-2 text-primary"><b>Method(s): </b></div>
+                                <div class="col-sm-9 col-md-10 col-lg-10">GET</div>
+                            </div>
+                            <div class="row">&nbsp;</div>
+                            <div class="row m-2 boarder border-bottom boarder-secondary">
+                                <div class="col-sm-3 col-md-2 col-lg-2 text-primary"><b>Filters fields: </b></div>
+                                <div class="col-sm-9 col-md-10 col-lg-10">
+                                    <div class="row">
+                                        <div class="col-md-2 col-sm-3"><span class="font-weight-bold">id:</span></div>
+                                        <div class="col-md-2 col-sm-3"><span class="font-italic">integer</span></div>
+                                        <div class="col-md-8 col-sm-6">database ID of owner</div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-2 col-sm-3"><span class="font-weight-bold">active:</span></div>
+                                        <div class="col-md-2 col-sm-3"><span class="font-italic">boolean</span></div>
+                                        <div class="col-md-8 col-sm-6">current status of owner</div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-2 col-sm-3"><span class="font-weight-bold">name:</span></div>
+                                        <div class="col-md-2 col-sm-3"><span class="font-italic">string</span></div>
+                                        <div class="col-md-8 col-sm-6">name of owner</div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-2 col-sm-3"><span class="font-weight-bold">email:</span></div>
+                                        <div class="col-md-2 col-sm-3"><span class="font-italic">string</span></div>
+                                        <div class="col-md-8 col-sm-6">email address of owner</div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-2 col-sm-3"><span class="font-weight-bold">name:</span></div>
+                                        <div class="col-md-2 col-sm-3"><span class="font-italic">string</span></div>
+                                        <div class="col-md-8 col-sm-6">name of owner</div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-2 col-sm-3"><span class="font-weight-bold">email:</span></div>
+                                        <div class="col-md-2 col-sm-3"><span class="font-italic">string</span></div>
+                                        <div class="col-md-8 col-sm-6">owner email address</div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-2 col-sm-3"><span class="font-weight-bold">created_at:</span></div>
+                                        <div class="col-md-2 col-sm-3"><span class="font-italic">datetime</span></div>
+                                        <div class="col-md-8 col-sm-6">timestamp of when this record was first created</div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-2 col-sm-3"><span class="font-weight-bold">updated_at:</span></div>
+                                        <div class="col-md-2 col-sm-3"><span class="font-italic">datetime</span></div>
+                                        <div class="col-md-8 col-sm-6">timestamp of when this record was lasted updated</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">&nbsp;</div>
+                            <div class="row m-2 boarder border-bottom boarder-secondary">
+                                <div class="col-sm-3 col-md-2 col-lg-2 text-primary"><b>Example Call: </b></div>
+                                <div class="col-sm-9 col-md-10 col-lg-10">curl -X GET http://{{ request.META.HTTP_HOST }}/hostmgr/api/v1/owner/ -H 'Authorization: Token {{ token }}'</div>
+                            </div>
+                            <div class="row">&nbsp;</div>
+                            <div class="row m-2">
+                                <div class="col-sm-3 col-md-2 col-lg-2 text-primary"><b>Example Responses: </b></div>
+                                <div class="col-sm-9 col-md-10 col-lg-10">
+                                        <span class="text-primary">
+                                            [{"id":55,"created_at":"2019-08-22T00:36:28.335291Z","updated_at":"2019-08-22T00:36:28.335314Z","active":true,"name":"owner_005","group":65,"email":null,"project_count":3,"pattern_count":17,"hostname_count":167},{"id":54,"created_at":"2019-08-22T00:36:28.331864Z","updated_at":"2019-08-22T00:36:28.331892Z","active":true,"name":"owner_004","group":64,"email":null,"project_count":2,"pattern_count":8,"hostname_count":66},{"id":53,"created_at":"2019-08-22T00:36:28.328071Z","updated_at":"2019-08-22T00:36:28.328099Z","active":true,"name":"owner_003","group":65,"email":null,"project_count":2,"pattern_count":10,"hostname_count":87},]
+                                        </span><br/>
+                                    <br/>
+                                    <span class="text-danger">
+
+                                        </span><br/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- detail owner -->
+                <div class="card mb-2">
+                    <div class="card-header">
+                        <a class="card-link" data-toggle="collapse" href="#detail_owner">
+                            <b>Detail specific owner</b>
+                        </a>
+                    </div>
+                    <div id="detail_owner" class="collapse" data-parent="#accordion">
+                        <div class="card-body">
+                        </div>
+                    </div>
+                </div>
+
+{#                <!-- detail owner-->#}
+{#                <div class="card mb-2">#}
+{#                    <div class="card-header">#}
+{#                        <a class="card-link" data-toggle="collapse" href="#assign">#}
+{#                            <b>Assign hostname</b>#}
+{#                        </a>#}
+{#                    </div>#}
+{#                    <div id="assign" class="collapse" data-parent="#accordion">#}
+{#                        <div class="card-body">#}
+{#                            <div class="row m-2 boarder border-bottom boarder-secondary">#}
+{#                                <div class="col-sm-3 col-md-2 col-lg-2 text-primary"><b>Description: </b></div>#}
+{#                                <div class="col-sm-9 col-md-10 col-lg-10">Sets a provided hostname to a status of 'assigned.'#}
+{#                                </div>#}
+{#                            </div>#}
+{#                            <div class="row">&nbsp;</div>#}
+{#                            <div class="row m-2 boarder border-bottom boarder-secondary">#}
+{#                                <div class="col-sm-3 col-md-2 col-lg-2 text-primary"><b>Method(s): </b></div>#}
+{#                                <div class="col-sm-9 col-md-10 col-lg-10">PATCH</div>#}
+{#                            </div>#}
+{#                            <div class="row m-2 boarder border-bottom boarder-secondary">#}
+{#                                <div class="col-sm-3 col-md-2 col-lg-2 text-primary"><b>Required Fields: </b></div>#}
+{#                                <div class="col-sm-9 col-md-10 col-lg-10">asset_id <small>(char)</small>, asset_id_type <small>(int)</small></div>#}
+{##}
+{#                            </div>#}
+{#                            <div class="row m-2 boarder border-bottom boarder-secondary">#}
+{#                                <div class="col-sm-3 col-md-2 col-lg-2 text-primary"><b>Optional Fields: </b></div>#}
+{#                                <div class="col-sm-9 col-md-10 col-lg-10">persistent <small>(char)</small>, assignment_expires <small>(date/time)</small></div>#}
+{#                            </div>#}
+{#                            <div class="row">&nbsp;</div>#}
+{#                            <div class="row m-2 boarder border-bottom boarder-secondary">#}
+{#                                <div class="col-sm-3 col-md-2 col-lg-2 text-primary"><b>Example Call: </b></div>#}
+{#                                <div class="col-sm-9 col-md-10 col-lg-10">curl -X PATCH http://{{ request.META.HTTP_HOST }}/hostmgr/api/v1/owner/my_owner/assign -H 'Authorization: Token {{ token }}' -d '{"asset_id":"12345", "asset_id_type":"serial number"}'</div>#}
+{#                            </div>#}
+{#                            <div class="row">&nbsp;</div>#}
+{#                            <div class="row m-2">#}
+{#                                <div class="col-sm-3 col-md-2 col-lg-2 text-primary"><b>Example Responses: </b></div>#}
+{#                                <div class="col-sm-9 col-md-10 col-lg-10">#}
+{#                                    <span class="text-primary">{"id":8,"created_at":"2019-05-19T21:39:40.918408Z","updated_at":"2019-05-19T21:39:40.918452Z","host":"host4","requester":"david","source":null,"request_details":null,"purpose":"test","notes":null,"expires_at":"2019-05-19T21:54:40.875809Z","status":"granted"}</span><br/>#}
+{#                                    <br/>#}
+{#                                    <span class="text-danger">{"host":["this host is currently locked"]}</span><br/>#}
+{#                                </div>#}
+{#                            </div>#}
+{#                        </div>#}
+{#                    </div>#}
+{#                </div>#}
+
+                <!-- project-->
+                <div class="card mb-2">
+                    <div class="card-header">
+                        <a class="card-link" data-toggle="collapse" href="#project">
+                            <b>List all projects for owner</b>
+                        </a>
+                    </div>
+                    <div id="project" class="collapse" data-parent="#accordion">
+                        <div class="card-body">
+                            <div class="card-body">
+                                <div class="row m-2 boarder border-bottom boarder-secondary">
+                                    <div class="col-sm-3 col-md-2 col-lg-2 text-primary"><b>Description: </b></div>
+                                    <div class="col-sm-9 col-md-10 col-lg-10">List all projects for a specific owner
+                                    </div>
+                                </div>
+                                <div class="row">&nbsp;</div>
+                                <div class="row m-2 boarder border-bottom boarder-secondary">
+                                    <div class="col-sm-3 col-md-2 col-lg-2 text-primary"><b>Method(s): </b></div>
+                                    <div class="col-sm-9 col-md-10 col-lg-10">GET</div>
+                                </div>
+                                <div class="row">&nbsp;</div>
+                                <div class="row m-2 boarder border-bottom boarder-secondary">
+                                    <div class="col-sm-3 col-md-2 col-lg-2 text-primary"><b>Example Call: </b></div>
+                                    <div class="col-sm-9 col-md-10 col-lg-10">curl -X GET http://{{ request.META.HTTP_HOST }}/hostmgr/api/v1/owner/<span class="font-weight-bold font-italic text-primary">my_owner</span>/projects -H 'Authorization: Token {{ token }}'</div>
+                                </div>
+                                <div class="row">&nbsp;</div>
+                                <div class="row m-2">
+                                    <div class="col-sm-3 col-md-2 col-lg-2 text-primary"><b>Example Responses: </b></div>
+                                    <div class="col-sm-9 col-md-10 col-lg-10">
+                                        <span class="text-primary">
+                                            [{"id":85,"created_at":"2019-08-22T00:36:28.358999Z","updated_at":"2019-08-22T00:36:28.359023Z","active":true,"name":"project_005","owner":55,"description":null,"pattern_count":7,"hostname_count":62,"available_hostname_count":38,"assigned_hostname_count":14,"reserved_hostname_count":10,"expired_hostname_count":0}]
+                                        </span><br/>
+                                        <br/>
+                                        <span class="text-danger">
+                                            {"detail":"Not found."}
+                                        </span><br/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- pattern-->
+                <div class="card mb-2">
+                    <div class="card-header">
+                        <a class="card-link" data-toggle="collapse" href="#pattern">
+                            <b>List all patterns for owner</b>
+                        </a>
+                    </div>
+                    <div id="pattern" class="collapse" data-parent="#accordion">
+                        <div class="card-body">
+                            <div class="card-body">
+                                <div class="row m-2 boarder border-bottom boarder-secondary">
+                                    <div class="col-sm-3 col-md-2 col-lg-2 text-primary"><b>Description: </b></div>
+                                    <div class="col-sm-9 col-md-10 col-lg-10">List all pattern for a specific owner'
+                                    </div>
+                                </div>
+                                <div class="row">&nbsp;</div>
+                                <div class="row m-2 boarder border-bottom boarder-secondary">
+                                    <div class="col-sm-3 col-md-2 col-lg-2 text-primary"><b>Method(s): </b></div>
+                                    <div class="col-sm-9 col-md-10 col-lg-10">GET</div>
+                                </div>
+                                <div class="row m-2 boarder border-bottom boarder-secondary">
+                                    <div class="col-sm-3 col-md-2 col-lg-2 text-primary"><b>Required Fields: </b></div>
+                                    <div class="col-sm-9 col-md-10 col-lg-10"><span class="font-italic">None</span></div>
+
+                                </div>
+                                <div class="row m-2 boarder border-bottom boarder-secondary">
+                                    <div class="col-sm-3 col-md-2 col-lg-2 text-primary"><b>Optional Fields: </b></div>
+                                    <div class="col-sm-9 col-md-10 col-lg-10"><span class="font-italic">None</span></div>
+                                </div>
+                                <div class="row">&nbsp;</div>
+                                <div class="row m-2 boarder border-bottom boarder-secondary">
+                                    <div class="col-sm-3 col-md-2 col-lg-2 text-primary"><b>Example Call: </b></div>
+                                    <div class="col-sm-9 col-md-10 col-lg-10">curl -X GET http://{{ request.META.HTTP_HOST }}/hostmgr/api/v1/owner/my_owner/patterns -H 'Authorization: Token {{ token }}'</div>
+                                </div>
+                                <div class="row">&nbsp;</div>
+                                <div class="row m-2">
+                                    <div class="col-sm-3 col-md-2 col-lg-2 text-primary"><b>Example Responses: </b></div>
+                                    <div class="col-sm-9 col-md-10 col-lg-10">
+                                        <span class="text-primary"></span><br/>
+                                        <br/>
+                                        <span class="text-danger"></span><br/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- all hostname-->
+                <div class="card mb-2">
+                    <div class="card-header">
+                        <a class="card-link" data-toggle="collapse" href="#hostname_all">
+                            <b>List all hostnames for owner</b>
+                        </a>
+                    </div>
+                    <div id="hostname_all" class="collapse" data-parent="#accordion">
+                        <div class="card-body">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- assigned hostname-->
+                <div class="card mb-2">
+                    <div class="card-header">
+                        <a class="card-link" data-toggle="collapse" href="#hostname_assigned">
+                            <b>List assigned hostnames for owner</b>
+                        </a>
+                    </div>
+                    <div id="hostname_assigned" class="collapse" data-parent="#accordion">
+                        <div class="card-body">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- reserved hostname-->
+                <div class="card mb-2">
+                    <div class="card-header">
+                        <a class="card-link" data-toggle="collapse" href="#hostname_reserved">
+                            <b>List reserved hostnames for owner</b>
+                        </a>
+                    </div>
+                    <div id="hostname_reserved" class="collapse" data-parent="#accordion">
+                        <div class="card-body">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- available hostname-->
+                <div class="card mb-2">
+                    <div class="card-header">
+                        <a class="card-link" data-toggle="collapse" href="#hostname_available">
+                            <b>List assigned hostnames for owner</b>
+                        </a>
+                    </div>
+                    <div id="hostname_available" class="collapse" data-parent="#accordion">
+                        <div class="card-body">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- expired hostname-->
+                <div class="card mb-2">
+                    <div class="card-header">
+                        <a class="card-link" data-toggle="collapse" href="#hostname_expired">
+                            <b>List expired hostnames for owner</b>
+                        </a>
+                    </div>
+                    <div id="hostname_expired" class="collapse" data-parent="#accordion">
+                        <div class="card-body">
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+{##}
+{#            <div id="accordion">#}
+{##}
+{#                <!-- list owners-->#}
+{#                <div class="card mb-2">#}
+{#                    <div class="card-header">#}
+{#                        <a class="card-link" data-toggle="collapse" href="#list">#}
+{#                            <b>List all owners</b>#}
+{#                        </a>#}
+{#                    </div>#}
+{#                    <div id="list" class="collapse" data-parent="#accordion">#}
+{#                        <div class="card-body">#}
+{#                            <div class="row m-2 boarder border-bottom boarder-secondary">#}
+{#                                <div class="col-sm-3 col-md-2 col-lg-2 text-primary"><b>Description: </b></div>#}
+{#                                <div class="col-sm-9 col-md-10 col-lg-10">Sets a provided hostname to a status of 'assigned.'#}
+{#                                </div>#}
+{#                            </div>#}
+{#                            <div class="row">&nbsp;</div>#}
+{#                            <div class="row m-2 boarder border-bottom boarder-secondary">#}
+{#                                <div class="col-sm-3 col-md-2 col-lg-2 text-primary"><b>Method(s): </b></div>#}
+{#                                <div class="col-sm-9 col-md-10 col-lg-10">PATCH</div>#}
+{#                            </div>#}
+{#                            <div class="row m-2 boarder border-bottom boarder-secondary">#}
+{#                                <div class="col-sm-3 col-md-2 col-lg-2 text-primary"><b>Required Fields: </b></div>#}
+{#                                <div class="col-sm-9 col-md-10 col-lg-10">asset_id <small>(char)</small>, asset_id_type <small>(int)</small></div>#}
+{##}
+{#                            </div>#}
+{#                            <div class="row m-2 boarder border-bottom boarder-secondary">#}
+{#                                <div class="col-sm-3 col-md-2 col-lg-2 text-primary"><b>Optional Fields: </b></div>#}
+{#                                <div class="col-sm-9 col-md-10 col-lg-10">persistent <small>(char)</small>, assignment_expires <small>(date/time)</small></div>#}
+{#                            </div>#}
+{#                            <div class="row">&nbsp;</div>#}
+{#                            <div class="row m-2 boarder border-bottom boarder-secondary">#}
+{#                                <div class="col-sm-3 col-md-2 col-lg-2 text-primary"><b>Example Call: </b></div>#}
+{#                                <div class="col-sm-9 col-md-10 col-lg-10">curl -X PATCH http://{{ request.META.HTTP_HOST }}/hostmgr/api/v1/hostname/123/assign -H 'Authorization: Token {{ token }}' -d '{"asset_id":"12345", "asset_id_type":"serial number"}'</div>#}
+{#                            </div>#}
+{#                            <div class="row">&nbsp;</div>#}
+{#                            <div class="row m-2">#}
+{#                                <div class="col-sm-3 col-md-2 col-lg-2 text-primary"><b>Example Responses: </b></div>#}
+{#                                <div class="col-sm-9 col-md-10 col-lg-10">#}
+{#                                    <span class="text-primary">{"id":8,"created_at":"2019-05-19T21:39:40.918408Z","updated_at":"2019-05-19T21:39:40.918452Z","host":"host4","requester":"david","source":null,"request_details":null,"purpose":"test","notes":null,"expires_at":"2019-05-19T21:54:40.875809Z","status":"granted"}</span><br/>#}
+{#                                    <br/>#}
+{#                                    <span class="text-danger">{"host":["this host is currently locked"]}</span><br/>#}
+{#                                </div>#}
+{#                            </div>#}
+{##}
+{#                        </div>#}
+{#                    </div>#}
+{#                </div>#}
+{##}
+{#                <!-- detail owner-->#}
+{#                <div class="card mb-2">#}
+{#                    <div class="card-header">#}
+{#                        <a class="card-link" data-toggle="collapse" href="#detail">#}
+{#                            <b>Detail an owner</b>#}
+{#                        </a>#}
+{#                    </div>#}
+{#                    <div id="detail" class="collapse" data-parent="#accordion">#}
+{#                        <div class="card-body">#}
+{#                            <div class="row m-2 boarder border-bottom boarder-secondary">#}
+{#                                <div class="col-sm-3 col-md-2 col-lg-2 text-primary"><b>Description: </b></div>#}
+{#                                <div class="col-sm-9 col-md-10 col-lg-10">Sets a provided hostname to a status of 'assigned.'#}
+{#                                </div>#}
+{#                            </div>#}
+{#                            <div class="row">&nbsp;</div>#}
+{#                            <div class="row m-2 boarder border-bottom boarder-secondary">#}
+{#                                <div class="col-sm-3 col-md-2 col-lg-2 text-primary"><b>Method(s): </b></div>#}
+{#                                <div class="col-sm-9 col-md-10 col-lg-10">PATCH</div>#}
+{#                            </div>#}
+{#                            <div class="row m-2 boarder border-bottom boarder-secondary">#}
+{#                                <div class="col-sm-3 col-md-2 col-lg-2 text-primary"><b>Required Fields: </b></div>#}
+{#                                <div class="col-sm-9 col-md-10 col-lg-10">asset_id <small>(char)</small>, asset_id_type <small>(int)</small></div>#}
+{##}
+{#                            </div>#}
+{#                            <div class="row m-2 boarder border-bottom boarder-secondary">#}
+{#                                <div class="col-sm-3 col-md-2 col-lg-2 text-primary"><b>Optional Fields: </b></div>#}
+{#                                <div class="col-sm-9 col-md-10 col-lg-10">persistent <small>(char)</small>, assignment_expires <small>(date/time)</small></div>#}
+{#                            </div>#}
+{#                            <div class="row">&nbsp;</div>#}
+{#                            <div class="row m-2 boarder border-bottom boarder-secondary">#}
+{#                                <div class="col-sm-3 col-md-2 col-lg-2 text-primary"><b>Example Call: </b></div>#}
+{#                                <div class="col-sm-9 col-md-10 col-lg-10">curl -X PATCH http://{{ request.META.HTTP_HOST }}/hostmgr/api/v1/hostname/123/assign -H 'Authorization: Token {{ token }}' -d '{"asset_id":"12345", "asset_id_type":"serial number"}'</div>#}
+{#                            </div>#}
+{#                            <div class="row">&nbsp;</div>#}
+{#                            <div class="row m-2">#}
+{#                                <div class="col-sm-3 col-md-2 col-lg-2 text-primary"><b>Example Responses: </b></div>#}
+{#                                <div class="col-sm-9 col-md-10 col-lg-10">#}
+{#                                    <span class="text-primary">{"id":8,"created_at":"2019-05-19T21:39:40.918408Z","updated_at":"2019-05-19T21:39:40.918452Z","host":"host4","requester":"david","source":null,"request_details":null,"purpose":"test","notes":null,"expires_at":"2019-05-19T21:54:40.875809Z","status":"granted"}</span><br/>#}
+{#                                    <br/>#}
+{#                                    <span class="text-danger">{"host":["this host is currently locked"]}</span><br/>#}
+{#                                </div>#}
+{#                            </div>#}
+{##}
+{#                        </div>#}
+{#                    </div>#}
+{#                </div>#}
+{##}
+{##}
+{#            </div> <!-- end accordion -->#}
+
+
+
+
+
+
+
+
+        </div>
+    </section>
+
+{% endblock content %}

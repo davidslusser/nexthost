@@ -37,7 +37,11 @@ urlpatterns = [
 
     # custom views
     path('show_admin_panel/', gui.ShowAdminPanel.as_view(), name='show_admin_panel'),
-    path('show_api_guide/', gui.ShowApiGuide.as_view(), name='show_api_guide'),
+    path('show_api_guide/', gui.ShowApiGuideIndex.as_view(), name='show_api_guide'),
+    path('show_api_guide_v1_owner/', gui.ShowApiGuideV1Owner.as_view(), name='show_api_guide_v1_owner'),
+    path('show_api_guide_v1_project/', gui.ShowApiGuideV1Project.as_view(), name='show_api_guide_v1_project'),
+    path('show_api_guide_v1_pattern/', gui.ShowApiGuideV1Pattern.as_view(), name='show_api_guide_v1_pattern'),
+    path('show_api_guide_v1_hostname/', gui.ShowApiGuideV1Hostname.as_view(), name='show_api_guide_v1_hostname'),
 
     # ajax views
     path('get_owner_details', ajax.get_owner_details, name='get_owner_details'),
