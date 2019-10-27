@@ -14,7 +14,6 @@ Including another URLconf
     2. Add a URL to urlpatterns:  url(r'^blog/', include('blog.urls'))
 """
 from django.urls import path, include
-from django.contrib.auth.views import login, logout_then_login
 from django.views.generic import TemplateView
 from django.conf import settings
 from django.contrib import admin
@@ -22,8 +21,7 @@ from nexthost import views
 
 urlpatterns = [
     path('admin/', admin.site.urls, name='admin'),
-    path('login/', login, {'template_name': 'registration/login.html'}, name="login"),
-    path('logout/', logout_then_login, name="logout"),
+    path('accounts/', include('django.contrib.auth.urls')),
 
     # home page
     path('', TemplateView.as_view(template_name='index.html')),
