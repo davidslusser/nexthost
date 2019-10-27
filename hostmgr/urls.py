@@ -49,6 +49,24 @@ urlpatterns = [
     path('get_pattern_details', ajax.get_pattern_details, name='get_pattern_details'),
     path('get_hostname_details', ajax.get_hostname_details, name='get_hostname_details'),
 
+    path('get_users_per_owner', ajax.get_users_per_owner, name='get_users_per_owner'),
+    path('get_projects_per_owner', ajax.get_projects_per_owner, name='get_projects_per_owner'),
+    path('get_patterns_per_owner', ajax.get_patterns_per_owner, name='get_patterns_per_owner'),
+    path('get_hostnames_per_owner', ajax.get_hostnames_per_owner, name='get_hostnames_per_owner'),
+
+    path('get_patterns_per_project', ajax.get_patterns_per_project, name='get_patterns_per_project'),
+    path('get_hostnames_per_project', ajax.get_hostnames_per_project, name='get_hostnames_per_project'),
+    path('get_assigned_hostnames_per_project', ajax.get_assigned_hostnames_per_project, name='get_assigned_hostnames_per_project'),
+    path('get_availble_hostnames_per_project', ajax.get_available_hostnames_per_project, name='get_available_hostnames_per_project'),
+    path('get_expired_hostnames_per_project', ajax.get_expired_hostnames_per_project, name='get_expired_hostnames_per_project'),
+    path('get_reserved_hostnames_per_project', ajax.get_reserved_hostnames_per_project, name='get_reserved_hostnames_per_project'),
+
+    path('get_hostnames_per_pattern', ajax.get_hostnames_per_pattern, name='get_hostnames_per_pattern'),
+    path('get_assigned_hostnames_per_pattern', ajax.get_assigned_hostnames_per_pattern, name='get_assigned_hostnames_per_pattern'),
+    path('get_available_hostnames_per_pattern', ajax.get_available_hostnames_per_pattern, name='get_available_hostnames_per_pattern'),
+    path('get_expired_hostnames_per_pattern', ajax.get_expired_hostnames_per_pattern, name='get_expired_hostnames_per_pattern'),
+    path('get_reserved_hostnames_per_pattern', ajax.get_reserved_hostnames_per_pattern, name='get_reserved_hostnames_per_pattern'),
+
     path('get_owner_auditlog', ajax.get_owner_auditlog, name='get_owner_auditlog'),
     path('get_project_auditlog', ajax.get_project_auditlog, name='get_project_auditlog'),
     path('get_pattern_auditlog', ajax.get_pattern_auditlog, name='get_pattern_auditlog'),

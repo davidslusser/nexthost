@@ -202,3 +202,362 @@ def get_owner_auditlog(request):
             return HttpResponse("Invalid request inputs", status=400)
     else:
         return HttpResponse("Invalid request", status=400)
+
+
+@require_GET
+def get_users_per_owner(request):
+    """
+    Description:
+        get all users for a given Owner.
+    Args:
+        request: AJAX request object.
+    Returns:
+        HttpResponse: JSON formatted response.
+    """
+    if (request.is_ajax()) and (request.method == 'GET'):
+        if 'client_response' in request.GET:
+            owner_id = request.GET['client_response']
+            queryset = Owner.objects.get(id=owner_id)
+            template = loader.get_template('ajax/list_users_per_owner.htm')
+            return HttpResponse(json.dumps({"server_response": template.render({'queryset': queryset})}),
+                                content_type='application/javascript')
+        else:
+            return HttpResponse("Invalid request inputs", status=400)
+    else:
+        return HttpResponse("Invalid request", status=400)
+
+
+@require_GET
+def get_projects_per_owner(request):
+    """
+    Description:
+        get all projects for a given Owner.
+    Args:
+        request: AJAX request object.
+    Returns:
+        HttpResponse: JSON formatted response.
+    """
+    if (request.is_ajax()) and (request.method == 'GET'):
+        if 'client_response' in request.GET:
+            owner_id = request.GET['client_response']
+            owner = Owner.objects.get(id=owner_id)
+            queryset = owner.get_projects()
+            template = loader.get_template('ajax/list_projects_per_owner.htm')
+            return HttpResponse(json.dumps({"server_response": template.render({'queryset': queryset})}),
+                                content_type='application/javascript')
+        else:
+            return HttpResponse("Invalid request inputs", status=400)
+    else:
+        return HttpResponse("Invalid request", status=400)
+
+
+@require_GET
+def get_patterns_per_owner(request):
+    """
+    Description:
+        get all patterns for a given Owner.
+    Args:
+        request: AJAX request object.
+    Returns:
+        HttpResponse: JSON formatted response.
+    """
+    if (request.is_ajax()) and (request.method == 'GET'):
+        if 'client_response' in request.GET:
+            owner_id = request.GET['client_response']
+            owner = Owner.objects.get(id=owner_id)
+            queryset = owner.get_patterns()
+            template = loader.get_template('ajax/list_patterns_per_owner.htm')
+            return HttpResponse(json.dumps({"server_response": template.render({'queryset': queryset})}),
+                                content_type='application/javascript')
+        else:
+            return HttpResponse("Invalid request inputs", status=400)
+    else:
+        return HttpResponse("Invalid request", status=400)
+
+
+@require_GET
+def get_hostnames_per_owner(request):
+    """
+    Description:
+        get all hostnames for a given Owner.
+    Args:
+        request: AJAX request object.
+    Returns:
+        HttpResponse: JSON formatted response.
+    """
+    if (request.is_ajax()) and (request.method == 'GET'):
+        if 'client_response' in request.GET:
+            owner_id = request.GET['client_response']
+            owner = Owner.objects.get(id=owner_id)
+            queryset = owner.get_hostnames()
+            template = loader.get_template('ajax/list_hostnames_per_owner.htm')
+            return HttpResponse(json.dumps({"server_response": template.render({'queryset': queryset})}),
+                                content_type='application/javascript')
+        else:
+            return HttpResponse("Invalid request inputs", status=400)
+    else:
+        return HttpResponse("Invalid request", status=400)
+
+
+@require_GET
+def get_patterns_per_project(request):
+    """
+    Description:
+        get all patterns for a given Project.
+    Args:
+        request: AJAX request object.
+    Returns:
+        HttpResponse: JSON formatted response.
+    """
+    if (request.is_ajax()) and (request.method == 'GET'):
+        if 'client_response' in request.GET:
+            obj_id = request.GET['client_response']
+            project = Project.objects.get(id=obj_id)
+            queryset = project.get_patterns()
+            template = loader.get_template('ajax/list_patterns_per_project.htm')
+            return HttpResponse(json.dumps({"server_response": template.render({'queryset': queryset})}),
+                                content_type='application/javascript')
+        else:
+            return HttpResponse("Invalid request inputs", status=400)
+    else:
+        return HttpResponse("Invalid request", status=400)
+
+
+@require_GET
+def get_hostnames_per_project(request):
+    """
+    Description:
+        get all hostnames for a given Project.
+    Args:
+        request: AJAX request object.
+    Returns:
+        HttpResponse: JSON formatted response.
+    """
+    if (request.is_ajax()) and (request.method == 'GET'):
+        if 'client_response' in request.GET:
+            obj_id = request.GET['client_response']
+            project = Project.objects.get(id=obj_id)
+            queryset = project.get_hostnames()
+            template = loader.get_template('ajax/list_hostnames_per_project.htm')
+            return HttpResponse(json.dumps({"server_response": template.render({'queryset': queryset})}),
+                                content_type='application/javascript')
+        else:
+            return HttpResponse("Invalid request inputs", status=400)
+    else:
+        return HttpResponse("Invalid request", status=400)
+
+
+@require_GET
+def get_assigned_hostnames_per_project(request):
+    """
+    Description:
+        get all hostnames with a status of 'assigned' for a given Project.
+    Args:
+        request: AJAX request object.
+    Returns:
+        HttpResponse: JSON formatted response.
+    """
+    if (request.is_ajax()) and (request.method == 'GET'):
+        if 'client_response' in request.GET:
+            obj_id = request.GET['client_response']
+            project = Project.objects.get(id=obj_id)
+            queryset = project.get_assigned_hostnames()
+            template = loader.get_template('ajax/list_hostnames_per_project.htm')
+            return HttpResponse(json.dumps({"server_response": template.render({'queryset': queryset})}),
+                                content_type='application/javascript')
+        else:
+            return HttpResponse("Invalid request inputs", status=400)
+    else:
+        return HttpResponse("Invalid request", status=400)
+
+
+@require_GET
+def get_available_hostnames_per_project(request):
+    """
+    Description:
+        get all hostnames with a status of 'available' for a given Project.
+    Args:
+        request: AJAX request object.
+    Returns:
+        HttpResponse: JSON formatted response.
+    """
+    if (request.is_ajax()) and (request.method == 'GET'):
+        if 'client_response' in request.GET:
+            obj_id = request.GET['client_response']
+            project = Project.objects.get(id=obj_id)
+            queryset = project.get_expired_hostnames()
+            template = loader.get_template('ajax/list_hostnames_per_project.htm')
+            return HttpResponse(json.dumps({"server_response": template.render({'queryset': queryset})}),
+                                content_type='application/javascript')
+        else:
+            return HttpResponse("Invalid request inputs", status=400)
+    else:
+        return HttpResponse("Invalid request", status=400)
+
+
+@require_GET
+def get_expired_hostnames_per_project(request):
+    """
+    Description:
+        get all hostnames with a status of 'expired' for a given Project.
+    Args:
+        request: AJAX request object.
+    Returns:
+        HttpResponse: JSON formatted response.
+    """
+    if (request.is_ajax()) and (request.method == 'GET'):
+        if 'client_response' in request.GET:
+            obj_id = request.GET['client_response']
+            project = Project.objects.get(id=obj_id)
+            queryset = project.get_expired_hostnames()
+            template = loader.get_template('ajax/list_hostnames_per_project.htm')
+            return HttpResponse(json.dumps({"server_response": template.render({'queryset': queryset})}),
+                                content_type='application/javascript')
+        else:
+            return HttpResponse("Invalid request inputs", status=400)
+    else:
+        return HttpResponse("Invalid request", status=400)
+
+
+@require_GET
+def get_reserved_hostnames_per_project(request):
+    """
+    Description:
+        get all hostnames with a status of 'reserved' for a given Project.
+    Args:
+        request: AJAX request object.
+    Returns:
+        HttpResponse: JSON formatted response.
+    """
+    if (request.is_ajax()) and (request.method == 'GET'):
+        if 'client_response' in request.GET:
+            obj_id = request.GET['client_response']
+            project = Project.objects.get(id=obj_id)
+            queryset = project.get_reserved_hostnames()
+            template = loader.get_template('ajax/list_hostnames_per_project.htm')
+            return HttpResponse(json.dumps({"server_response": template.render({'queryset': queryset})}),
+                                content_type='application/javascript')
+        else:
+            return HttpResponse("Invalid request inputs", status=400)
+    else:
+        return HttpResponse("Invalid request", status=400)
+
+
+@require_GET
+def get_hostnames_per_pattern(request):
+    """
+    Description:
+        get all hostnames for a given Pattern.
+    Args:
+        request: AJAX request object.
+    Returns:
+        HttpResponse: JSON formatted response.
+    """
+    if (request.is_ajax()) and (request.method == 'GET'):
+        if 'client_response' in request.GET:
+            obj_id = request.GET['client_response']
+            pattern = Pattern.objects.get(id=obj_id)
+            queryset = pattern.get_hostnames()
+            template = loader.get_template('ajax/list_hostnames_per_project.htm')
+            return HttpResponse(json.dumps({"server_response": template.render({'queryset': queryset})}),
+                                content_type='application/javascript')
+        else:
+            return HttpResponse("Invalid request inputs", status=400)
+    else:
+        return HttpResponse("Invalid request", status=400)
+
+
+@require_GET
+def get_assigned_hostnames_per_pattern(request):
+    """
+    Description:
+        get all hostnames with a status of 'assigned' for a given Pattern.
+    Args:
+        request: AJAX request object.
+    Returns:
+        HttpResponse: JSON formatted response.
+    """
+    if (request.is_ajax()) and (request.method == 'GET'):
+        if 'client_response' in request.GET:
+            obj_id = request.GET['client_response']
+            pattern = Pattern.objects.get(id=obj_id)
+            queryset = pattern.get_assigned_hostnames()
+            template = loader.get_template('ajax/list_hostnames_per_project.htm')
+            return HttpResponse(json.dumps({"server_response": template.render({'queryset': queryset})}),
+                                content_type='application/javascript')
+        else:
+            return HttpResponse("Invalid request inputs", status=400)
+    else:
+        return HttpResponse("Invalid request", status=400)
+
+
+@require_GET
+def get_available_hostnames_per_pattern(request):
+    """
+    Description:
+        get all hostnames with a status of 'available' for a given Pattern.
+    Args:
+        request: AJAX request object.
+    Returns:
+        HttpResponse: JSON formatted response.
+    """
+    if (request.is_ajax()) and (request.method == 'GET'):
+        if 'client_response' in request.GET:
+            obj_id = request.GET['client_response']
+            pattern = Pattern.objects.get(id=obj_id)
+            queryset = pattern.get_expired_hostnames()
+            template = loader.get_template('ajax/list_hostnames_per_project.htm')
+            return HttpResponse(json.dumps({"server_response": template.render({'queryset': queryset})}),
+                                content_type='application/javascript')
+        else:
+            return HttpResponse("Invalid request inputs", status=400)
+    else:
+        return HttpResponse("Invalid request", status=400)
+
+
+@require_GET
+def get_expired_hostnames_per_pattern(request):
+    """
+    Description:
+        get all hostnames with a status of 'expired' for a given Pattern.
+    Args:
+        request: AJAX request object.
+    Returns:
+        HttpResponse: JSON formatted response.
+    """
+    if (request.is_ajax()) and (request.method == 'GET'):
+        if 'client_response' in request.GET:
+            obj_id = request.GET['client_response']
+            project = Project.objects.get(id=obj_id)
+            queryset = project.get_expired_hostnames()
+            template = loader.get_template('ajax/list_hostnames_per_project.htm')
+            return HttpResponse(json.dumps({"server_response": template.render({'queryset': queryset})}),
+                                content_type='application/javascript')
+        else:
+            return HttpResponse("Invalid request inputs", status=400)
+    else:
+        return HttpResponse("Invalid request", status=400)
+
+
+@require_GET
+def get_reserved_hostnames_per_pattern(request):
+    """
+    Description:
+        get all hostnames with a status of 'reserved' for a given Project.
+    Args:
+        request: AJAX request object.
+    Returns:
+        HttpResponse: JSON formatted response.
+    """
+    if (request.is_ajax()) and (request.method == 'GET'):
+        if 'client_response' in request.GET:
+            obj_id = request.GET['client_response']
+            pattern = Pattern.objects.get(id=obj_id)
+            queryset = pattern.get_reserved_hostnames()
+            template = loader.get_template('ajax/list_hostnames_per_project.htm')
+            return HttpResponse(json.dumps({"server_response": template.render({'queryset': queryset})}),
+                                content_type='application/javascript')
+        else:
+            return HttpResponse("Invalid request inputs", status=400)
+    else:
+        return HttpResponse("Invalid request", status=400)

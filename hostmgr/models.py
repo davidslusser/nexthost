@@ -59,15 +59,19 @@ class Owner(HostManagerBase):
         return Hostname.objects.filter(pattern__project__owner=self)
 
     def get_available_hostnames(self):
+        """ get all hostnames with a status of 'available' for a given owner """
         return Hostname.objects.filter(pattern__project__owner=self, status="available")
 
     def get_assigned_hostnames(self):
+        """ get all hostnames with a status of 'assigned' for a given owner """
         return Hostname.objects.filter(pattern__project__owner=self, status="assigned")
 
     def get_reserved_hostnames(self):
+        """ get all hostnames with a status of 'reserved' for a given owner """
         return Hostname.objects.filter(pattern__project__owner=self, status="reserved")
 
     def get_expired_hostnames(self):
+        """ get all expired hostnames for a given owner """
         return Hostname.objects.filter(pattern__project__owner=self, assignment_expires__lte=timezone.now())
 
 
@@ -130,6 +134,28 @@ class Project(HostManagerBase):
 
     def get_expired_hostnames(self):
         return Hostname.objects.filter(pattern__project=self, assignment_expires__lte=timezone.now())
+
+    def get_pattern_count(self):
+        return self.pattern_set.count()
+
+    def get_hostname_count(self):
+        return len([hostname for pattern in self.pattern_set.all() for hostname in pattern.hostname_set.all()])
+
+    def get_assigned_hostname_count(self):
+        return len([hostname for pattern in self.pattern_set.all() for hostname in
+                    pattern.hostname_set.filter(status="assigned")])
+
+    def get_available_hostname_count(self):
+        return len([hostname for pattern in self.pattern_set.all() for hostname in
+                    pattern.hostname_set.filter(status="available")])
+
+    def get_expired_hostname_count(self):
+        return len([hostname for pattern in self.pattern_set.all() for hostname in
+                    pattern.hostname_set.filter(assignment_expires__lte=timezone.now())])
+
+    def get_reserved_hostname_count(self):
+        return len([hostname for pattern in self.pattern_set.all() for hostname in
+                    pattern.hostname_set.filter(status="reserved")])
 
 
 class Pattern(HostManagerBase):

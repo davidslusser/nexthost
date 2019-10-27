@@ -32,7 +32,7 @@ urlpatterns = [
     path('index', TemplateView.as_view(template_name='index.html'), name="index"),
 
     # project-level
-    path('about', TemplateView.as_view(template_name='about.html'), name="about"),
+    path('about', TemplateView.as_view(template_name='custom/about.html'), name="about"),
     path('register', views.RegisterUser.as_view(), name='register'),
     path('dashboard', views.ShowDashboard.as_view(), name='dashboard'),
 
