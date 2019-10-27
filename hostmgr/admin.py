@@ -1,12 +1,7 @@
 from django.contrib import admin
 
 # import models
-from hostmgr.models import (Owner,
-                            Project,
-                            Pattern,
-                            AssetIdType,
-                            Hostname
-                            )
+from hostmgr.models import (Owner, Project, Pattern, AssetIdType,  Hostname)
 
 
 class OwnerAdmin(admin.ModelAdmin):
@@ -22,8 +17,10 @@ class ProjectAdmin(admin.ModelAdmin):
 
 
 class PatternAdmin(admin.ModelAdmin):
-    list_display = ['id', 'created_at', 'updated_at', 'active', 'name', 'description', 'project', 'prefix', 'prefix_delimiter', 'suffix', 'suffix_delimiter', 'host_count', 'increment', 'start_from']
-    search_fields = ['name', 'description', 'prefix', 'prefix_delimiter', 'suffix', 'suffix_delimiter', 'host_count', 'increment', 'start_from']
+    list_display = ['id', 'created_at', 'updated_at', 'active', 'name', 'description', 'project', 'prefix',
+                    'prefix_delimiter', 'suffix', 'suffix_delimiter', 'host_count', 'increment', 'start_from']
+    search_fields = ['name', 'description', 'prefix', 'prefix_delimiter', 'suffix', 'suffix_delimiter', 'host_count',
+                     'increment', 'start_from']
     list_filter = ['active', 'project']
 
 
@@ -34,7 +31,8 @@ class AssetIdTypeAdmin(admin.ModelAdmin):
 
 
 class HostnameAdmin(admin.ModelAdmin):
-    list_display = ['id', 'created_at', 'updated_at', 'active', 'pattern', 'hostname', 'asset_id', 'asset_id_type', 'persistent', 'status', 'reservation_expires', 'assignment_expires']
+    list_display = ['id', 'created_at', 'updated_at', 'active', 'pattern', 'hostname', 'asset_id', 'asset_id_type',
+                    'persistent', 'status', 'reservation_expires', 'assignment_expires']
     search_fields = ['hostname', 'asset_id', 'status']
     list_filter = ['active', 'pattern', 'asset_id_type', 'persistent', 'status']
 
