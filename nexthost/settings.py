@@ -11,6 +11,11 @@ https://docs.djangoproject.com/en/1.10/ref/settings/
 """
 
 import os
+import environ
+import djcelery
+
+
+env = environ.Env()
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -49,6 +54,7 @@ INSTALLED_APPS = [
     'rest_framework.authtoken',
     'rest_framework_filters',
     'userextensions',
+    'django_celery_beat',
 
     # project apps
     'hostmgr'
@@ -148,3 +154,40 @@ SESSION_COOKIE_AGE = 28800
 
 
 SKIP_FIXED_URL_LIST = ["/list_recents/"]
+
+
+# drf configuration
+REST_FRAMEWORK = {
+    'DEFAULT_FILTER_BACKENDS': (
+        'rest_framework_filters.backends.DjangoFilterBackend',
+    ),
+
+    'DEFAULT_PERMISSION_CLASSES': (
+        'rest_framework.permissions.IsAuthenticatedOrReadOnly',
+    ),
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework.authentication.BasicAuthentication',
+        'rest_framework.authentication.TokenAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
+    ),
+    'TEST_REQUEST_DEFAULT_FORMAT': 'json',
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
+    'PAGE_SIZE': 100
+}
+
+
+# celery configuration
+BROKER_USE_SSL = True
+CELERYBEAT_SCHEDULER = 'django_celery_beat.schedulers:DatabaseScheduler'
+BROKER_URL = env.str('CELERY_BROKER_URL', default='redis://localhost:6379')
+CELERY_RESULT_BACKEND = env.str('CELERY_RESULT_BACKEND', default='redis://localhost:6379')
+CELERY_ACCEPT_CONTENT = ['application/json']
+CELERY_TASK_SERIALIZER = 'json'
+CELERY_RESULT_SERIALIZER = 'json'
+CELERYD_TASK_TIME_LIMIT = 60 * 30
+CELERYD_TASK_SOFT_TIME_LIMIT = 60 * 29
+CELERY_TASK_RESULT_EXPIRES = 60 * 60
+BROKER_CONNECTION_TIMEOUT = 30
+CELERY_EVENT_QUEUE_EXPIRES = 60
+CELERYD_POOL_RESTARTS = True
+CELERY_ALWAYS_EAGER = True
