@@ -396,7 +396,7 @@ class Hostname(HostManagerBase):
         self.save()
         return 0
 
-    def assign_hostname(self, user, asset_id, asset_id_type_name, persistent):
+    def assign_hostname(self, user, asset_id, asset_id_type_name, persistent=False):
         """ set the status of this host to 'assigned' """
         if not self.get_manageability(user):
             raise UserNotAuthorized("{} is not authorized to manage this lock".format(user))
