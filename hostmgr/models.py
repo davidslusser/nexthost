@@ -227,8 +227,9 @@ class Pattern(HostManagerBase):
 
     def create_hosts(self):
         """ create hosts entries based on the rules of this hostname pattern """
-        for i in range(self.start_from, self.host_count * self.increment + 1, self.increment):
-            num = "{}".format(i).zfill(len(str(self.host_count)))
+        fill_count = max(len(str(self.host_count)), len(str(self.start_from)))
+        for i in range(self.start_from, (self.start_from + (self.host_count * self.increment)), self.increment):
+            num = "{}".format(i).zfill(fill_count)
             hostname = ""
             if self.prefix:
                 hostname += "{}{}".format(self.prefix, self.prefix_delimiter)
@@ -247,10 +248,6 @@ class Pattern(HostManagerBase):
             diff = hostname_count - self.host_count
             qs = self.hostname_set.filter(status="available").order_by('-update_at')[:diff]
             qs.delete()
-
-    def myfield(self):
-        # return "test"
-        return self.hostname_set.all()
 
     def get_hostnames(self):
         """ return a queryset of all hostnames for this pattern """

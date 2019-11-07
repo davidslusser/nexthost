@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, reverse
 from django.utils import timezone
 from django.views.generic import (View, ListView, DetailView, TemplateView)
 from djangohelpers.views import FilterByQueryParamsMixin
@@ -11,12 +11,21 @@ import datetime
 # import models
 from hostmgr.models import (Owner, Project, Pattern, AssetIdType, Hostname)
 
+# import forms
+from hostmgr.forms import (OwnerForm, ProjectForm, PatternForm)
+
 
 class HostmgrBaseListView(FilterByQueryParamsMixin, ListView):
     """ base view for hostmgr list pages """
     title = None
     table = None
     modals = None
+    create_form = dict()
+    create_form_obj = None
+    create_form_url = None
+    create_form_title = None
+    create_form_modal = None
+    create_form_link_title = None
 
     def get(self, request, *args, **kwargs):
         context = dict()
@@ -26,6 +35,14 @@ class HostmgrBaseListView(FilterByQueryParamsMixin, ListView):
         context['sub_title'] = self.page_description
         context['table'] = self.table
         context['modals'] = self.modals
+        if self.create_form_obj:
+            self.create_form['form'] = self.create_form_obj(request.POST or None)
+            self.create_form['action'] = "Add"
+            self.create_form['action_url'] = self.create_form_url
+            self.create_form['title'] = self.create_form_title
+            self.create_form['modal_name'] = self.create_form_modal
+            self.create_form['link_title'] = self.create_form_link_title
+            context['create_form'] = self.create_form
         return render(request, template, context=context)
 
 
@@ -35,6 +52,11 @@ class ListOwners(HostmgrBaseListView):
     title = "Owners"
     page_description = ""
     table = "table/table_owners.htm"
+    create_form_obj = OwnerForm
+    create_form_url = '/hostmgr/show_admin_panel/?action=add_owner'
+    create_form_title = "<b>Add Owner: </b><small> </small>"
+    create_form_modal = "add_owner"
+    create_form_link_title = "add owner"
 
 
 class ListProjects(HostmgrBaseListView):
@@ -43,6 +65,11 @@ class ListProjects(HostmgrBaseListView):
     title = "Projects"
     page_description = ""
     table = "table/table_projects.htm"
+    create_form_obj = ProjectForm
+    create_form_url = '/hostmgr/show_admin_panel/?action=add_project'
+    create_form_title = "<b>Add Project: </b><small> </small>"
+    create_form_modal = "add_project"
+    create_form_link_title = "add project"
 
 
 class ListPatterns(HostmgrBaseListView):
@@ -51,6 +78,11 @@ class ListPatterns(HostmgrBaseListView):
     title = "Patterns"
     page_description = ""
     table = "table/table_patterns.htm"
+    create_form_obj = PatternForm
+    create_form_url = '/hostmgr/show_admin_panel/?action=add_pattern'
+    create_form_title = "<b>Add Pattern: </b><small> </small>"
+    create_form_modal = "add_pattern"
+    create_form_link_title = "add pattern"
 
 
 class ListHostnames(HostmgrBaseListView):
@@ -84,10 +116,98 @@ class DetailPattern(DetailView):
 
 class ShowAdminPanel(LoginRequiredMixin, View):
     """ display actions only provided to admins """
+    def add_owner(self, redirect_url):
+        """ add an owner """
+        form = OwnerForm(self.request.POST or None)
+        if form.is_valid():
+            new_record = form.cleaned_data['name']
+            form.save()
+            messages.add_message(self.request, messages.INFO, "Owner '{}' created!".format(new_record),
+                                 extra_tags='alert-info', )
+            return redirect(redirect_url)
+        else:
+            for error in form.errors:
+                messages.add_message(self.request, messages.ERROR, "Input error: {}".format(error),
+                                     extra_tags='alert-danger', )
+            return self.get(self.request)
+
+    def add_project(self, redirect_url):
+        """ add a project """
+        form = ProjectForm(self.request.POST or None)
+        if form.is_valid():
+            new_record = form.cleaned_data['name']
+            form.save()
+            messages.add_message(self.request, messages.INFO, "Project '{}' created!".format(new_record),
+                                 extra_tags='alert-info', )
+            return redirect(redirect_url)
+        else:
+            for error in form.errors:
+                messages.add_message(self.request, messages.ERROR, "Input error: {}".format(error),
+                                     extra_tags='alert-danger', )
+            return self.get(self.request)
+
+    def add_pattern(self, redirect_url):
+        """ add a pattern """
+        form = PatternForm(self.request.POST or None)
+        if form.is_valid():
+            new_record = form.cleaned_data['name']
+            form.save()
+            messages.add_message(self.request, messages.INFO, "Pattern '{}' created!".format(new_record),
+                                 extra_tags='alert-info', )
+            return redirect(redirect_url)
+        else:
+            for error in form.errors:
+                messages.add_message(self.request, messages.ERROR, "Input error: {}".format(error),
+                                     extra_tags='alert-danger', )
+            return self.get(self.request)
+
     def get(self, request, *args, **kwargs):
         template = "custom/admin_panel.html"
         context = dict()
+
+        # include owner form
+        form_add_owner = dict()
+        form_add_owner['form'] = OwnerForm(request.POST or None)
+        form_add_owner['action'] = "Add"
+        form_add_owner['action_url'] = reverse('hostmgr:show_admin_panel') + "?action=add_owner"
+        form_add_owner['title'] = "<b>Add Owner: </b><small> </small>"
+        form_add_owner['modal_name'] = "add_owner"
+        context['form_add_owner'] = form_add_owner
+
+        # include project form
+        form_add_project = dict()
+        form_add_project['form'] = ProjectForm(request.POST or None)
+        form_add_project['action'] = "Add"
+        form_add_project['action_url'] = reverse('hostmgr:show_admin_panel') + "?action=add_project"
+        form_add_project['title'] = "<b>Add Project: </b><small> </small>"
+        form_add_project['modal_name'] = "add_project"
+        context['form_add_project'] = form_add_project
+
+        # include pattern form
+        form_add_pattern = dict()
+        form_add_pattern['form'] = PatternForm(request.POST or None)
+        form_add_pattern['action'] = "Add"
+        form_add_pattern['action_url'] = reverse('hostmgr:show_admin_panel') + "?action=add_patterm"
+        form_add_pattern['title'] = "<b>Add Pattern: </b><small> </small>"
+        form_add_pattern['modal_name'] = "add_pattern"
+        context['form_add_pattern'] = form_add_pattern
+
         return render(request, template, context=context)
+
+    def post(self, request):
+        redirect_url = self.request.META.get('HTTP_REFERER')
+        action = self.request.GET.dict().get('action', None)
+
+        if action in ['add_owner']:
+            return self.add_owner(redirect_url)
+        elif action in ['add_project']:
+            return self.add_project(redirect_url)
+        elif action in ['add_pattern']:
+            return self.add_pattern(redirect_url)
+        else:
+            messages.add_message(request, messages.ERROR, "Could not complete requested action",
+                                 extra_tags='alert-danger')
+            return self.get(request)
 
 
 class ShowApiGuideIndex(LoginRequiredMixin, View):
@@ -198,4 +318,18 @@ class ReleaseHostname(LoginRequiredMixin, View):
                                  extra_tags='alert-success')
         except Exception as err:
             messages.add_message(request, messages.ERROR, err, extra_tags='alert-danger')
+        return redirect(redirect_url)
+
+
+class CreateOwner(LoginRequiredMixin, View):
+    """ create a new instance of an owner  """
+    def post(self, request, *args, **kwargs):
+        """ process POST request """
+        redirect_url = self.request.META.get('HTTP_REFERER')
+        # obj_id = self.request.GET.dict().get('id', None)
+        # hostname = Hostname.objects.get_object_or_none(id=obj_id)
+        # try:
+        #     hostname.reserve_hostname(user=request.user)
+        # except Exception as err:
+        #     messages.add_message(request, messages.ERROR, err, extra_tags='alert-danger')
         return redirect(redirect_url)
