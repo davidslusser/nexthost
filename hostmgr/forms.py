@@ -48,15 +48,15 @@ class PatternForm(forms.ModelForm):
         }
 
 
-class HostNameAssignForm(forms.ModelForm):
-    """ Form class used to assign a hostname to an asset """
-    class Meta:
-        model = Hostname
-        fields = ['hostname', 'asset_id_type', 'asset_id', 'is_eternal', 'assignment_expires']
-        widgets = {
-            'hostname': forms.TextInput(attrs={'class': 'form-control'}),
-            'asset_id_type': forms.Select(attrs={'class': 'form-control'}),
-            'asset_id': forms.TextInput(attrs={'class': 'form-control'}),
-            'persistent': forms.CheckboxInput(attrs={'class': 'form-control'}),
-        }
+# class HostNameAssignForm(forms.ModelForm):
+#     """ Form class used to assign a hostname to an asset """
+#     class Meta:
+#         model = Hostname
+#         fields = ['hostname', 'asset_id_type', 'asset_id', 'is_eternal', 'assignment_expires']
+#         widgets = {
+#             'hostname': forms.TextInput(attrs={'class': 'form-control'}),
+#             'asset_id_type': forms.Select(attrs={'class': 'form-control'}),
+#             'asset_id': forms.TextInput(attrs={'class': 'form-control'}),
+#             'persistent': forms.CheckboxInput(attrs={'class': 'form-control'}),
+#         }
 

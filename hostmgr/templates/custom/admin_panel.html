@@ -22,7 +22,7 @@
         <div class="d-flex flex-wrap align-items-center justify-content-center">
 
             <div class="card m-4 text-center hvr-grow admin_panel_card div-shadow">
-                <a href="">
+                <a href="#" data-toggle="modal" data-target="#modal_{{ form_add_owner.modal_name }}">
                     <div class="card-body text-primary">
                         <h2 class="card-title"><i class="fas fa-user"></i></h2>
                         <p class="card-text mt-4">Add owner</p>
@@ -31,7 +31,7 @@
             </div>
 
             <div class="card m-4 text-center hvr-grow admin_panel_card div-shadow">
-                <a href="">
+                <a href="#" data-toggle="modal" data-target="#modal_{{ form_add_project.modal_name }}">
                     <div class="card-body text-primary">
                         <h2 class="card-title"><i class="fas fa-project-diagram"></i></h2>
                         <p class="card-text mt-4">Add project</p>
@@ -40,7 +40,7 @@
             </div>
 
             <div class="card m-4 text-center hvr-grow admin_panel_card div-shadow">
-                <a href="">
+                <a href="#" data-toggle="modal" data-target="#modal_{{ form_add_pattern.modal_name }}">
                     <div class="card-body text-primary">
                         <h2 class="card-title"><i class="fas fa-swatchbook"></i></h2>
                         <p class="card-text mt-4">Add pattern</p>
@@ -51,5 +51,22 @@
         </div>
     </div>
 </section>
+
+
+
+    {% with form_add_owner as form_data %}
+        {% include 'generic/generic_modal_form.htm' %}
+    {% endwith %}
+
+    {% with form_add_project as form_data %}
+        {% include 'generic/generic_modal_form.htm' %}
+    {% endwith %}
+
+    {% with form_add_pattern as form_data %}
+        {% include 'generic/generic_modal_form.htm' %}
+    {% endwith %}
+
+
+    {% include 'component/modals.htm' %}
 
 {% endblock content %}
