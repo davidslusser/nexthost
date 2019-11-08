@@ -319,17 +319,3 @@ class ReleaseHostname(LoginRequiredMixin, View):
         except Exception as err:
             messages.add_message(request, messages.ERROR, err, extra_tags='alert-danger')
         return redirect(redirect_url)
-
-
-class CreateOwner(LoginRequiredMixin, View):
-    """ create a new instance of an owner  """
-    def post(self, request, *args, **kwargs):
-        """ process POST request """
-        redirect_url = self.request.META.get('HTTP_REFERER')
-        # obj_id = self.request.GET.dict().get('id', None)
-        # hostname = Hostname.objects.get_object_or_none(id=obj_id)
-        # try:
-        #     hostname.reserve_hostname(user=request.user)
-        # except Exception as err:
-        #     messages.add_message(request, messages.ERROR, err, extra_tags='alert-danger')
-        return redirect(redirect_url)
