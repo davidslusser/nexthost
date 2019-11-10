@@ -2,8 +2,8 @@
 Description: this file provides project-level views
 """
 
-from django.views.generic import (View, ListView, TemplateView, DeleteView)
-from django.shortcuts import render, redirect
+from django.views.generic import (View, ListView, UpdateView, TemplateView, DeleteView)
+from django.shortcuts import render, redirect, reverse
 from django.contrib import messages
 from djangohelpers.views import FilterByQueryParamsMixin
 from rest_framework.authtoken.models import Token
@@ -16,8 +16,11 @@ from django.urls import reverse_lazy
 from django.views import generic
 
 # import models
-from userextensions.models import (UserRecent, UserFavorite)
+from userextensions.models import (UserRecent, UserFavorite, UserPreference)
 from hostmgr.models import (Owner, Project, Pattern, Hostname)
+
+# import forms
+from nexthost.forms import (UserPreferenceForm)
 
 
 @api_view()
@@ -29,13 +32,37 @@ def schema_view(request):
 
 class ShowUserProfile(LoginRequiredMixin, View):
     """ show user profile """
-    @staticmethod
-    def get(request):
+    template = "detail/detail_current_user.html"
+
+    def get(self, request):
         context = dict()
+
+        # include user preference form
+        form_data_user_preferences = dict()
+        form_data_user_preferences['form'] = UserPreferenceForm(request.POST or None, instance=request.user.preference)
+        form_data_user_preferences['action'] = "Update"
+        form_data_user_preferences['action_url'] = reverse('detail_user')
+        form_data_user_preferences['title'] = "<b>Update Preferences: </b><small> {} </small>".format(request.user)
+        form_data_user_preferences['modal_name'] = "update_user_preferences"
+        context['form_data_user_preferences'] = form_data_user_preferences
+
         context['user'] = request.user
         context['token'] = str(Token.objects.get_or_create(user=request.user)[0])
         context['groups'] = sorted([i.name for i in request.user.groups.all()])
-        return render(request, "detail/detail_current_user.html", context)
+        return render(request, self.template, context)
+
+    def post(self, request):
+        redirect_url = request.META.get('HTTP_REFERER')
+        form = UserPreferenceForm(request.POST or None, instance=request.user.preference)
+        if form.is_valid():
+            form.save()
+            messages.add_message(request, messages.ERROR, "Preferences updated!", extra_tags='alert-info', )
+            return redirect(redirect_url)
+        else:
+            for error in form.errors:
+                messages.add_message(request, messages.ERROR, "Input error: {}".format(error),
+                                     extra_tags='alert-danger', )
+            return self.get(request)
 
 
 class ListRecents(LoginRequiredMixin, FilterByQueryParamsMixin, ListView):
@@ -76,6 +103,34 @@ class UpdateApiToken(LoginRequiredMixin, View):
             messages.add_message(request, messages.ERROR, "Could not complete requested action",
                                  extra_tags='alert-danger')
         return redirect(redirect_url)
+
+
+# class UpdateUserPreference(LoginRequiredMixin, View):
+#     """ update user preferences """
+#     def post(self, request):
+#         redirect_url = self.request.META.get('HTTP_REFERER')
+#         form = UserPreferenceForm(self.request.POST or None)
+#         if form.is_valid():
+#             new_record = form.cleaned_data['name']
+#             form.save()
+#             messages.add_message(self.request, messages.INFO, "Owner '{}' created!".format(new_record),
+#                                  extra_tags='alert-info', )
+#             return redirect(redirect_url)
+#         else:
+#             for error in form.errors:
+#                 messages.add_message(self.request, messages.ERROR, "Input error: {}".format(error),
+#                                      extra_tags='alert-danger', )
+#             return self.get(self.request)
+
+class UpdateUserPreference(LoginRequiredMixin, UpdateView):
+    """ update user preferences """
+    model = UserPreference
+    # template_name = ''
+    form_class = UserPreferenceForm
+
+    def form_valid(self, form):
+        form.save()
+        return super(UpdateUserPreference, self).form_valid(form)
 
 
 class RegisterUser(generic.CreateView):
