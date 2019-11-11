@@ -1,6 +1,7 @@
 from django import forms
 
 # import models
+from django.contrib.auth.models import Group
 from hostmgr.models import (Owner, Project, Pattern, Hostname)
 
 
@@ -16,6 +17,11 @@ class OwnerForm(forms.ModelForm):
             'group': forms.Select(attrs={'class': 'form-control'}),
         }
 
+    def __init__(self, username=None, *args, **kwargs):
+        super(OwnerForm, self).__init__(*args, **kwargs)
+        if username:
+            self.fields['group'].queryset = Group.objects.filter(user__username=username)
+
 
 class ProjectForm(forms.ModelForm):
     """ Form class used to add/edit user Project objects """
@@ -28,6 +34,11 @@ class ProjectForm(forms.ModelForm):
             'description': forms.TextInput(attrs={'class': 'form-control'}),
             'owner': forms.Select(attrs={'class': 'form-control'}),
         }
+
+    def __init__(self, username=None, *args, **kwargs):
+        super(ProjectForm, self).__init__(*args, **kwargs)
+        if username:
+            self.fields['owner'].queryset = Owner.objects.filter(group__user__username=username)
 
 
 class PatternForm(forms.ModelForm):
@@ -46,6 +57,11 @@ class PatternForm(forms.ModelForm):
             'increment': forms.NumberInput(attrs={'class': 'form-control'}),
             'start_from': forms.NumberInput(attrs={'class': 'form-control'}),
         }
+
+    def __init__(self, username=None, *args, **kwargs):
+        super(PatternForm, self).__init__(*args, **kwargs)
+        if username:
+            self.fields['project'].queryset = Project.objects.filter(owner__group__user__username=username)
 
 
 # class HostNameAssignForm(forms.ModelForm):

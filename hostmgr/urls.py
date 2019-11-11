@@ -30,6 +30,8 @@ urlpatterns = [
     path('assign_hostname/', gui.AssignHostname.as_view(), name='assign_hostname'),
     path('release_hostname/', gui.ReleaseHostname.as_view(), name='release_hostname'),
     path('create_owner/', gui.CreateOwner.as_view(), name='create_owner'),
+    path('create_project/', gui.CreateProject.as_view(), name='create_project'),
+    path('create_pattern/', gui.CreatePattern.as_view(), name='create_pattern'),
 
     # detail views
     path('detail_owner/<int:pk>/', gui.DetailOwner.as_view(), name='detail_owner'),

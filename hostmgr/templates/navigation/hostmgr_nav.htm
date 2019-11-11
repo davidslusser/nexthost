@@ -6,31 +6,33 @@
     <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
         <li><a class="dropdown-item" href="{% url 'dashboard' %}">Dashboard</a></li>
         <div class="dropdown-divider"></div>
+        <li class="dropdown-submenu"><a class="dropdown-item dropdown-toggle" href="#">Owners</a>
+            <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="{% url 'hostmgr:list_owners' %}">All Owners</a></li>
+                <li><a class="dropdown-item" href="{% url 'hostmgr:list_owners' %}?group__user__username={{ request.user.username }}&page_description=My Owners">My Owners</a></li>
+            </ul>
+        </li>
+
         <li class="dropdown-submenu"><a class="dropdown-item dropdown-toggle" href="#">Projects</a>
             <ul class="dropdown-menu">
                 <li><a class="dropdown-item" href="{% url 'hostmgr:list_projects' %}">List Projects</a></li>
-{#                <li><a class="dropdown-item" href="">My Projects</a></li>#}
+                <li><a class="dropdown-item" href="{% url 'hostmgr:list_projects' %}?owner__group__user__username={{ request.user.username }}&page_description=My Projects">My Projects</a></li>
             </ul>
         </li>
 
         <li class="dropdown-submenu"><a class="dropdown-item dropdown-toggle" href="#">Patterns</a>
             <ul class="dropdown-menu">
                 <li><a class="dropdown-item" href="{% url 'hostmgr:list_patterns' %}">List Patterns</a></li>
-{#                <li><a class="dropdown-item" href="">My Patterns</a></li>#}
+                <li><a class="dropdown-item" href="{% url 'hostmgr:list_patterns' %}?project__owner__group__user__username={{ request.user.username }}&page_description=My Patterns">My Patterns</a></li>
             </ul>
         </li>
 
         <li class="dropdown-submenu"><a class="dropdown-item dropdown-toggle" href="#">Hosts</a>
             <ul class="dropdown-menu">
                 <li><a class="dropdown-item" href="{% url 'hostmgr:list_hostnames' %}">List Hosts</a></li>
-{#                <li><a class="dropdown-item" href="">My Hosts</a></li>#}
+                <li><a class="dropdown-item" href="{% url 'hostmgr:list_hostnames' %}?pattern__project__owner__group__user__username={{ request.user.username }}&page_description=My Hostnames">My Hosts</a></li>
             </ul>
         </li>
 
-        <li class="dropdown-submenu"><a class="dropdown-item dropdown-toggle" href="#">Owners</a>
-            <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="{% url 'hostmgr:list_owners' %}">List Owners</a></li>
-            </ul>
-        </li>
     </ul>
 </li>
