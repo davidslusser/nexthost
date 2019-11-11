@@ -9,6 +9,7 @@ from django.db.models import Q, Count, Sum
 import datetime
 
 # import models
+from django.contrib.auth.models import Group, Permission, User
 from hostmgr.models import (Owner, Project, Pattern, AssetIdType, Hostname)
 
 # import forms
@@ -17,6 +18,23 @@ from hostmgr.forms import (OwnerForm, ProjectForm, PatternForm)
 
 class HostmgrBaseListView(FilterByQueryParamsMixin, ListView):
     """ base view for hostmgr list pages """
+    title = None
+    table = None
+    modals = None
+
+    def get(self, request, *args, **kwargs):
+        context = dict()
+        template = "generic/generic_list.html"
+        context['queryset'] = self.filter_by_query_params()
+        context['title'] = self.title
+        context['sub_title'] = self.page_description
+        context['table'] = self.table
+        context['modals'] = self.modals
+        return render(request, template, context=context)
+
+
+class HostMgrBaseListViewCreate(FilterByQueryParamsMixin, ListView):
+    """ base view for hostmgr list pages that include create forms """
     title = None
     table = None
     modals = None
@@ -36,7 +54,8 @@ class HostmgrBaseListView(FilterByQueryParamsMixin, ListView):
         context['table'] = self.table
         context['modals'] = self.modals
         if self.create_form_obj:
-            self.create_form['form'] = self.create_form_obj(request.POST or None)
+            self.create_form['form'] = self.create_form_obj
+            self.create_form['form'] = self.create_form_obj(request.user.username, request.POST or None)
             self.create_form['action'] = "Add"
             self.create_form['action_url'] = self.create_form_url
             self.create_form['title'] = self.create_form_title
@@ -46,40 +65,40 @@ class HostmgrBaseListView(FilterByQueryParamsMixin, ListView):
         return render(request, template, context=context)
 
 
-class ListOwners(HostmgrBaseListView):
+class ListOwners(HostMgrBaseListViewCreate):
     """ list available Owner entries """
     queryset = Owner.objects.all().select_related('group').prefetch_related('project_set').order_by('-created_at')
     title = "Owners"
     page_description = ""
     table = "table/table_owners.htm"
     create_form_obj = OwnerForm
-    create_form_url = '/hostmgr/show_admin_panel/?action=add_owner'
+    create_form_url = '/hostmgr/create_owner/'
     create_form_title = "<b>Add Owner: </b><small> </small>"
     create_form_modal = "add_owner"
     create_form_link_title = "add owner"
 
 
-class ListProjects(HostmgrBaseListView):
+class ListProjects(HostMgrBaseListViewCreate):
     """ list available Project entries """
     queryset = Project.objects.all().select_related('owner').prefetch_related('pattern_set')
     title = "Projects"
     page_description = ""
     table = "table/table_projects.htm"
     create_form_obj = ProjectForm
-    create_form_url = '/hostmgr/show_admin_panel/?action=add_project'
+    create_form_url = '/hostmgr/create_project/'
     create_form_title = "<b>Add Project: </b><small> </small>"
     create_form_modal = "add_project"
     create_form_link_title = "add project"
 
 
-class ListPatterns(HostmgrBaseListView):
+class ListPatterns(HostMgrBaseListViewCreate):
     """ list available Pattern entries """
     queryset = Pattern.objects.all().select_related('project').prefetch_related('hostname_set')
     title = "Patterns"
     page_description = ""
     table = "table/table_patterns.htm"
     create_form_obj = PatternForm
-    create_form_url = '/hostmgr/show_admin_panel/?action=add_pattern'
+    create_form_url = '/hostmgr/create_pattern/'
     create_form_title = "<b>Add Pattern: </b><small> </small>"
     create_form_modal = "add_pattern"
     create_form_link_title = "add pattern"
@@ -120,6 +139,7 @@ class ShowAdminPanel(LoginRequiredMixin, View):
         """ add an owner """
         form = OwnerForm(self.request.POST or None)
         if form.is_valid():
+            print("valid...")
             new_record = form.cleaned_data['name']
             form.save()
             messages.add_message(self.request, messages.INFO, "Owner '{}' created!".format(new_record),
@@ -127,6 +147,7 @@ class ShowAdminPanel(LoginRequiredMixin, View):
             return redirect(redirect_url)
         else:
             for error in form.errors:
+                print("GOT AN ERROR...")
                 messages.add_message(self.request, messages.ERROR, "Input error: {}".format(error),
                                      extra_tags='alert-danger', )
             return self.get(self.request)
@@ -205,6 +226,7 @@ class ShowAdminPanel(LoginRequiredMixin, View):
         elif action in ['add_pattern']:
             return self.add_pattern(redirect_url)
         else:
+            print("FAILED!")
             messages.add_message(request, messages.ERROR, "Could not complete requested action",
                                  extra_tags='alert-danger')
             return self.get(request)
@@ -318,4 +340,58 @@ class ReleaseHostname(LoginRequiredMixin, View):
                                  extra_tags='alert-success')
         except Exception as err:
             messages.add_message(request, messages.ERROR, err, extra_tags='alert-danger')
+        return redirect(redirect_url)
+
+
+class CreateOwner(LoginRequiredMixin, View):
+    """ """
+    def post(self, request, *args, **kwargs):
+        """ process POST request """
+        redirect_url = self.request.META.get('HTTP_REFERER')
+        form = OwnerForm(request.user.username, self.request.POST or None)
+        if form.is_valid():
+            new_record = form.cleaned_data['name']
+            form.save()
+            messages.add_message(self.request, messages.INFO, "Owner '{}' created!".format(new_record),
+                                 extra_tags='alert-info', )
+        else:
+            for error in form.errors:
+                messages.add_message(self.request, messages.ERROR, "Input error: {}".format(error),
+                                     extra_tags='alert-danger', )
+        return redirect(redirect_url)
+
+
+class CreateProject(LoginRequiredMixin, View):
+    """ """
+    def post(self, request, *args, **kwargs):
+        """ process POST request """
+        redirect_url = self.request.META.get('HTTP_REFERER')
+        form = ProjectForm(request.user.username, self.request.POST or None)
+        if form.is_valid():
+            new_record = form.cleaned_data['name']
+            form.save()
+            messages.add_message(self.request, messages.INFO, "Project '{}' created!".format(new_record),
+                                 extra_tags='alert-info', )
+        else:
+            for error in form.errors:
+                messages.add_message(self.request, messages.ERROR, "Input error: {}".format(error),
+                                     extra_tags='alert-danger', )
+        return redirect(redirect_url)
+
+
+class CreatePattern(LoginRequiredMixin, View):
+    """ """
+    def post(self, request, *args, **kwargs):
+        """ process POST request """
+        redirect_url = self.request.META.get('HTTP_REFERER')
+        form = PatternForm(request.user.username, self.request.POST or None)
+        if form.is_valid():
+            new_record = form.cleaned_data['name']
+            form.save()
+            messages.add_message(self.request, messages.INFO, "Pattern '{}' created!".format(new_record),
+                                 extra_tags='alert-info', )
+        else:
+            for error in form.errors:
+                messages.add_message(self.request, messages.ERROR, "Input error: {}".format(error),
+                                     extra_tags='alert-danger', )
         return redirect(redirect_url)
