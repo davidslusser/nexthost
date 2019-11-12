@@ -5,6 +5,7 @@ Description: this file provides project-level views
 from django.views.generic import (View, ListView, UpdateView, TemplateView, DeleteView)
 from django.shortcuts import render, redirect, reverse
 from django.contrib import messages
+from django.utils import timezone
 from djangohelpers.views import FilterByQueryParamsMixin
 from rest_framework.authtoken.models import Token
 from braces.views import LoginRequiredMixin, GroupRequiredMixin
@@ -21,6 +22,9 @@ from hostmgr.models import (Owner, Project, Pattern, Hostname)
 
 # import forms
 from nexthost.forms import (UserPreferenceForm)
+
+from hostmgr.helpers.queryset_helpers import get_hr_trend_data
+
 
 
 @api_view()
@@ -156,4 +160,8 @@ class ShowDashboard(LoginRequiredMixin, View):
         context['hostnames_reserved'] = hostnames.filter(status="reserved")
         context['hostnames_expired'] = hostnames.filter(status="expired")
         context['activity'] = None
+        context['trend_hostnames_assigned'] = get_hr_trend_data(hostnames.filter(status='assigned'), 12, 'updated_at')
+        context['trend_hostnames_reserved'] = get_hr_trend_data(hostnames.filter(status='reserved'), 12, 'updated_at')
+        context['trend_hostnames_available'] = get_hr_trend_data(hostnames.filter(status='available'), 12, 'updated_at')
+        context['trend_hostnames_expired'] = get_hr_trend_data(hostnames.filter(assignment_expires__lte=timezone.now()), 12, 'updated_at')
         return render(request, template, context=context)

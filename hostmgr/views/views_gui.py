@@ -15,6 +15,8 @@ from hostmgr.models import (Owner, Project, Pattern, AssetIdType, Hostname)
 # import forms
 from hostmgr.forms import (OwnerForm, ProjectForm, PatternForm)
 
+from hostmgr.helpers.queryset_helpers import get_hr_trend_data
+
 
 class HostmgrBaseListView(FilterByQueryParamsMixin, ListView):
     """ base view for hostmgr list pages """
@@ -124,6 +126,14 @@ class DetailProject(DetailView):
     """ display details of a specific project """
     model = Project
     template_name = "detail/detail_project.html"
+
+    def get_context_data(self, **kwargs):
+        context = super(DetailProject, self).get_context_data(**kwargs)
+        context['hostnames_assigned'] = get_hr_trend_data(self.object.get_assigned_hostnames(), 12, 'updated_at')
+        context['hostnames_reserved'] = get_hr_trend_data(self.object.get_reserved_hostnames(), 12, 'updated_at')
+        context['hostnames_available'] = get_hr_trend_data(self.object.get_available_hostnames(), 12, 'updated_at')
+        context['hostnames_expired'] = get_hr_trend_data(self.object.get_expired_hostnames(), 12, 'updated_at')
+        return context
 
 
 class DetailPattern(DetailView):

@@ -174,24 +174,29 @@
     new Chart(document.getElementById("project_activity_chart"), {
         type: 'line',
         data: {
-            labels: [0,1,2,3,4,5,6,7,8,9,10,11,12],
+            {#labels: [0,1,2,3,4,5,6,7,8,9,10,11,12],#}
+            labels: [{% for k in trend_hostnames_assigned.keys %} {{ k }}, {% endfor %}],
             datasets: [{
-                data: [345,23,86,114,106,106,213,107,111,133,221,378,247],
+                {#data: [345,23,86,114,106,106,213,107,111,133,221,378,247],#}
+                data: [{% for i in trend_hostnames_assigned.values %} {{ i }}, {% endfor %}],
                 label: "Assigned",
                 borderColor: theme.primary,
                 fill: true
             }, {
-                data: [282,106,213,107,350,411,348,324,423,327,309,278,255],
+                {#data: [282,106,213,107,350,411,348,324,423,327,309,278,255],#}
+                data: [{% for i in trend_hostnames_reserved.values %} {{ i }}, {% endfor %}],
                 label: "Reserved",
                 borderColor: theme.warning,
                 fill: true
             }, {
-                data: [168,170,178,106,213,107,190,203,276,408,447,475,434],
+                {#data: [168,170,178,106,213,107,190,203,276,408,447,475,434],#}
+                data: [{% for i in trend_hostnames_available.values %} {{ i }}, {% endfor %}],
                 label: "Released",
                 borderColor: theme.secondary,
                 fill: true
             }, {
-                data: [40,20,10,16,24,38,74,106,213,107,167,408,484],
+                {#data: [40,20,10,16,24,38,74,106,213,107,167,408,484],#}
+                data: [{% for i in hostnames_expired.values %} {{ i }}, {% endfor %}],
                 label: "Expired",
                 borderColor: theme.danger,
                 fill: true
