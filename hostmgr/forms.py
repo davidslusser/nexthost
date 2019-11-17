@@ -62,17 +62,3 @@ class PatternForm(forms.ModelForm):
         super(PatternForm, self).__init__(*args, **kwargs)
         if username:
             self.fields['project'].queryset = Project.objects.filter(owner__group__user__username=username)
-
-
-# class HostNameAssignForm(forms.ModelForm):
-#     """ Form class used to assign a hostname to an asset """
-#     class Meta:
-#         model = Hostname
-#         fields = ['hostname', 'asset_id_type', 'asset_id', 'is_eternal', 'assignment_expires']
-#         widgets = {
-#             'hostname': forms.TextInput(attrs={'class': 'form-control'}),
-#             'asset_id_type': forms.Select(attrs={'class': 'form-control'}),
-#             'asset_id': forms.TextInput(attrs={'class': 'form-control'}),
-#             'persistent': forms.CheckboxInput(attrs={'class': 'form-control'}),
-#         }
-
