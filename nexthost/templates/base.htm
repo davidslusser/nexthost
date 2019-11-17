@@ -92,6 +92,12 @@
 
                 <!-- login -->
                 <ul class="navbar-nav mr-4">
+                    <li class="nav-item dropdown align-right">
+                        <a class="nav-link" href="{% url 'about' %}">
+                            <b class="fa fa-question-circle fw"></b>
+                        </a>
+                    </li>
+
 
                     {% if user.is_authenticated %}
                         <li class="nav-item dropdown align-right">

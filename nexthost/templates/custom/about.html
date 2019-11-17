@@ -5,12 +5,12 @@
 {% block content %}
 <div class="container-fluid text-center mb-5 animated fadeIn">
     <h1><b><span class="text-primary">Next</span><span class="text-secondary">Host</span></b></h1>
-    <h5>About</h5>
+    <h5 class="text-secondary">About</h5>
 </div>
 
 <section class="animated fadeIn" style="animation-delay: .25s;">
     <div class="container-fluid mb-5">
-        <div class="text-center">
+        <div>
             <p>
             NextHost is a service created to manage hostnames. Hostnames are tracked via patterns that exist under projects
             that are owned by owners. Hostname, Pattern, Project, and Owner entries are unique. Owners can own multiple
@@ -20,16 +20,43 @@
             Hostnames are added automatically when a new pattern is created. The pattern parameters determine the
             format of the hostnames. When initially created, hostnames have a status of 'available.' A hostname
             can have a status available, reserved, assigned, or expired. Status for a hostname can be changed via RESTful API
-            or via web interface. Full roll based access controls limits changes to applicable owners and admins.
+            or via web interface. Full role based access controls limit changes to applicable owners and admins.
             </p>
             <p>
             NextHost includes views and APIs to show hostnames of any or all status by pattern, project, or owner.
             </p>
             <p>
-            example: An owner, named ops, has a project named redis. This project has three patterns:
-                <span class="font-italic text-info">aws_redis_(\d[3])</span>, <span class="font-italic text-info">azr_redis_(\d[3])</span>, and <span class="font-italic text-info">gcp_redis_(\d[3])</span>, with each pattern allowing upto ten hosts. Hostnames
-            for this project would include: aws_redis_001, aws_redis_002, aws_redis_003, azr_redis_001, azr_redis_002, azr_redis_003,
-            gcp_redis_001, gcp_redis_002, gcp_redis_003, etc.
+                example: An owner, named ops, has a project named redis. This project has three patterns, each allowing upto ten hosts:
+                <ul>
+                    <li><span class="font-italic text-info">aws_redis_(\d[3])</span></li>
+                    <li><span class="font-italic text-info">azr_redis_(\d[3])</span></li>
+                    <li><span class="font-italic text-info">gcp_redis_(\d[3])</span></li>
+                </ul>
+            </p>
+            <p>
+                Hostnames for this project would include:
+                <ul>
+                    <div class="row">
+                        <div class="col-sm-4">
+                            <li>aws_redis_001</li>
+                            <li>aws_redis_002</li>
+                            <li>aws_redis_003</li>
+                            <li>etc...</li>
+                        </div>
+                        <div class="col-sm-4">
+                            <li>azr_redis_001</li>
+                            <li>azr_redis_002</li>
+                            <li>azr_redis_003</li>
+                            <li>etc...</li>
+                        </div>
+                        <div class="col-sm-4">
+                            <li>gcp_redis_001</li>
+                            <li>gcp_redis_002</li>
+                            <li>gcp_redis_003</li>
+                            <li>etc...</li>
+                        </div>
+                    </div>
+                </ul>
             </p>
         </div>
     </div>

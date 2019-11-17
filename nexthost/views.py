@@ -2,13 +2,13 @@
 Description: this file provides project-level views
 """
 
-from django.views.generic import (View, ListView, UpdateView, TemplateView, DeleteView)
+from django.views.generic import (View, ListView, UpdateView)
 from django.shortcuts import render, redirect, reverse
 from django.contrib import messages
 from django.utils import timezone
 from djangohelpers.views import FilterByQueryParamsMixin
 from rest_framework.authtoken.models import Token
-from braces.views import LoginRequiredMixin, GroupRequiredMixin
+from braces.views import LoginRequiredMixin
 from rest_framework import response, schemas
 from rest_framework.decorators import api_view, renderer_classes
 from rest_framework_swagger.renderers import OpenAPIRenderer, SwaggerUIRenderer
@@ -109,27 +109,9 @@ class UpdateApiToken(LoginRequiredMixin, View):
         return redirect(redirect_url)
 
 
-# class UpdateUserPreference(LoginRequiredMixin, View):
-#     """ update user preferences """
-#     def post(self, request):
-#         redirect_url = self.request.META.get('HTTP_REFERER')
-#         form = UserPreferenceForm(self.request.POST or None)
-#         if form.is_valid():
-#             new_record = form.cleaned_data['name']
-#             form.save()
-#             messages.add_message(self.request, messages.INFO, "Owner '{}' created!".format(new_record),
-#                                  extra_tags='alert-info', )
-#             return redirect(redirect_url)
-#         else:
-#             for error in form.errors:
-#                 messages.add_message(self.request, messages.ERROR, "Input error: {}".format(error),
-#                                      extra_tags='alert-danger', )
-#             return self.get(self.request)
-
 class UpdateUserPreference(LoginRequiredMixin, UpdateView):
     """ update user preferences """
     model = UserPreference
-    # template_name = ''
     form_class = UserPreferenceForm
 
     def form_valid(self, form):
