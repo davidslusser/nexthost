@@ -32,6 +32,8 @@ def add_groups_to_new_user(sender, instance, created, **kwargs):
         return
     if created:
         group_list = Group.objects.all()
+        if not group_list:
+            return
         group_count = random.randint(1, len(group_list))
         for i in range(0, group_count):
             group = get_random_row(group_list)
