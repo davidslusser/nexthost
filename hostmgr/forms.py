@@ -58,7 +58,9 @@ class PatternForm(forms.ModelForm):
             'start_from': forms.NumberInput(attrs={'class': 'form-control'}),
         }
 
-    def __init__(self, username=None, *args, **kwargs):
+    def __init__(self, username=None, project=None, *args, **kwargs):
         super(PatternForm, self).__init__(*args, **kwargs)
         if username:
             self.fields['project'].queryset = Project.objects.filter(owner__group__user__username=username)
+        if project:
+            self.fields['project'].queryset = Project.objects.filter(id=project['project'].id)

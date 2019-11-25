@@ -232,10 +232,14 @@ class Pattern(HostManagerBase):
             num = "{}".format(i).zfill(fill_count)
             hostname = ""
             if self.prefix:
-                hostname += "{}{}".format(self.prefix, self.prefix_delimiter)
+                hostname += "{}".format(self.prefix)
+            if self.prefix_delimiter:
+                hostname += "{}".format(self.prefix_delimiter)
             hostname += "{}".format(num)
+            if self.suffix_delimiter:
+                hostname += "{}".format(self.suffix_delimiter)
             if self.suffix:
-                hostname += "{}{}".format(self.suffix_delimiter, self.suffix)
+                hostname += "{}".format(self.suffix)
             Hostname.objects.get_or_create(hostname=hostname, pattern=self,
                                            defaults=dict(hostname=hostname, pattern=self, host_number=i))
 
