@@ -23,7 +23,7 @@ from hostmgr.models import (Owner, Project, Pattern, Hostname)
 # import forms
 from nexthost.forms import (UserPreferenceForm)
 
-from hostmgr.helpers.queryset_helpers import get_hr_trend_data
+from hostmgr.helpers.queryset_helpers import get_hr_trend_data, get_hr_trend_labels
 
 
 
@@ -132,6 +132,7 @@ class ShowDashboard(LoginRequiredMixin, View):
     def get(self, request, *args, **kwargs):
         template = "custom/nexthost_dashboard.html"
         context = dict()
+        now = timezone.now()
         context['projects'] = Project.objects.all()
         context['patterns'] = Pattern.objects.all()
         context['owners'] = Owner.objects.all()
@@ -142,8 +143,9 @@ class ShowDashboard(LoginRequiredMixin, View):
         context['hostnames_reserved'] = hostnames.filter(status="reserved")
         context['hostnames_expired'] = hostnames.filter(status="expired")
         context['activity'] = None
-        context['trend_hostnames_assigned'] = get_hr_trend_data(hostnames.filter(status='assigned'), 12, 'updated_at')
-        context['trend_hostnames_reserved'] = get_hr_trend_data(hostnames.filter(status='reserved'), 12, 'updated_at')
-        context['trend_hostnames_available'] = get_hr_trend_data(hostnames.filter(status='available'), 12, 'updated_at')
-        context['trend_hostnames_expired'] = get_hr_trend_data(hostnames.filter(assignment_expires__lte=timezone.now()), 12, 'updated_at')
+        context['trend_hostnames_assigned'] = get_hr_trend_data(hostnames.filter(status='assigned'), 12, 'updated_at', now=now)
+        context['trend_hostnames_reserved'] = get_hr_trend_data(hostnames.filter(status='reserved'), 12, 'updated_at', now=now)
+        context['trend_hostnames_available'] = get_hr_trend_data(hostnames.filter(status='available'), 12, 'updated_at', now=now)
+        context['trend_hostnames_expired'] = get_hr_trend_data(hostnames.filter(assignment_expires__lte=timezone.now()), 12, 'updated_at', now=now)
+        context['hour_labels'] = get_hr_trend_labels(hrs=12, now=now)
         return render(request, template, context=context)

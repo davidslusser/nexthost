@@ -133,6 +133,16 @@ class DetailProject(DetailView):
         context['hostnames_reserved'] = get_hr_trend_data(self.object.get_reserved_hostnames(), 12, 'updated_at')
         context['hostnames_available'] = get_hr_trend_data(self.object.get_available_hostnames(), 12, 'updated_at')
         context['hostnames_expired'] = get_hr_trend_data(self.object.get_expired_hostnames(), 12, 'updated_at')
+
+        # include pattern form
+        form_add_pattern = dict()
+        form_add_pattern['form'] = PatternForm(self.request.POST or None, {'project': self.object})
+        form_add_pattern['action'] = "Add"
+        form_add_pattern['action_url'] = reverse('hostmgr:show_admin_panel') + "?action=add_patterm"
+        form_add_pattern['title'] = "<b>Add Pattern: </b><small> </small>"
+        form_add_pattern['modal_name'] = "add_pattern"
+        context['form_add_pattern'] = form_add_pattern
+
         return context
 
 

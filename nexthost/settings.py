@@ -28,7 +28,7 @@ SECRET_KEY = os.environ.get('SECRET_KEY', 'CHANGEME')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['dbslusser.pythonanywhere.com', '127.0.0.1']
+ALLOWED_HOSTS = ['127.0.0.1', 'www.nexthost.tech']
 
 
 # Application definition
@@ -176,23 +176,23 @@ REST_FRAMEWORK = {
 
 # settings for redislite
 
-# Create a Redis instance using redislite
-REDIS_DB_PATH = os.path.join('/tmp/my_redis.db')
-rdb = Redis(REDIS_DB_PATH)
-REDIS_SOCKET_PATH = 'redis+socket://%s' % (rdb.socket_file, )
-
-# Use redislite for the Celery broker
-BROKER_URL = REDIS_SOCKET_PATH
-
-# (Optionally) use redislite for the Celery result backend
-CELERY_RESULT_BACKEND = REDIS_SOCKET_PATH
+# # Create a Redis instance using redislite
+# REDIS_DB_PATH = os.path.join('/tmp/my_redis.db')
+# rdb = Redis(REDIS_DB_PATH)
+# REDIS_SOCKET_PATH = 'redis+socket://%s' % (rdb.socket_file, )
+#
+# # Use redislite for the Celery broker
+# BROKER_URL = REDIS_SOCKET_PATH
+#
+# # (Optionally) use redislite for the Celery result backend
+# CELERY_RESULT_BACKEND = REDIS_SOCKET_PATH
 
 
 # celery configuration
 BROKER_USE_SSL = True
 CELERYBEAT_SCHEDULER = 'django_celery_beat.schedulers:DatabaseScheduler'
-#BROKER_URL = env.str('CELERY_BROKER_URL', default='redis://localhost:6379')
-#CELERY_RESULT_BACKEND = env.str('CELERY_RESULT_BACKEND', default='redis://localhost:6379')
+BROKER_URL = env.str('CELERY_BROKER_URL', default='redis://localhost:6379')
+CELERY_RESULT_BACKEND = env.str('CELERY_RESULT_BACKEND', default='redis://localhost:6379')
 CELERY_ACCEPT_CONTENT = ['application/json']
 CELERY_TASK_SERIALIZER = 'json'
 CELERY_RESULT_SERIALIZER = 'json'

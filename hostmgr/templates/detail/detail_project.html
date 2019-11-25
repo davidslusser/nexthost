@@ -74,7 +74,19 @@
             <div class="col-sm-12 col-md-8 col-lg-8">
 
                 <div class="card mb-4 bg-light shadow1 pattern_list_card">
-                    <div class="card-header text-primary font-weight-bold text-lg-left">Patterns</div>
+                    <div class="card-header text-primary font-weight-bold text-lg-left">
+                        <div class="row">
+                            <div class="col-sm-6 text-left">Patterns</div>
+                            <div class="col-sm-6 text-right" style="text-align: right">
+                                <small>
+                                    <a class="hvr-grow" href="#" data-toggle="modal" data-target="#modal_{{ form_add_pattern.modal_name }}">
+                                        <i class="fas fa-plus-circle mr-2"></i>
+                                        Add Pattern
+                                    </a>
+                                </small>
+                            </div>
+                        </div>
+                    </div>
                     <div class="card-body" style="overflow-y: auto; overflow-x: hidden; height: 200px">
                         <ul class="list-group mx-auto justify-content-center" style="max-width: 95%; margin-top: .5%; margin-bottom: .5%">
                             {% for pattern in object.pattern_set.all|dictsort:"name" %}
@@ -186,6 +198,14 @@
     });
 </script>
 
-
     {% include 'component/modals.htm' %}
+
+    {% with form_add_pattern as form_data %}
+        {% include 'generic/generic_modal_form.htm' %}
+    {% endwith %}
+
+    {% if modals %}
+        {% include modals %}
+    {% endif %}
+
 {% endblock %}
