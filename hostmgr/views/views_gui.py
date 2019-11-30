@@ -113,7 +113,7 @@ class ListHostnames(HostmgrBaseListView):
     title = "Hostnames"
     page_description = ""
     table = "table/table_hostnames.htm"
-    modals = "forms/hostmgr_modals_test.htm"
+    modals = "forms/form_assign_hostname.htm"
 
 
 class DetailOwner(DetailView):
