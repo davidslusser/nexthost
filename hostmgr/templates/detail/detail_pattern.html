@@ -83,16 +83,7 @@
     </div>
 </section>
 
-
     {% include 'component/modals.htm' %}
-    {% include 'forms/hostmgr_modals.htm' %}
-
-    {% with create_form as form_data %}
-        {% include 'generic/generic_modal_form.htm' %}
-    {% endwith %}
-
-    {% if modals %}
-        {% include modals %}
-    {% endif %}
+    {% include 'forms/hostmgr_modals_test.htm' %}
 
 {% endblock content %}
