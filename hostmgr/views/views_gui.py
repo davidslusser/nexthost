@@ -151,7 +151,6 @@ class DetailPattern(DetailView):
     model = Pattern
     template_name = "detail/detail_pattern.html"
     queryset = model.objects.all().select_related('project__owner')
-    modals = "forms/hostmgr_modals_test.htm"
 
 
 class ShowAdminPanel(LoginRequiredMixin, View):
