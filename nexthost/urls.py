@@ -33,6 +33,8 @@ urlpatterns = [
     path('about', TemplateView.as_view(template_name='custom/about.html'), name="about"),
     path('register', views.RegisterUser.as_view(), name='register'),
     path('dashboard', views.ShowDashboard.as_view(), name='dashboard'),
+    path('robots.txt', TemplateView.as_view(template_name='custom/robots.txt'), name="robots"),
+    path('sitemap.xml', TemplateView.as_view(template_name='custom/sitemap.xml'), name="sitemap"),
 
     # app urls
     path('userextensions/', include('userextensions.urls'), ),
