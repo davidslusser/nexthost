@@ -55,7 +55,8 @@ INSTALLED_APPS = [
     'django_celery_beat',
 
     # project apps
-    'hostmgr'
+    'hostmgr',
+    'landing',
 ]
 
 INTERNAL_IPS = ['127.0.0.1', ]

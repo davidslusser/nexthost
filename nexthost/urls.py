@@ -37,6 +37,7 @@ urlpatterns = [
     # app urls
     path('userextensions/', include('userextensions.urls'), ),
     path('hostmgr/', include('hostmgr.urls'), ),
+    path('landing/', include('landing.urls'), ),
 
     # userextension views
     path('list_recents/', views.ListRecents.as_view(), name='list_recents'),
