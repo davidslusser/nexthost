@@ -214,13 +214,17 @@ class Pattern(HostManagerBase):
         """ build the regex value for this pattern """
         regex = "^"
         if self.prefix:
-            regex += "{}{}".format(self.prefix, self.prefix_delimiter)
+            regex += "{}".format(self.prefix)
+        if self.prefix_delimiter:
+            regex += "{}".format(self.prefix_delimiter)
         regex += "[0-9]{{{}}}".format(len(str(self.host_count)))
         # regex += "[{}-{}]".format(self.start_from, self.start_from + self.host_count)
         # regex += "([0-9]{{{}}})".format(len(str(self.host_count)))
 
+        if self.suffix_delimiter:
+            regex += "{}".format(self.suffix_delimiter)
         if self.suffix:
-            regex += "{}{}".format(self.suffix_delimiter, self.suffix)
+            regex += "{}".format(self.suffix)
         regex += "$"
         return regex
         # return "^{}{}[0-9]{{{}}}$".format(self.prefix, self.prefix_delimiter, len(str(self.host_count)))
