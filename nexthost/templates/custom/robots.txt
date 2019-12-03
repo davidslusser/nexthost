@@ -1,2 +1,3 @@
-this is the robots.txt page
-Disallow /admin
+User-agent: *
+Disallow: 
+Disallow: /admin
