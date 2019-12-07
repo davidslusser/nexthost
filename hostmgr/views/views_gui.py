@@ -125,7 +125,7 @@ class DetailOwner(DetailView):
 class DetailProject(DetailView):
     """ display details of a specific project """
     model = Project
-    template_name = "detail/detail_project.html"
+    template_name = "detail/detail_project2.html"
 
     def get_context_data(self, **kwargs):
         context = super(DetailProject, self).get_context_data(**kwargs)

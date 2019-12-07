@@ -1,0 +1,286 @@
+{% extends base_template|default:"base.htm" %}
+{% load staticfiles %}
+
+{% block local_head %}
+    {% include 'component/chart_components.htm' %}
+    <link href="{% static 'nexthost_dashboard.css' %}" rel="stylesheet">
+{% endblock local_head %}
+
+
+{% block content %}
+<div class="container-fluid mb-4 animated fadeIn">
+    <h1><span class="text-primary mr-2"><b>Project: </b></span><span class="text-secondary"><small>{{ object.name }}</small></span></h1><br/>
+</div>
+
+<!-- summary of host state counts -->
+<section class="animated fadeIn" style="animation-delay: .25s;">
+
+    <div class="container-fluid mb-3">
+        <div class="row">
+            <!-- breakdown hostname counts by status -->
+            <div class="col-sm-12 col-md-4 col-lg-4">
+
+                <div class="row mb-3">
+                    <div class="col-sm-12">
+                        <div class="card shadow1 bg-light">
+                            <div class="card-body text-center">
+                                <div class="btn-group float-left">
+                                    <div class="h1"><i class="fas fa-check-circle"></i></div>
+                                </div>
+                                <div class="text-right"><h1><b>{{ object.get_available_hostnames.count }}</b></h1></div>
+                                <div class="text-left mt-3 mb-n3"><small>
+                                    <a class="hvr-grow" href="{% url 'hostmgr:list_hostnames' %}?pattern__project__name={{ object.name }}&status=available"> Hostnames Available</a>
+                                </small></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <div class="col-sm-12">
+                        <div class="card shadow1 bg-light">
+                            <div class="card-body text-center">
+                                <div class="btn-group float-left">
+                                    <div class="h1"><i class="fas fa-pause-circle"></i></div>
+                                </div>
+                                <div class="text-right"><h1><b>{{ object.get_reserved_hostnames.count }}</b></h1></div>
+                                <div class="text-left mt-3 mb-n3"><small>
+                                    <a class="hvr-grow" href="{% url 'hostmgr:list_hostnames' %}?pattern__project__name={{ object.name }}&status=reserved">Hostnames Reserved</a>
+                                </small></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <div class="col-sm-12">
+                        <div class="card shadow1 bg-light">
+                            <div class="card-body text-center">
+                                <div class="btn-group float-left">
+                                    <div class="h1"><i class="fas fa-stop-circle"></i></div>
+                                </div>
+                                <div class="text-right"><h1><b>{{ object.get_assigned_hostnames.count }}</b></h1></div>
+                                <div class="text-left mt-3 mb-n3"><small>
+                                    <a class="hvr-grow" href="{% url 'hostmgr:list_hostnames' %}?pattern__project__name={{ object.name }}&status=assigned">Hostnames Assigned</a>
+                                </small></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- list patterns in this project -->
+            <div class="col-sm-12 col-md-8 col-lg-8">
+
+                <div class="card mb-4 bg-light shadow1 pattern_list_card">
+                    <div class="card-header text-primary font-weight-bold text-lg-left">
+                        <div class="row">
+                            <div class="col-sm-6 text-left">Patterns</div>
+                            <div class="col-sm-6 text-right" style="text-align: right">
+                                <small>
+                                    <a class="hvr-grow" href="#" data-toggle="modal" data-target="#modal_{{ form_add_pattern.modal_name }}">
+                                        <i class="fas fa-plus-circle mr-2"></i>
+                                        Add Pattern
+                                    </a>
+                                </small>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body" style="overflow-y: auto; overflow-x: hidden; height: 200px">
+                        <ul class="list-group mx-auto justify-content-center" style="max-width: 95%; margin-top: .5%; margin-bottom: .5%">
+                            {% for pattern in object.pattern_set.all|dictsort:"name" %}
+                                <li class="list-group-item hvr-grow m-1" style="background-color: white;">
+                                    <div class="row flex-nowrap" style="height: 25px;">
+                                        <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 text-left">
+                                            <a href="{% url 'hostmgr:detail_pattern' pattern.id %}"><b>{{ pattern.name }}</b></a>
+                                        </div>
+                                        <div class="col-xs-7 col-sm-7 col-md-7 col-lg-7 mr-sm-n2 text-left">
+                                            <p><small style="font-size: 10px">
+                                                {% if pattern.description %}
+                                                    {{ pattern.description }}
+                                                {% else %}
+                                                    ex. {{ pattern.prefix }}{{ pattern.delimiter }}{{ pattern.max_hosts }}
+                                                {% endif %}
+                                            </small></p>
+                                        </div>
+                                        <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1 text-right">
+                                            <a href="#" title="view pattern details"
+                                               onClick="showInfo('{% url "hostmgr:get_pattern_details" %}', '{{ pattern.id }}', 'Details: <small><i>{{ pattern.name }}</i></small>', true);"
+                                               role="button" data-toggle="tooltip" data-placement="left">
+                                                <i class="fa fa-info-circle fa-fw text-secondary"></i>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+</section>
+
+
+<!-- activity chart -->
+<section class="animated fadeIn" style="animation-delay: .5s;">
+{#    <div class="container-fluid mb-5">#}
+{#        <div class="card shadow1 bg-light">#}
+{#            <div class="card-body text-center">#}
+{#                <canvas id="project_activity_chart" style="height: 400px; max-width: auto;"></canvas>#}
+{#            </div>#}
+{#        </div>#}
+{#    </div>#}
+    <div class="container-fluid mb-3">
+        <div class="row">
+            <div class="col-sm-12 col-md-4 col-lg-4">
+                <div class="card mb-4 bg-light shadow1 pattern_list_card">
+                    <div class="card-header text-primary font-weight-bold text-lg-left">
+                        Hostname Utilization
+                    </div>
+                    <div class="card-body">
+                        <canvas id="project_activity_chart" style="height: 200px; max-width: auto;"></canvas>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-12 col-md-8 col-lg-8">
+                <div class="card mb-4 bg-light shadow1 ">
+                    <div class="card-header text-primary font-weight-bold text-lg-left">
+                        Hostname Status
+                    </div>
+                    <div class="card-body">
+                        <div class="d-flex flex-wrap align-items-center justify-content-center">
+{#                            <div class="card" style="width: 100px; height:50px;">#}
+{#                                <div class="card-body text-center hvr-grow m-4 div-shadow">blah</div>#}
+{#                            </div>#}
+{#                            <div class="card mb-4 text-center justify-content-center hvr-grow m-2 div-shadow" style="background-color: whitesmoke; width: 100px; height: 50px;">#}
+{#                                <div class="card-text">Dashboard</div>#}
+{#                            </div>#}
+{#                            <div class="card mb-4 text-center justify-content-center hvr-grow m-2 div-shadow" style="background-color: whitesmoke; width: 100px; height: 50px;">#}
+{#                                <div class="card-text">Dashboard</div>#}
+{#                            </div>#}
+                            {% for hostname in object.get_hostnames %}
+                                <div class="card mb-4 text-center justify-content-center hvr-grow m-2 div-shadow" style="background-color: whitesmoke; width: 100px; height: 50px;">
+                                    {% if hostname.status == 'assigned' %}
+                                        <div class="card-text text-primary"><small>{{ hostname }}</small></div>
+                                    {% elif hostname.status == 'available' %}
+                                        <div class="card-text text-secondary"><small>{{ hostname }}</small></div>
+                                    {% elif hostname.status == 'reserved' %}
+                                        <div class="card-text text-warning"><small>{{ hostname }}</small></div>
+                                    {% elif hostname.status == 'expired' %}
+                                        <div class="card-text text-danger"><small>{{ hostname }}</small></div>
+                                    {% else %}
+                                        <div class="card-text"><small>{{ hostname }}</small></div>
+                                    {% endif %}
+                                </div>
+
+                            {% endfor %}
+{#                            <div class="card card-body text-center hvr-grow m-4 div-shadow" style="width: 50px">blah</div>#}
+{#                            <div class="card card-body text-center hvr-grow m-4 div-shadow" style="width: 50px">blah</div>#}
+{#                            <div class="card card-body text-center hvr-grow m-4 div-shadow" style="width: 50px">blah</div>#}
+{#                            <div class="card card-body text-center hvr-grow m-4 div-shadow" style="width: 50px">blah</div>#}
+{#                            <div class="card card-body text-center hvr-grow m-4 div-shadow" style="width: 50px">blah</div>#}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<div class="m-4">&nbsp;</div>
+
+<!-- chartjs script -->
+<script>
+    var style = getComputedStyle(document.body);
+    var theme = {};
+    theme.primary = style.getPropertyValue('--primary');
+    theme.secondary = style.getPropertyValue('--secondary');
+    theme.success = style.getPropertyValue('--success');
+    theme.info = style.getPropertyValue('--info');
+    theme.warning = style.getPropertyValue('--warning');
+    theme.danger = style.getPropertyValue('--danger');
+    theme.light = style.getPropertyValue('--light');
+    theme.dark = style.getPropertyValue('--dark');
+
+    new Chart(document.getElementById("project_activity_chart"), {
+        type: 'line',
+        data: {
+            {#labels: [0,1,2,3,4,5,6,7,8,9,10,11,12],#}
+            labels: [{% for k in hostnames_assigned.keys %} {{ k }}, {% endfor %}],
+            datasets: [{
+                {#data: [345,23,86,114,106,106,213,107,111,133,221,378,247],#}
+                data: [{% for i in hostnames_assigned.values %} {{ i }}, {% endfor %}],
+                label: "Assigned",
+                borderColor: theme.primary,
+                fill: true
+            }, {
+                {#data: [282,106,213,107,350,411,348,324,423,327,309,278,255],#}
+                data: [{% for i in hostnames_reserved.values %} {{ i }}, {% endfor %}],
+                label: "Reserved",
+                borderColor: theme.warning,
+                fill: true
+            }, {
+                {#data: [168,170,178,106,213,107,190,203,276,408,447,475,434],#}
+                data: [{% for i in hostnames_available.values %} {{ i }}, {% endfor %}],
+                label: "Available",
+                borderColor: theme.secondary,
+                fill: true
+            }, {
+                {#data: [40,20,10,16,24,38,74,106,213,107,167,408,484],#}
+                data: [{% for i in hostnames_expired.values %} {{ i }}, {% endfor %}],
+                label: "Expired",
+                borderColor: theme.danger,
+                fill: true
+            }
+            ]
+        },
+        options: {
+            title: {
+                display: true,
+                text: 'Hostname Activity (past 12hrs)',
+                position: 'top'
+            },
+            maintainAspectRatio: false,
+            legend: {
+                position: 'bottom'
+            }
+        }
+    });
+
+
+    new Chart(document.getElementById("pie-chart"), {
+        type: 'pie',
+        data: {
+            labels: ["Africa", "Asia", "Europe", "Latin America", "North America"],
+            datasets: [{
+                label: "Population (millions)",
+                backgroundColor: ["#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9","#c45850"],
+                data: [2478,5267,734,784,433]
+            }]
+        },
+        options: {
+            title: {
+                display: true,
+                text: 'Predicted world population (millions) in 2050'
+            }
+        }
+    });
+
+</script>
+
+    {% include 'component/modals.htm' %}
+
+    {% with form_add_pattern as form_data %}
+        {% include 'generic/generic_modal_form.htm' %}
+    {% endwith %}
+
+    {% if modals %}
+        {% include modals %}
+    {% endif %}
+
+{% endblock %}
