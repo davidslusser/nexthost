@@ -2,7 +2,7 @@
 {% load userextension_tags %}
 
 <!DOCTYPE html>
-<!-- project_base.html -->
+<!-- nexthost_base.html -->
 <html lang="en">
 {% block mainheader %}
     <head>
@@ -115,27 +115,36 @@
                             <div class="dropdown-menu ml-md-n5 ml-lg-n5 ml-sm-0" aria-labelledby="navbarDropdown">
                                 <a class="dropdown-item" href="{% url 'logout' %}"><b class="fa fa-sign-out-alt fw mr-3"></b>Log out</a>
                                 <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="{% url 'detail_user' %}"><i class="fa fa-address-card fw mr-3"></i>Profile</a>
+                                <a class="dropdown-item" href="{% url 'userextensions:detail_user' %}"><i class="fa fa-address-card fw mr-3"></i>Profile</a>
                                 <a class="dropdown-item" href="#"><b class="fa fa-cogs fw mr-3 text-greyout"></b>Settings</a>
-                                <a class="dropdown-item" href="{% url 'list_recents' %}"><b class="far fa-clock fw mr-3"></b>Recents</a>
-                                <a class="dropdown-item" href="{% url 'list_favorites' %}"><i class="far fa-heart mr-3"></i>Favorites</a>
+                                <a class="dropdown-item" href="{% url 'userextensions:list_recents' %}"><b class="far fa-clock fw mr-3"></b>Recents</a>
+                                <a class="dropdown-item" href="{% url 'userextensions:list_favorites' %}"><i class="far fa-heart mr-3"></i>Favorites</a>
                                 <div class="dropdown-divider"></div>
                                 <div class="dropdown-item">
                                     {% is_favorite request as favorite_id %}
                                     {% if favorite_id %}
-                                        <form name="submitForm" method="POST" action="{% url 'userextensions:delete_favorite' favorite_id %}">
+                                        <form name="addFavoriteForm" method="POST" action="{% url 'userextensions:delete_favorite' favorite_id %}">
                                             {% csrf_token %}
                                             <input type="hidden" name="name" value="">
-                                            <a href="javascript:document.submitForm.submit()"><i class="fas fa-heart-broken mr-3"></i></b>Remove Favorite</a>
+                                            <a href="javascript:document.addFavoriteForm.submit()"><i class="fas fa-heart-broken mr-3"></i></b>Remove Favorite</a>
                                         </form>
                                     {% else %}
-                                        <form name="submitForm" method="POST" action="{% url 'userextensions:add_favorite' %}">
+                                        <form name="deleteFavoriteForm" method="POST" action="{% url 'userextensions:add_favorite' %}">
                                             {% csrf_token %}
                                             <input type="hidden" name="name" value="">
-                                            <a href="javascript:document.submitForm.submit()"><b class="fas fa-heart mr-3"></b>Add Favorite</a>
+                                            <a href="javascript:document.deleteFavoriteForm.submit()"><b class="fas fa-heart mr-3"></b>Add Favorite</a>
                                         </form>
                                     {% endif %}
                                 </div>
+                                <div class="dropdown-item">
+                                    {# set page a user start page #}
+                                    <form name="startPageForm" method="POST" action="{% url 'userextensions:set_start_page' %}">
+                                        {% csrf_token %}
+                                        <input type="hidden" name="name" value="">
+                                        <a href="javascript:document.startPageForm.submit()"><b class="fas fa-sign-in-alt mr-3"></b>Set start page</a>
+                                    </form>
+                                </div>
+
                             </div>
                         </li>
                     {% else %}
