@@ -18,6 +18,7 @@ from django.views.generic import TemplateView
 from django.conf import settings
 from django.contrib import admin
 from nexthost import views
+from django.contrib.auth import urls
 
 urlpatterns = [
     path('admin/', admin.site.urls, name='admin'),
@@ -35,6 +36,7 @@ urlpatterns = [
     path('dashboard', views.ShowDashboard.as_view(), name='dashboard'),
     path('robots.txt', TemplateView.as_view(template_name='custom/robots.txt'), name="robots"),
     path('sitemap.xml', TemplateView.as_view(template_name='custom/sitemap.xml'), name="sitemap"),
+    path('test', TemplateView.as_view(template_name='custom/test.html'), name='test'),
 
     # app urls
     path('userextensions/', include('userextensions.urls'), ),

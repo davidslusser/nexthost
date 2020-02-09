@@ -1,7 +1,8 @@
 from django.shortcuts import render, redirect, reverse
+from django.conf import settings
 from django.utils import timezone
 from django.views.generic import (View, ListView, DetailView, TemplateView)
-from djangohelpers.views import FilterByQueryParamsMixin
+from djangohelpers.views import HandyHelperBaseListView, HandyHelperBaseCreateListView
 from rest_framework.authtoken.models import Token
 from braces.views import LoginRequiredMixin
 from django.contrib import messages
@@ -18,56 +19,7 @@ from hostmgr.forms import (OwnerForm, ProjectForm, PatternForm)
 from hostmgr.helpers.queryset_helpers import get_hr_trend_data
 
 
-class HostmgrBaseListView(FilterByQueryParamsMixin, ListView):
-    """ base view for hostmgr list pages """
-    title = None
-    table = None
-    modals = None
-
-    def get(self, request, *args, **kwargs):
-        context = dict()
-        template = "generic/generic_list.html"
-        context['queryset'] = self.filter_by_query_params()
-        context['title'] = self.title
-        context['sub_title'] = self.page_description
-        context['table'] = self.table
-        context['modals'] = self.modals
-        return render(request, template, context=context)
-
-
-class HostMgrBaseListViewCreate(FilterByQueryParamsMixin, ListView):
-    """ base view for hostmgr list pages that include create forms """
-    title = None
-    table = None
-    modals = None
-    create_form = dict()
-    create_form_obj = None
-    create_form_url = None
-    create_form_title = None
-    create_form_modal = None
-    create_form_link_title = None
-
-    def get(self, request, *args, **kwargs):
-        context = dict()
-        template = "generic/generic_list.html"
-        context['queryset'] = self.filter_by_query_params()
-        context['title'] = self.title
-        context['sub_title'] = self.page_description
-        context['table'] = self.table
-        context['modals'] = self.modals
-        if self.create_form_obj:
-            self.create_form['form'] = self.create_form_obj
-            self.create_form['form'] = self.create_form_obj(request.user.username, request.POST or None)
-            self.create_form['action'] = "Add"
-            self.create_form['action_url'] = self.create_form_url
-            self.create_form['title'] = self.create_form_title
-            self.create_form['modal_name'] = self.create_form_modal
-            self.create_form['link_title'] = self.create_form_link_title
-            context['create_form'] = self.create_form
-        return render(request, template, context=context)
-
-
-class ListOwners(HostMgrBaseListViewCreate):
+class ListOwners(HandyHelperBaseCreateListView):
     """ list available Owner entries """
     queryset = Owner.objects.all().select_related('group').prefetch_related('project_set').order_by('-created_at')
     title = "Owners"
@@ -80,7 +32,7 @@ class ListOwners(HostMgrBaseListViewCreate):
     create_form_link_title = "add owner"
 
 
-class ListProjects(HostMgrBaseListViewCreate):
+class ListProjects(HandyHelperBaseCreateListView):
     """ list available Project entries """
     queryset = Project.objects.all().select_related('owner').prefetch_related('pattern_set')
     title = "Projects"
@@ -93,7 +45,7 @@ class ListProjects(HostMgrBaseListViewCreate):
     create_form_link_title = "add project"
 
 
-class ListPatterns(HostMgrBaseListViewCreate):
+class ListPatterns(HandyHelperBaseCreateListView):
     """ list available Pattern entries """
     queryset = Pattern.objects.all().select_related('project').prefetch_related('hostname_set')
     title = "Patterns"
@@ -106,7 +58,7 @@ class ListPatterns(HostMgrBaseListViewCreate):
     create_form_link_title = "add pattern"
 
 
-class ListHostnames(HostmgrBaseListView):
+class ListHostnames(HandyHelperBaseListView):
     """ list available Hostname entries """
     queryset = Hostname.objects.all().select_related('pattern', 'pattern__project', 'pattern__project__owner'
                                                      ).order_by('hostname')
