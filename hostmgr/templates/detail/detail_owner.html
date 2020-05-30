@@ -16,7 +16,6 @@
 
 <section class="animated fadeIn" style="animation-delay: .25s;">
     <div class="container-fluid mb-5">
-{#        <div class="text-center text-secondary mb-3">hostname breakdown</div>#}
 
         <!-- hostname usage break-down -->
         <div class="row pt-sm-0">
@@ -138,7 +137,7 @@
                                             <a href="{% url 'hostmgr:detail_project' project.id %}"><b>{{ project.name }}</b></a>
                                         </div>
                                         <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 text-right">
-                                            <a href="#" title="view pattern details"
+                                            <a href="#" title="view project details"
                                                onClick="showInfo('{% url "hostmgr:get_project_details" %}', '{{ project.id }}', 'Details: <small><i>{{ project.name }}</i></small>', true);"
                                                role="button" data-toggle="tooltip" data-placement="left">
                                                 <i class="fa fa-info-circle fa-fw text-secondary"></i>
@@ -155,7 +154,6 @@
         </div>
     </div>
 </section>
-
 
 
     {% include 'component/modals.htm' %}

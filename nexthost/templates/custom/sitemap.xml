@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+    <url>
+        <loc>http://nexthost.tech/index</loc>
+    </url>
+    <url>
+        <loc>http://nexthost.tech/dashboard</loc>
+    </url>
+    <url>
+        <loc>http://nexthost.tech/hostmgr/list_owners/</loc>
+    </url>
+    <url>
+        <loc>http://nexthost.tech/hostmgr/list_owners/?group__user__username=&page_description=My Owners</loc>
+    </url>
+    <url>
+        <loc>http://nexthost.tech/hostmgr/list_projects/</loc>
+    </url>
+    <url>
+        <loc>http://nexthost.tech/hostmgr/list_projects/?owner__group__user__username=&page_description=My Projects</loc>
+    </url>
+    <url>
+        <loc>http://nexthost.tech/hostmgr/list_patterns/</loc>
+    </url>
+    <url>
+        <loc>http://nexthost.tech/hostmgr/list_patterns/?project__owner__group__user__username=&page_description=My Patterns</loc>
+    </url>
+    <url>
+        <loc>http://nexthost.tech/hostmgr/list_hostnames/</loc>
+    </url>
+    <url>
+        <loc>http://nexthost.tech/hostmgr/list_hostnames/?pattern__project__owner__group__user__username=&page_description=My Hostnames</loc>
+    </url>
+    <url>
+        <loc>http://nexthost.tech/hostmgr/api/v1</loc>
+    </url>
+    <url>
+        <loc>http://nexthost.tech/swagger</loc>
+    </url>
+    <url>
+        <loc>http://nexthost.tech/about</loc>
+    </url>
+    <url>
+        <loc>http://nexthost.tech/accounts/login/</loc>
+    </url>
+    <url>
+        <loc>http://nexthost.tech/hostmgr/show_admin_panel/</loc>
+    </url>
+</urlset>

@@ -18,6 +18,7 @@ from django.views.generic import TemplateView
 from django.conf import settings
 from django.contrib import admin
 from nexthost import views
+from django.contrib.auth import urls
 
 urlpatterns = [
     path('admin/', admin.site.urls, name='admin'),
@@ -33,16 +34,14 @@ urlpatterns = [
     path('about', TemplateView.as_view(template_name='custom/about.html'), name="about"),
     path('register', views.RegisterUser.as_view(), name='register'),
     path('dashboard', views.ShowDashboard.as_view(), name='dashboard'),
+    path('robots.txt', TemplateView.as_view(template_name='custom/robots.txt'), name="robots"),
+    path('sitemap.xml', TemplateView.as_view(template_name='custom/sitemap.xml'), name="sitemap"),
+    path('test', TemplateView.as_view(template_name='custom/test.html'), name='test'),
 
     # app urls
     path('userextensions/', include('userextensions.urls'), ),
     path('hostmgr/', include('hostmgr.urls'), ),
     path('landing/', include('landing.urls'), ),
-
-    # userextension views
-    path('list_recents/', views.ListRecents.as_view(), name='list_recents'),
-    path('list_favorites/', views.ListFavorites.as_view(), name='list_favorites'),
-    path('detail_user/', views.ShowUserProfile.as_view(), name='detail_user'),
 
     # swagger API docs
     path('swagger', views.schema_view, name="swagger"),

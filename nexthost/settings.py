@@ -46,7 +46,7 @@ INSTALLED_APPS = [
     'debug_toolbar',
     'django_extensions',
     'django_filters',
-    'djangohelpers',
+    'handyhelpers',
     'rest_framework',
     'rest_framework_swagger',
     'rest_framework.authtoken',
@@ -148,7 +148,8 @@ STATICFILES_FINDERS = [
 ]
 
 LOGIN_URL = '/accounts/login/'
-LOGIN_REDIRECT_URL = '/'
+# LOGIN_REDIRECT_URL = '/'
+LOGIN_REDIRECT_URL = '/userextensions/user_login_redirect'
 SESSION_COOKIE_AGE = 28800
 
 
@@ -204,3 +205,5 @@ BROKER_CONNECTION_TIMEOUT = 30
 CELERY_EVENT_QUEUE_EXPIRES = 60
 CELERYD_POOL_RESTARTS = True
 CELERY_ALWAYS_EAGER = True
+
+BASE_TEMPLATE = 'base.htm'

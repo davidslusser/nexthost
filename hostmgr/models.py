@@ -214,13 +214,17 @@ class Pattern(HostManagerBase):
         """ build the regex value for this pattern """
         regex = "^"
         if self.prefix:
-            regex += "{}{}".format(self.prefix, self.prefix_delimiter)
+            regex += "{}".format(self.prefix)
+        if self.prefix_delimiter:
+            regex += "{}".format(self.prefix_delimiter)
         regex += "[0-9]{{{}}}".format(len(str(self.host_count)))
         # regex += "[{}-{}]".format(self.start_from, self.start_from + self.host_count)
         # regex += "([0-9]{{{}}})".format(len(str(self.host_count)))
 
+        if self.suffix_delimiter:
+            regex += "{}".format(self.suffix_delimiter)
         if self.suffix:
-            regex += "{}{}".format(self.suffix_delimiter, self.suffix)
+            regex += "{}".format(self.suffix)
         regex += "$"
         return regex
         # return "^{}{}[0-9]{{{}}}$".format(self.prefix, self.prefix_delimiter, len(str(self.host_count)))
@@ -380,14 +384,14 @@ class Hostname(HostManagerBase):
     def disable_hostname(self, user):
         """ set this hostname to active = False """
         if not self.get_manageability(user):
-            raise UserNotAuthorized("{} is not authorized to manage this lock".format(user))
+            raise UserNotAuthorized("{} is not authorized to manage this hostname".format(user))
         self.active = False
         self.save()
 
     def reserve_hostname(self, user):
         """ set the status of this host to 'reserved' """
         if not self.get_manageability(user):
-            raise UserNotAuthorized("{} is not authorized to manage this lock".format(user))
+            raise UserNotAuthorized("{} is not authorized to manage this hostname".format(user))
         if not self.active:
             raise HostnameInactive("{} is currently inactive".format(self.hostname))
         if self.status not in ['available', 'assigned']:
@@ -400,7 +404,7 @@ class Hostname(HostManagerBase):
     def assign_hostname(self, user, asset_id, asset_id_type_name, persistent=False):
         """ set the status of this host to 'assigned' """
         if not self.get_manageability(user):
-            raise UserNotAuthorized("{} is not authorized to manage this lock".format(user))
+            raise UserNotAuthorized("{} is not authorized to manage this hostname".format(user))
         if not self.active:
             raise HostnameInactive("{} is currently inactive".format(self.hostname))
         if self.status not in ['available', 'reserved']:
@@ -424,7 +428,7 @@ class Hostname(HostManagerBase):
     def reassign_hostname(self, user, asset_id, asset_id_type_name):
         """ assign this hostname to a different asset """
         if not self.get_manageability(user):
-            raise UserNotAuthorized("{} is not authorized to manage this lock".format(user))
+            raise UserNotAuthorized("{} is not authorized to manage this hostname".format(user))
         if not self.active:
             raise HostnameInactive("{} is currently inactive".format(self.hostname))
         if self.status not in ['assigned']:
@@ -445,7 +449,7 @@ class Hostname(HostManagerBase):
     def release_hostname(self, user):
         """ set the status of this host to 'available' """
         if not self.get_manageability(user):
-            raise UserNotAuthorized("{} is not authorized to manage this lock".format(user))
+            raise UserNotAuthorized("{} is not authorized to manage this hostname".format(user))
         if not self.active:
             raise HostnameInactive("{} is currently inactive".format(self.hostname))
         if self.persistent:
