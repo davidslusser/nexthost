@@ -24,7 +24,7 @@ class ListOwners(HandyHelperBaseCreateListView):
     queryset = Owner.objects.all().select_related('group').prefetch_related('project_set').order_by('-created_at')
     title = "Owners"
     page_description = ""
-    table = "table/table_owners.htm"
+    table = "hostmgr/table/table_owners.htm"
     create_form_obj = OwnerForm
     create_form_url = '/hostmgr/create_owner/'
     create_form_title = "<b>Add Owner: </b><small> </small>"
@@ -37,7 +37,7 @@ class ListProjects(HandyHelperBaseCreateListView):
     queryset = Project.objects.all().select_related('owner').prefetch_related('pattern_set')
     title = "Projects"
     page_description = ""
-    table = "table/table_projects.htm"
+    table = "hostmgr/table/table_projects.htm"
     create_form_obj = ProjectForm
     create_form_url = '/hostmgr/create_project/'
     create_form_title = "<b>Add Project: </b><small> </small>"
@@ -50,7 +50,7 @@ class ListPatterns(HandyHelperBaseCreateListView):
     queryset = Pattern.objects.all().select_related('project').prefetch_related('hostname_set')
     title = "Patterns"
     page_description = ""
-    table = "table/table_patterns.htm"
+    table = "hostmgr/table/table_patterns.htm"
     create_form_obj = PatternForm
     create_form_url = '/hostmgr/create_pattern/'
     create_form_title = "<b>Add Pattern: </b><small> </small>"
@@ -64,20 +64,20 @@ class ListHostnames(HandyHelperBaseListView):
                                                      ).order_by('hostname')
     title = "Hostnames"
     page_description = ""
-    table = "table/table_hostnames.htm"
-    modals = "forms/form_assign_hostname.htm"
+    table = "hostmgr/table/table_hostnames.htm"
+    modals = "hostmgr/forms/form_assign_hostname.htm"
 
 
 class DetailOwner(DetailView):
     """ display details of a specific owner """
     model = Owner
-    template_name = "detail/detail_owner.html"
+    template_name = "hostmgr/detail/detail_owner.html"
 
 
 class DetailProject(DetailView):
     """ display details of a specific project """
     model = Project
-    template_name = "detail/detail_project.html"
+    template_name = "hostmgr/detail/detail_project.html"
 
     def get_context_data(self, **kwargs):
         context = super(DetailProject, self).get_context_data(**kwargs)
@@ -88,9 +88,10 @@ class DetailProject(DetailView):
 
         # include pattern form
         form_add_pattern = dict()
-        form_add_pattern['form'] = PatternForm(self.request.POST or None, {'project': self.object})
+        form_add_pattern['form'] = PatternForm(self.request.POST or None, {'project': self.object}, initial={'project': self.object})
         form_add_pattern['action'] = "Add"
-        form_add_pattern['action_url'] = reverse('hostmgr:show_admin_panel') + "?action=add_patterm"
+        # form_add_pattern['action_url'] = reverse('hostmgr:show_admin_panel') + "?action=add_pattern"
+        form_add_pattern['action_url'] = reverse('hostmgr:create_pattern')
         form_add_pattern['title'] = "<b>Add Pattern: </b><small> </small>"
         form_add_pattern['modal_name'] = "add_pattern"
         context['form_add_pattern'] = form_add_pattern
@@ -101,7 +102,7 @@ class DetailProject(DetailView):
 class DetailPattern(DetailView):
     """ display details of a specific pattern """
     model = Pattern
-    template_name = "detail/detail_pattern.html"
+    template_name = "hostmgr/detail/detail_pattern.html"
     queryset = model.objects.all().select_related('project__owner')
 
 
@@ -111,7 +112,6 @@ class ShowAdminPanel(LoginRequiredMixin, View):
         """ add an owner """
         form = OwnerForm(self.request.POST or None)
         if form.is_valid():
-            print("valid...")
             new_record = form.cleaned_data['name']
             form.save()
             messages.add_message(self.request, messages.INFO, "Owner '{}' created!".format(new_record),
@@ -119,7 +119,6 @@ class ShowAdminPanel(LoginRequiredMixin, View):
             return redirect(redirect_url)
         else:
             for error in form.errors:
-                print("GOT AN ERROR...")
                 messages.add_message(self.request, messages.ERROR, "Input error: {}".format(error),
                                      extra_tags='alert-danger', )
             return self.get(self.request)
@@ -155,7 +154,7 @@ class ShowAdminPanel(LoginRequiredMixin, View):
             return self.get(self.request)
 
     def get(self, request, *args, **kwargs):
-        template = "custom/admin_panel.html"
+        template = "hostmgr/custom/admin_panel.html"
         context = dict()
 
         # include owner form
@@ -262,108 +261,3 @@ class ShowApiGuideV1Hostname(LoginRequiredMixin, View):
         context['sub_title'] = "v1"
         context['token'] = str(Token.objects.get_or_create(user=request.user)[0])
         return render(request, template, context=context)
-
-
-class ReserveHostname(LoginRequiredMixin, View):
-    """ request reservation of a hostname """
-    def post(self, request, *args, **kwargs):
-        """ process POST request """
-        redirect_url = self.request.META.get('HTTP_REFERER')
-        obj_id = self.request.GET.dict().get('id', None)
-        hostname = Hostname.objects.get_object_or_none(id=obj_id)
-        try:
-            hostname.reserve_hostname(user=request.user)
-        except Exception as err:
-            messages.add_message(request, messages.ERROR, err, extra_tags='alert-danger')
-        return redirect(redirect_url)
-
-
-class AssignHostname(LoginRequiredMixin, View):
-    """ assign reservation of a hostname """
-    def post(self, request, *args, **kwargs):
-        """ process POST request """
-        redirect_url = self.request.META.get('HTTP_REFERER')
-        obj_id = self.request.GET.dict().get('id', None)
-        asset_id = self.request.GET.dict().get('asset_id', None)
-        asset_id_type_name = self.request.GET.dict().get('asset_id_type', None)
-        persistent = self.request.GET.dict().get('persistent', None)
-
-        hostname = Hostname.objects.get_object_or_none(id=obj_id)
-        try:
-            hostname.assign_hostname(user=request.user, asset_id=asset_id,
-                                     asset_id_type_name=asset_id_type_name, persistent=persistent)
-            messages.add_message(request, messages.INFO, "{} set to 'assigned'".format(hostname.hostname),
-                                 extra_tags='alert-success')
-        except Exception as err:
-            messages.add_message(request, messages.ERROR, err, extra_tags='alert-danger')
-        return redirect(redirect_url)
-
-
-class ReleaseHostname(LoginRequiredMixin, View):
-    """ release reservation of a hostname """
-    def post(self, request, *args, **kwargs):
-        """ process POST request """
-        redirect_url = self.request.META.get('HTTP_REFERER')
-        obj_id = self.request.GET.dict().get('id', None)
-        hostname = Hostname.objects.get_object_or_none(id=obj_id)
-        try:
-            hostname.release_hostname(user=request.user)
-            messages.add_message(request, messages.INFO, "assignment on {} has been released".format(hostname.hostname),
-                                 extra_tags='alert-success')
-        except Exception as err:
-            messages.add_message(request, messages.ERROR, err, extra_tags='alert-danger')
-        return redirect(redirect_url)
-
-
-class CreateOwner(LoginRequiredMixin, View):
-    """ """
-    def post(self, request, *args, **kwargs):
-        """ process POST request """
-        redirect_url = self.request.META.get('HTTP_REFERER')
-        form = OwnerForm(request.user.username, self.request.POST or None)
-        if form.is_valid():
-            new_record = form.cleaned_data['name']
-            form.save()
-            messages.add_message(self.request, messages.INFO, "Owner '{}' created!".format(new_record),
-                                 extra_tags='alert-info', )
-        else:
-            for error in form.errors:
-                messages.add_message(self.request, messages.ERROR, "Input error: {}".format(error),
-                                     extra_tags='alert-danger', )
-        return redirect(redirect_url)
-
-
-class CreateProject(LoginRequiredMixin, View):
-    """ """
-    def post(self, request, *args, **kwargs):
-        """ process POST request """
-        redirect_url = self.request.META.get('HTTP_REFERER')
-        form = ProjectForm(request.user.username, self.request.POST or None)
-        if form.is_valid():
-            new_record = form.cleaned_data['name']
-            form.save()
-            messages.add_message(self.request, messages.INFO, "Project '{}' created!".format(new_record),
-                                 extra_tags='alert-info', )
-        else:
-            for error in form.errors:
-                messages.add_message(self.request, messages.ERROR, "Input error: {}".format(error),
-                                     extra_tags='alert-danger', )
-        return redirect(redirect_url)
-
-
-class CreatePattern(LoginRequiredMixin, View):
-    """ """
-    def post(self, request, *args, **kwargs):
-        """ process POST request """
-        redirect_url = self.request.META.get('HTTP_REFERER')
-        form = PatternForm(request.user.username, self.request.POST or None)
-        if form.is_valid():
-            new_record = form.cleaned_data['name']
-            form.save()
-            messages.add_message(self.request, messages.INFO, "Pattern '{}' created!".format(new_record),
-                                 extra_tags='alert-info', )
-        else:
-            for error in form.errors:
-                messages.add_message(self.request, messages.ERROR, "Input error: {}".format(error),
-                                     extra_tags='alert-danger', )
-        return redirect(redirect_url)

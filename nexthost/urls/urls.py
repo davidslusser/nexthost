@@ -18,20 +18,20 @@ from django.views.generic import TemplateView
 from django.conf import settings
 from django.contrib import admin
 from nexthost import views
-from django.contrib.auth import urls
+
 
 urlpatterns = [
     path('admin/', admin.site.urls, name='admin'),
     path('accounts/', include('django.contrib.auth.urls')),
 
     # home page
-    path('', TemplateView.as_view(template_name='index.html')),
-    path('default', TemplateView.as_view(template_name='index.html'), name="default"),
-    path('home', TemplateView.as_view(template_name='index.html'), name="home"),
-    path('index', TemplateView.as_view(template_name='index.html'), name="index"),
+    path('', TemplateView.as_view(template_name='landing.html')),
+    path('default', TemplateView.as_view(template_name='landing.html'), name="default"),
+    path('home', TemplateView.as_view(template_name='landing.html'), name="home"),
+    path('index', TemplateView.as_view(template_name='landing.html'), name="index"),
 
     # project-level
-    path('about', TemplateView.as_view(template_name='custom/about.html'), name="about"),
+    path('about', TemplateView.as_view(template_name='landing.html'), name="about"),
     path('register', views.RegisterUser.as_view(), name='register'),
     path('dashboard', views.ShowDashboard.as_view(), name='dashboard'),
     path('robots.txt', TemplateView.as_view(template_name='custom/robots.txt'), name="robots"),
@@ -41,9 +41,14 @@ urlpatterns = [
     # app urls
     path('userextensions/', include('userextensions.urls'), ),
     path('hostmgr/', include('hostmgr.urls'), ),
+    path('landing/', include('landing.urls'), ),
 
     # swagger API docs
     path('swagger', views.schema_view, name="swagger"),
+    path('swagger/', views.schema_view),
+
+    # api redirect
+    path(r'api/', include('nexthost.urls.api_v1', namespace='api')),
 
 ]
 

@@ -4,7 +4,7 @@
 {% block local_head %}
     {% include 'component/chart_components.htm' %}
     {% include 'component/table_components.htm' %}
-    <link href="{% static 'nexthost_dashboard.css' %}" rel="stylesheet">
+    <link href="{% static 'hostmgr/nexthost_dashboard.css' %}" rel="stylesheet">
 {% endblock local_head %}
 
 
@@ -93,7 +93,7 @@
                             </div>
                             <div class="row">
                                 <div class="col-4 col-lg-4"><b class="text-primary">Email:</b></div>
-                                <div class="col-8 col-lg-8">blah.blah.blah</div>
+                                <div class="col-8 col-lg-8">{{ object.email }}</div>
                             </div>
                             <div class="row">
                                 <div class="col-4 col-lg-4"><b class="text-primary">Group:</b></div>

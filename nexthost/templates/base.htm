@@ -42,9 +42,9 @@
         {% if user_theme %}
             <link href="{% static user_theme.css_file %}" rel="stylesheet">
         {% else %}
-            <link href="{% static 'default.css' %}" rel="stylesheet">
+            <link href="{% static 'nexthost/css/default.css' %}" rel="stylesheet">
         {% endif %}
-        <link href="{% static 'nexthost_base.css' %}" rel="stylesheet">
+        <link href="{% static 'nexthost/css/nexthost_base.css' %}" rel="stylesheet">
 
         <!-- Local HEAD content -->
         {% block local_head %}{% endblock %}
@@ -84,7 +84,7 @@
 
     {% block mainnavbar %}
         <nav class="navbar navbar-expand-md navbar-dark bg-primary">
-            <a class="navbar-brand mr-5" href="{% url 'index' %}"><b>Next<span class="text-secondary">Host</span></b></a>
+            <a class="navbar-brand mr-5" href="{% url 'hostmgr:index' %}"><b>Next<span class="text-secondary">Host</span></b></a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -92,8 +92,8 @@
             <div class="collapse navbar-collapse" id="navbarNavDropdown">
                 <ul class="navbar-nav mr-auto">
 
-                    {% include 'navigation/hostmgr_nav.htm' %}
-                    {% include 'navigation/hostmgr_apis.htm' %}
+                    {% include 'hostmgr/navigation/hostmgr_nav.htm' %}
+                    {% include 'hostmgr/navigation/hostmgr_apis.htm' %}
 {#                    {% include 'navigation/hostmgr_selfservice.htm' %}#}
 
                 </ul>
