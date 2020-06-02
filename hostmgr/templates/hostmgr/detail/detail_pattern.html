@@ -4,7 +4,7 @@
 {% block local_head %}
     {% include 'component/chart_components.htm' %}
     {% include 'component/table_components.htm' %}
-    <link href="{% static 'nexthost_dashboard.css' %}" rel="stylesheet">
+    <link href="{% static 'nexthost/css/nexthost_dashboard.css' %}" rel="stylesheet">
 {% endblock local_head %}
 
 
@@ -78,12 +78,12 @@
 <section class="animated fadeIn" style="animation-delay: .5s;">
     <div class="container-fluid mb-5">
         {% with object.hostname_set.all as queryset %}
-            {% include 'table/table_hostnames.htm' %}
+            {% include 'hostmgr/table/table_hostnames.htm' %}
         {% endwith %}
     </div>
 </section>
 
     {% include 'component/modals.htm' %}
-    {% include 'forms/form_assign_hostname.htm' %}
+    {% include 'hostmgr/forms/form_assign_hostname.htm' %}
 
 {% endblock content %}

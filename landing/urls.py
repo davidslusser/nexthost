@@ -1,9 +1,5 @@
 from django.urls import path
-from django.conf.urls import include
 from django.views.generic import TemplateView
-
-# import views
-
 
 app_name = 'landing'
 

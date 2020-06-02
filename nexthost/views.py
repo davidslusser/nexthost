@@ -27,7 +27,7 @@ from hostmgr.helpers.queryset_helpers import get_hr_trend_data, get_hr_trend_lab
 @api_view()
 @renderer_classes([OpenAPIRenderer, SwaggerUIRenderer])
 def schema_view(request):
-    generator = schemas.SchemaGenerator(title='PadLock APIs')
+    generator = schemas.SchemaGenerator(title='NextHost APIs')
     return response.Response(generator.get_schema(request=request))
 
 

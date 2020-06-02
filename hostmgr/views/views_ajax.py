@@ -30,7 +30,7 @@ def get_owner_details(request):
             object_id = request.GET['client_response']
             obj = Owner.objects.get(id=object_id)
             queryset = obj.jiras.all()
-            template = loader.get_template('ajax/get_owner_details.htm')
+            template = loader.get_template('hostmgr/ajax/get_owner_details.htm')
             return HttpResponse(json.dumps({"server_response": template.render({'queryset': queryset})}),
                                 content_type='application/javascript')
         else:
@@ -53,7 +53,7 @@ def get_project_details(request):
         if 'client_response' in request.GET:
             object_id = request.GET['client_response']
             obj = Project.objects.get(id=object_id)
-            template = loader.get_template('ajax/get_project_details.htm')
+            template = loader.get_template('hostmgr/ajax/get_project_details.htm')
             return HttpResponse(json.dumps({"server_response": template.render({'object': obj})}),
                                 content_type='application/javascript')
         else:
@@ -76,7 +76,7 @@ def get_pattern_details(request):
         if 'client_response' in request.GET:
             object_id = request.GET['client_response']
             obj = Pattern.objects.get(id=object_id)
-            template = loader.get_template('ajax/get_pattern_details.htm')
+            template = loader.get_template('hostmgr/ajax/get_pattern_details.htm')
             return HttpResponse(json.dumps({"server_response": template.render({'object': obj})}),
                                 content_type='application/javascript')
         else:
@@ -99,7 +99,7 @@ def get_hostname_details(request):
         if 'client_response' in request.GET:
             object_id = request.GET['client_response']
             obj = Hostname.objects.get(id=object_id)
-            template = loader.get_template('ajax/get_hostname_details.htm')
+            template = loader.get_template('hostmgr/ajax/get_hostname_details.htm')
             return HttpResponse(json.dumps({"server_response": template.render({'object': obj})}),
                                 content_type='application/javascript')
         else:
@@ -123,7 +123,7 @@ def get_hostname_auditlog(request):
             hostname = request.GET['client_response']
             queryset = LogEntry.objects.filter(content_type__model="hostname",
                                                object_repr__icontains=hostname)
-            template = loader.get_template('ajax/show_audit_log.htm')
+            template = loader.get_template('handyhelpers/ajax/show_audit_log.htm')
             return HttpResponse(json.dumps({"server_response": template.render({'queryset': queryset})}),
                                 content_type='application/javascript')
         else:
@@ -147,7 +147,7 @@ def get_pattern_auditlog(request):
             name = request.GET['client_response']
             queryset = LogEntry.objects.filter(content_type__model="pattern",
                                                object_repr__icontains=name)
-            template = loader.get_template('ajax/show_audit_log.htm')
+            template = loader.get_template('hostmgr/ajax/show_audit_log.htm')
             return HttpResponse(json.dumps({"server_response": template.render({'queryset': queryset})}),
                                 content_type='application/javascript')
         else:
@@ -171,7 +171,7 @@ def get_project_auditlog(request):
             name = request.GET['client_response']
             queryset = LogEntry.objects.filter(content_type__model="project",
                                                object_repr__icontains=name)
-            template = loader.get_template('ajax/show_audit_log.htm')
+            template = loader.get_template('hostmgr/ajax/show_audit_log.htm')
             return HttpResponse(json.dumps({"server_response": template.render({'queryset': queryset})}),
                                 content_type='application/javascript')
         else:
@@ -195,7 +195,7 @@ def get_owner_auditlog(request):
             name = request.GET['client_response']
             queryset = LogEntry.objects.filter(content_type__model="owner",
                                                object_repr__icontains=name)
-            template = loader.get_template('ajax/show_audit_log.htm')
+            template = loader.get_template('hostmgr/ajax/show_audit_log.htm')
             return HttpResponse(json.dumps({"server_response": template.render({'queryset': queryset})}),
                                 content_type='application/javascript')
         else:
@@ -218,7 +218,7 @@ def get_users_per_owner(request):
         if 'client_response' in request.GET:
             owner_id = request.GET['client_response']
             queryset = Owner.objects.get(id=owner_id)
-            template = loader.get_template('ajax/list_users_per_owner.htm')
+            template = loader.get_template('hostmgr/ajax/list_users_per_owner.htm')
             return HttpResponse(json.dumps({"server_response": template.render({'queryset': queryset})}),
                                 content_type='application/javascript')
         else:
@@ -242,7 +242,7 @@ def get_projects_per_owner(request):
             owner_id = request.GET['client_response']
             owner = Owner.objects.get(id=owner_id)
             queryset = owner.get_projects()
-            template = loader.get_template('ajax/list_projects_per_owner.htm')
+            template = loader.get_template('hostmgr/ajax/list_projects_per_owner.htm')
             return HttpResponse(json.dumps({"server_response": template.render({'queryset': queryset})}),
                                 content_type='application/javascript')
         else:
@@ -266,7 +266,7 @@ def get_patterns_per_owner(request):
             owner_id = request.GET['client_response']
             owner = Owner.objects.get(id=owner_id)
             queryset = owner.get_patterns()
-            template = loader.get_template('ajax/list_patterns_per_owner.htm')
+            template = loader.get_template('hostmgr/ajax/list_patterns_per_owner.htm')
             return HttpResponse(json.dumps({"server_response": template.render({'queryset': queryset})}),
                                 content_type='application/javascript')
         else:
@@ -290,7 +290,7 @@ def get_hostnames_per_owner(request):
             owner_id = request.GET['client_response']
             owner = Owner.objects.get(id=owner_id)
             queryset = owner.get_hostnames()
-            template = loader.get_template('ajax/list_hostnames_per_owner.htm')
+            template = loader.get_template('hostmgr/ajax/list_hostnames_per_owner.htm')
             return HttpResponse(json.dumps({"server_response": template.render({'queryset': queryset})}),
                                 content_type='application/javascript')
         else:
@@ -314,7 +314,7 @@ def get_patterns_per_project(request):
             obj_id = request.GET['client_response']
             project = Project.objects.get(id=obj_id)
             queryset = project.get_patterns()
-            template = loader.get_template('ajax/list_patterns_per_project.htm')
+            template = loader.get_template('hostmgr/ajax/list_patterns_per_project.htm')
             return HttpResponse(json.dumps({"server_response": template.render({'queryset': queryset})}),
                                 content_type='application/javascript')
         else:
@@ -338,7 +338,7 @@ def get_hostnames_per_project(request):
             obj_id = request.GET['client_response']
             project = Project.objects.get(id=obj_id)
             queryset = project.get_hostnames()
-            template = loader.get_template('ajax/list_hostnames_per_project.htm')
+            template = loader.get_template('hostmgr/ajax/list_hostnames_per_project.htm')
             return HttpResponse(json.dumps({"server_response": template.render({'queryset': queryset})}),
                                 content_type='application/javascript')
         else:
@@ -362,7 +362,7 @@ def get_assigned_hostnames_per_project(request):
             obj_id = request.GET['client_response']
             project = Project.objects.get(id=obj_id)
             queryset = project.get_assigned_hostnames()
-            template = loader.get_template('ajax/list_hostnames_per_project.htm')
+            template = loader.get_template('hostmgr/ajax/list_hostnames_per_project.htm')
             return HttpResponse(json.dumps({"server_response": template.render({'queryset': queryset})}),
                                 content_type='application/javascript')
         else:
@@ -386,7 +386,7 @@ def get_available_hostnames_per_project(request):
             obj_id = request.GET['client_response']
             project = Project.objects.get(id=obj_id)
             queryset = project.get_expired_hostnames()
-            template = loader.get_template('ajax/list_hostnames_per_project.htm')
+            template = loader.get_template('hostmgr/ajax/list_hostnames_per_project.htm')
             return HttpResponse(json.dumps({"server_response": template.render({'queryset': queryset})}),
                                 content_type='application/javascript')
         else:
@@ -410,7 +410,7 @@ def get_expired_hostnames_per_project(request):
             obj_id = request.GET['client_response']
             project = Project.objects.get(id=obj_id)
             queryset = project.get_expired_hostnames()
-            template = loader.get_template('ajax/list_hostnames_per_project.htm')
+            template = loader.get_template('hostmgr/ajax/list_hostnames_per_project.htm')
             return HttpResponse(json.dumps({"server_response": template.render({'queryset': queryset})}),
                                 content_type='application/javascript')
         else:
@@ -434,7 +434,7 @@ def get_reserved_hostnames_per_project(request):
             obj_id = request.GET['client_response']
             project = Project.objects.get(id=obj_id)
             queryset = project.get_reserved_hostnames()
-            template = loader.get_template('ajax/list_hostnames_per_project.htm')
+            template = loader.get_template('hostmgr/ajax/list_hostnames_per_project.htm')
             return HttpResponse(json.dumps({"server_response": template.render({'queryset': queryset})}),
                                 content_type='application/javascript')
         else:
@@ -458,7 +458,7 @@ def get_hostnames_per_pattern(request):
             obj_id = request.GET['client_response']
             pattern = Pattern.objects.get(id=obj_id)
             queryset = pattern.get_hostnames()
-            template = loader.get_template('ajax/list_hostnames_per_project.htm')
+            template = loader.get_template('hostmgr/ajax/list_hostnames_per_project.htm')
             return HttpResponse(json.dumps({"server_response": template.render({'queryset': queryset})}),
                                 content_type='application/javascript')
         else:
@@ -482,7 +482,7 @@ def get_assigned_hostnames_per_pattern(request):
             obj_id = request.GET['client_response']
             pattern = Pattern.objects.get(id=obj_id)
             queryset = pattern.get_assigned_hostnames()
-            template = loader.get_template('ajax/list_hostnames_per_project.htm')
+            template = loader.get_template('hostmgr/ajax/list_hostnames_per_project.htm')
             return HttpResponse(json.dumps({"server_response": template.render({'queryset': queryset})}),
                                 content_type='application/javascript')
         else:
@@ -506,7 +506,7 @@ def get_available_hostnames_per_pattern(request):
             obj_id = request.GET['client_response']
             pattern = Pattern.objects.get(id=obj_id)
             queryset = pattern.get_expired_hostnames()
-            template = loader.get_template('ajax/list_hostnames_per_project.htm')
+            template = loader.get_template('hostmgr/ajax/list_hostnames_per_project.htm')
             return HttpResponse(json.dumps({"server_response": template.render({'queryset': queryset})}),
                                 content_type='application/javascript')
         else:
@@ -530,7 +530,7 @@ def get_expired_hostnames_per_pattern(request):
             obj_id = request.GET['client_response']
             project = Project.objects.get(id=obj_id)
             queryset = project.get_expired_hostnames()
-            template = loader.get_template('ajax/list_hostnames_per_project.htm')
+            template = loader.get_template('hostmgr/ajax/list_hostnames_per_project.htm')
             return HttpResponse(json.dumps({"server_response": template.render({'queryset': queryset})}),
                                 content_type='application/javascript')
         else:
@@ -554,7 +554,7 @@ def get_reserved_hostnames_per_pattern(request):
             obj_id = request.GET['client_response']
             pattern = Pattern.objects.get(id=obj_id)
             queryset = pattern.get_reserved_hostnames()
-            template = loader.get_template('ajax/list_hostnames_per_project.htm')
+            template = loader.get_template('hostmgr/ajax/list_hostnames_per_project.htm')
             return HttpResponse(json.dumps({"server_response": template.render({'queryset': queryset})}),
                                 content_type='application/javascript')
         else:

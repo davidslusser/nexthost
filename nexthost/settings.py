@@ -148,8 +148,8 @@ STATICFILES_FINDERS = [
 ]
 
 LOGIN_URL = '/accounts/login/'
-# LOGIN_REDIRECT_URL = '/'
 LOGIN_REDIRECT_URL = '/userextensions/user_login_redirect'
+LOGIN_REDIRECT_URL_DEFAULT = '/hostmgr/'
 SESSION_COOKIE_AGE = 28800
 
 
@@ -159,7 +159,7 @@ SKIP_FIXED_URL_LIST = ["/list_recents/"]
 # drf configuration
 REST_FRAMEWORK = {
     'DEFAULT_FILTER_BACKENDS': (
-        'rest_framework_filters.backends.DjangoFilterBackend',
+        'rest_framework_filters.backends.RestFrameworkFilterBackend',
     ),
 
     'DEFAULT_PERMISSION_CLASSES': (

@@ -1,24 +1,20 @@
 from django.urls import path
-from django.conf.urls import include
-from rest_framework.routers import DefaultRouter
+from django.views.generic import TemplateView
 
 # import views
 import hostmgr.views.views_gui as gui
-import hostmgr.views.views_api as apis
 import hostmgr.views.views_ajax as ajax
+import hostmgr.views.views_action as action
 
 app_name = 'hostmgr'
 
-router = DefaultRouter()
-
-# hostmgr API Endpoints
-router.register(r'owner', apis.OwnerViewSet, "owner")
-router.register(r'project', apis.ProjectViewSet, "project")
-router.register(r'pattern', apis.PatternViewSet, "pattern")
-router.register(r'assetidtype', apis.AssetIdTypeViewSet, "assetidtype")
-router.register(r'hostname', apis.HostnameViewSet, "hostname")
-
 urlpatterns = [
+
+    path('', TemplateView.as_view(template_name='hostmgr/index.html'), name="index"),
+    path('default', TemplateView.as_view(template_name='hostmgr/index.html'), name="default"),
+    path('home', TemplateView.as_view(template_name='hostmgr/index.html'), name="home"),
+    path('index', TemplateView.as_view(template_name='hostmgr/index.html'), name="index"),
+
     # list views
     path('list_owners/', gui.ListOwners.as_view(), name='list_owners'),
     path('list_projects/', gui.ListProjects.as_view(), name='list_projects'),
@@ -26,12 +22,12 @@ urlpatterns = [
     path('list_hostnames/', gui.ListHostnames.as_view(), name='list_hostnames'),
 
     # action views
-    path('reserve_hostname/', gui.ReserveHostname.as_view(), name='reserve_hostname'),
-    path('assign_hostname/', gui.AssignHostname.as_view(), name='assign_hostname'),
-    path('release_hostname/', gui.ReleaseHostname.as_view(), name='release_hostname'),
-    path('create_owner/', gui.CreateOwner.as_view(), name='create_owner'),
-    path('create_project/', gui.CreateProject.as_view(), name='create_project'),
-    path('create_pattern/', gui.CreatePattern.as_view(), name='create_pattern'),
+    path('reserve_hostname/', action.ReserveHostname.as_view(), name='reserve_hostname'),
+    path('assign_hostname/', action.AssignHostname.as_view(), name='assign_hostname'),
+    path('release_hostname/', action.ReleaseHostname.as_view(), name='release_hostname'),
+    path('create_owner/', action.CreateOwner.as_view(), name='create_owner'),
+    path('create_project/', action.CreateProject.as_view(), name='create_project'),
+    path('create_pattern/', action.CreatePattern.as_view(), name='create_pattern'),
 
     # detail views
     path('detail_owner/<int:pk>/', gui.DetailOwner.as_view(), name='detail_owner'),
@@ -74,9 +70,5 @@ urlpatterns = [
     path('get_project_auditlog', ajax.get_project_auditlog, name='get_project_auditlog'),
     path('get_pattern_auditlog', ajax.get_pattern_auditlog, name='get_pattern_auditlog'),
     path('get_hostname_auditlog', ajax.get_hostname_auditlog, name='get_hostname_auditlog'),
-
-    # API views
-    path('api/', include(router.urls)),
-    path('api/v1/', include(router.urls)),
 
 ]
