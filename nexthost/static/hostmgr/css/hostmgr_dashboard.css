@@ -1,0 +1,198 @@
+/* CSS specific to hostmgr dashboard */
+
+.grid-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(6, minmax(100px, 1fr));
+    grid-template-areas:
+            "owners owners graph graph graph graph"
+            "projects projects graph graph graph graph"
+            "patterns patterns graph graph graph graph"
+            "hostnames hostnames available assigned reserved expired";
+    grid-gap: 15px;
+    min-height: calc(100vh - 20%);
+}
+
+.grid-item {
+    padding-top: 10px;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-bottom: 5px;
+    background-color: rgba(255, 255, 255, 0.075);
+    border: 1px solid rgba(255, 255, 255, 0.075);
+    /*box-shadow: 5px 5px 5px rgba(255, 255, 255, 0.075);*/
+}
+
+.sub-grid-item {
+    max-height: 80%;
+    align-self: flex-end;
+}
+
+.owners {
+    grid-area: owners;
+}
+.projects {
+    grid-area: projects;
+}
+.patterns {
+    grid-area: patterns;
+}
+.hostnames {
+    grid-area: hostnames;
+}
+
+.graph {
+    grid-area: graph;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /*height: 106%;*/
+}
+
+.available {
+    grid-area: available;
+}
+.assigned {
+    grid-area: assigned;
+}
+.reserved {
+    grid-area: reserved;
+}
+.expired {
+    grid-area: expired;
+}
+
+.sub-grid {
+    display: grid;
+    grid: repeat(2, 40px)
+      / repeat(3, minmax(20px, 1fr));
+    grid-template-areas:
+            "icon . count"
+            "title title title";
+    grid-gap: 2px;
+}
+
+.icon {
+    grid-area: icon;
+    display: flex;
+    align-items: flex-start;
+}
+.count {
+    grid-area: count;
+}
+.title {
+    grid-area: title;
+}
+
+
+.summary-icon {
+    font-size: 32px;
+    font-weight: bold;
+}
+.summary-count {
+    font-size: 32px;
+    font-weight: bold;
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-end;
+    margin-top: 5px;
+}
+.summary-title {
+    font-size: 16px;
+    display: flex;
+    align-items: flex-end;
+    justify-content: flex-start;
+}
+
+.status-icon {
+    font-size: 20px;
+    font-weight: bold;
+}
+.status-count {
+    font-size: 20px;
+    font-weight: bold;
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-start;
+    margin-top: -7px;
+}
+.status-title {
+    font-size: 12px;
+    display: flex;
+    align-items: flex-end;
+    justify-content: flex-start;
+    padding-bottom: 15px;
+}
+
+
+/* set grid on small */
+/*@media (max-width: 576px) {*/
+@media only screen and (max-width: 600px) {
+    .grid {
+        display: grid;
+        grid-template-columns: repeat(1, 1fr);
+        grid-template-areas:
+                "owners"
+                "projects"
+                "patterns"
+                "graph"
+                "hostnames"
+                "available"
+                "assigned"
+                "reserved"
+                "expired"
+                ".";
+        grid-gap: 15px;
+        min-height: calc(100vh - 20%);
+    }
+    .sub-grid-item {
+        max-height: 100%;
+    }
+    .status-icon {
+        font-size: 32px;
+        font-weight: bold;
+    }
+    .status-count {
+        font-size: 32px;
+        font-weight: bold;
+    }
+    .status-title {
+        padding-bottom: 0px;
+        font-size: 16px;
+    }
+}
+
+/* set grid on medium */
+@media only screen and (min-width: 768px) {
+    .grid {
+        display: grid;
+        grid-template-columns: repeat(6, minmax(120px, 1fr));
+        grid-template-areas:
+                "owners owners graph graph graph graph"
+                "projects projects graph graph graph graph"
+                "patterns patterns graph graph graph graph"
+                "hostnames hostnames available assigned reserved expired";
+        grid-gap: 15px;
+        min-height: calc(100vh - 20%);
+    }
+}
+
+/* set grid on large */
+@media (min-width: 992px) {
+    .grid {
+        display: grid;
+        grid-template-columns: repeat(6, minmax(100px, 175px));
+        grid-template-areas:
+                "owners owners graph graph graph graph"
+                "projects projects graph graph graph graph"
+                "patterns patterns graph graph graph graph"
+                "hostnames hostnames available assigned reserved expired";
+        grid-gap: 15px;
+        min-height: calc(100vh - 20%);
+    }
+}

@@ -1,0 +1,122 @@
+{% extends base_template|default:"base.htm" %}
+{% load staticfiles %}
+
+{% block local_head %}
+    {% include 'component/chart_components.htm' %}
+    <link href="{% static 'hostmgr/css/hostmgr_dashboard.css' %}" rel="stylesheet">
+{% endblock local_head %}
+
+{% block content %}
+<div class="container-fluid text-center mb-5 animated fadeIn">
+    <h1><b><span class="text-primary">Next</span><span class="text-secondary">Host</span></b></h1>
+</div>
+
+<section class="grid-wrapper animated fadeIn" style="animation-delay: .25s;">
+    <div class="grid">
+        <div class="owners grid-item sub-grid card shadow1 bg-light">
+            <div class="icon summary-icon"><i class="fas fa-user"></i></div>
+            <div class="count summary-count">{{ owners.count }}</div>
+            <div class="title summary-title"><a class="hvr-grow" href="{% url 'hostmgr:list_owners' %}">Owners</a></div>
+        </div>
+        <div class="projects grid-item sub-grid card shadow1 bg-light">
+            <div class="icon summary-icon"><i class="fas fa-project-diagram"></i></div>
+            <div class="count summary-count">{{ projects.count }}</div>
+            <div class="title summary-title"><a class="hvr-grow" href="{% url 'hostmgr:list_projects' %}">Projects</a></div>
+        </div>
+        <div class="patterns grid-item sub-grid card shadow1 bg-light">
+            <div class="icon summary-icon"><i class="fas fa-swatchbook"></i></div>
+            <div class="count summary-count">{{ patterns.count }}</div>
+            <div class="title summary-title"><a class="hvr-grow" href="{% url 'hostmgr:list_patterns' %}">Patterns</a></div>
+        </div>
+        <div class="hostnames grid-item sub-grid card shadow1 bg-light">
+            <div class="icon summary-icon"><i class="fas fa-server"></i></div>
+            <div class="count summary-count">{{ hostnames_all.count }}</div>
+            <div class="title summary-title"><a class="hvr-grow" href="{% url 'hostmgr:list_hostnames' %}">Hostnames</a></div>
+        </div>
+
+
+        <div class="graph grid-item card shadow1 bg-light">
+            <canvas id="project_activity_chart"></canvas>
+        </div>
+
+
+        <div class="available grid-item sub-grid sub-grid-item card shadow1 bg-light">
+            <div class="icon status-icon"><i class="fas fa-check-circle"></i></div>
+            <div class="count status-count">{{ hostnames_available.count }}</div>
+            <div class="title status-title"><a class="hvr-grow" href="{% url 'hostmgr:list_hostnames' %}?status=available&page_description=Available">Hostnames Available</a></div>
+        </div>
+        <div class="assigned grid-item sub-grid sub-grid-item card shadow1 bg-light">
+            <div class="icon status-icon"><i class="fas fa-stop-circle"></i></div>
+            <div class="count status-count">{{ hostnames_assigned.count }}</div>
+            <div class="title status-title"><a class="hvr-grow" href="{% url 'hostmgr:list_hostnames' %}?status=assigned&page_description=Assigned">Hostnames Assigned</a></div>
+        </div>
+        <div class="reserved grid-item sub-grid sub-grid-item card shadow1 bg-light">
+            <div class="icon status-icon"><i class="fas fa-pause-circle"></i></div>
+            <div class="count status-count">{{ hostnames_reserved.count }}</div>
+            <div class="title status-title"><a class="hvr-grow" href="{% url 'hostmgr:list_hostnames' %}?status=reserved&page_description=Reserved">Hostnames Reserved</a></div>
+        </div>
+        <div class="expired grid-item sub-grid sub-grid-item card shadow1 bg-light">
+            <div class="icon status-icon"><i class="fas fa-times-circle"></i></div>
+            <div class="count status-count">{{ hostnames_expired.count }}</div>
+            <div class="title status-title"><a class="hvr-grow" href="{% url 'hostmgr:list_hostnames' %}?status=expired&page_description=Expired">Hostnames Expired</a></div>
+        </div>
+    </div>
+
+</section>
+
+
+<!-- chartjs script -->
+<script>
+    var style = getComputedStyle(document.body);
+    var theme = {};
+    theme.primary = style.getPropertyValue('--primary');
+    theme.secondary = style.getPropertyValue('--secondary');
+    theme.success = style.getPropertyValue('--success');
+    theme.info = style.getPropertyValue('--info');
+    theme.warning = style.getPropertyValue('--warning');
+    theme.danger = style.getPropertyValue('--danger');
+    theme.light = style.getPropertyValue('--light');
+    theme.dark = style.getPropertyValue('--dark');
+
+    new Chart(document.getElementById("project_activity_chart"), {
+        type: 'line',
+        data: {
+            labels: {{ hour_labels }},
+            datasets: [{
+                data: [{% for i in trend_hostnames_assigned.values %} {{ i }}, {% endfor %}],
+                label: "Assigned",
+                borderColor: theme.primary,
+                fill: true
+            }, {
+                data: [{% for i in trend_hostnames_reserved.values %} {{ i }}, {% endfor %}],
+                label: "Reserved",
+                borderColor: theme.warning,
+                fill: true
+            }, {
+                data: [{% for i in trend_hostnames_available.values %} {{ i }}, {% endfor %}],
+                label: "Released",
+                borderColor: theme.secondary,
+                fill: true
+            }, {
+                data: [{% for i in hostnames_expired.values %} {{ i }}, {% endfor %}],
+                label: "Expired",
+                borderColor: theme.danger,
+                fill: true
+            }
+            ]
+        },
+        options: {
+            title: {
+                display: true,
+                text: 'Hostname Activity (past 12hrs)',
+                position: 'top'
+            },
+            maintainAspectRatio: false,
+            legend: {
+                position: 'bottom'
+            }
+        }
+    });
+</script>
+
+{% endblock content %}

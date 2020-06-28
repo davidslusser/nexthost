@@ -72,7 +72,8 @@ class Owner(HostManagerBase):
 
     def get_expired_hostnames(self):
         """ get all expired hostnames for a given owner """
-        return Hostname.objects.filter(pattern__project__owner=self, assignment_expires__lte=timezone.now())
+        # return Hostname.objects.filter(pattern__project__owner=self, assignment_expires__lte=timezone.now())
+        return Hostname.objects.filter(pattern__project__owner=self, status="expired")
 
 
 class Project(HostManagerBase):
