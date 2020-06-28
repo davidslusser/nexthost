@@ -33,7 +33,7 @@ urlpatterns = [
     # project-level
     path('about', TemplateView.as_view(template_name='landing.html'), name="about"),
     path('register', views.RegisterUser.as_view(), name='register'),
-    path('dashboard', views.ShowDashboard.as_view(), name='dashboard'),
+    # path('dashboard', views.ShowDashboard.as_view(), name='dashboard'),
     path('robots.txt', TemplateView.as_view(template_name='custom/robots.txt'), name="robots"),
     path('sitemap.xml', TemplateView.as_view(template_name='custom/sitemap.xml'), name="sitemap"),
     path('test', TemplateView.as_view(template_name='custom/test.html'), name='test'),

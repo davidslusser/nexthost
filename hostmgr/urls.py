@@ -35,6 +35,7 @@ urlpatterns = [
     path('detail_pattern/<int:pk>/', gui.DetailPattern.as_view(), name='detail_pattern'),
 
     # custom views
+    path('dashboard', gui.ShowDashboard.as_view(), name='show_dashboard'),
     path('show_admin_panel/', gui.ShowAdminPanel.as_view(), name='show_admin_panel'),
     path('show_api_guide/', gui.ShowApiGuideIndex.as_view(), name='show_api_guide'),
     path('show_api_guide_v1_owner/', gui.ShowApiGuideV1Owner.as_view(), name='show_api_guide_v1_owner'),

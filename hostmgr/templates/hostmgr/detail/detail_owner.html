@@ -85,7 +85,7 @@
             <div class="col-sm-12 col-md-5 col-lg-6">
                 <div class="card mb-4 bg-light shadow1 project_list_card">
                     <div class="card-header text-primary font-weight-bold text-lg-left">Owner Details</div>
-                    <div class="card-body" style="overflow-y: auto; overflow-x: hidden; height: 200px">
+                    <div class="card-body" style="overflow-y: auto; overflow-x: hidden; height: 220px">
                         <div class="container">
                             <div class="row">
                                 <div class="col-4 col-lg-4"><b class="text-primary">Name:</b></div>
@@ -128,7 +128,7 @@
 
                 <div class="card mb-4 bg-light shadow1 project_list_card">
                     <div class="card-header text-primary font-weight-bold text-lg-left">Projects</div>
-                    <div class="card-body" style="overflow-y: auto; overflow-x: hidden; height: 200px">
+                    <div class="card-body" style="overflow-y: auto; overflow-x: hidden; height: 220px">
                         <ul class="list-group mx-auto justify-content-center" style="max-width: 95%; margin-top: .5%; margin-bottom: .5%">
                             {% for project in object.project_set.all|dictsort:"name" %}
                                 <li class="list-group-item hvr-grow m-1" style="background-color: white;">
