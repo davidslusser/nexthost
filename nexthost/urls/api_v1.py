@@ -6,7 +6,7 @@ from rest_framework.routers import DefaultRouter
 import hostmgr.views.views_api as api
 
 
-app_name = "apis"
+app_name = "api"
 
 router = DefaultRouter()
 

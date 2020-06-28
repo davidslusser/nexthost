@@ -3,6 +3,7 @@ from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.decorators import action
 from rest_framework.response import Response
 from rest_framework import status
+from handyhelpers.mixins.viewset_mixins import InvalidLookupMixin
 
 # import models
 from hostmgr.models import (Owner, Project, Pattern, AssetIdType, Hostname)
@@ -12,11 +13,15 @@ from hostmgr.serializers import (OwnerSerializer, ProjectSerializer, PatternSeri
                                  AssetIdTypeSerializer, HostnameSerializer)
 
 
-class OwnerViewSet(viewsets.ReadOnlyModelViewSet):
+class HostmgrBaseViewSet(InvalidLookupMixin, viewsets.ReadOnlyModelViewSet):
+    filter_backends = (DjangoFilterBackend, )
+
+
+class OwnerViewSet(HostmgrBaseViewSet):
     """
     API endpoint that allows Owners to be viewed or edited.
     """
-    filter_backends = (DjangoFilterBackend, )
+
     model = Owner
     queryset = model.objects.all().select_related()
     serializer_class = OwnerSerializer
@@ -142,11 +147,10 @@ class OwnerViewSet(viewsets.ReadOnlyModelViewSet):
             return Response({'messages': 'no data available for requested owner'}, status.HTTP_400_BAD_REQUEST)
 
 
-class ProjectViewSet(viewsets.ReadOnlyModelViewSet):
+class ProjectViewSet(HostmgrBaseViewSet):
     """
     API endpoint that allows Projects to be viewed or edited.
     """
-    filter_backends = (DjangoFilterBackend, )
     model = Project
     queryset = model.objects.all().select_related('owner').prefetch_related('pattern_set', 'pattern_set__hostname_set')
     serializer_class = ProjectSerializer
@@ -248,11 +252,10 @@ class ProjectViewSet(viewsets.ReadOnlyModelViewSet):
             return Response({'messages': err}, status.HTTP_400_BAD_REQUEST)
 
 
-class PatternViewSet(viewsets.ReadOnlyModelViewSet):
+class PatternViewSet(HostmgrBaseViewSet):
     """
     API endpoint that allows Patterns to be viewed or edited.
     """
-    filter_backends = (DjangoFilterBackend, )
     model = Pattern
     queryset = model.objects.all().select_related()
     serializer_class = PatternSerializer
@@ -349,11 +352,10 @@ class PatternViewSet(viewsets.ReadOnlyModelViewSet):
             return Response({'messages': err}, status.HTTP_400_BAD_REQUEST)
 
 
-class AssetIdTypeViewSet(viewsets.ReadOnlyModelViewSet):
+class AssetIdTypeViewSet(HostmgrBaseViewSet):
     """
     API endpoint that allows AssetIdTypes to be viewed or edited.
     """
-    filter_backends = (DjangoFilterBackend, )
     model = AssetIdType
     queryset = model.objects.all().select_related()
     serializer_class = AssetIdTypeSerializer
@@ -362,11 +364,10 @@ class AssetIdTypeViewSet(viewsets.ReadOnlyModelViewSet):
     lookup_field = 'name'
 
 
-class HostnameViewSet(viewsets.ReadOnlyModelViewSet):
+class HostnameViewSet(HostmgrBaseViewSet):
     """
     API endpoint that allows Hostnames to be viewed or edited.
     """
-    filter_backends = (DjangoFilterBackend, )
     model = Hostname
     queryset = model.objects.all().select_related()
     serializer_class = HostnameSerializer
