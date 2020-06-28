@@ -4,7 +4,10 @@
         <loc>http://nexthost.tech/index</loc>
     </url>
     <url>
-        <loc>http://nexthost.tech/dashboard</loc>
+        <loc>http://nexthost.tech/hostmgr</loc>
+    </url>
+    <url>
+        <loc>http://nexthost.tech/hostmgr/dashboard</loc>
     </url>
     <url>
         <loc>http://nexthost.tech/hostmgr/list_owners/</loc>
@@ -31,7 +34,7 @@
         <loc>http://nexthost.tech/hostmgr/list_hostnames/?pattern__project__owner__group__user__username=&page_description=My Hostnames</loc>
     </url>
     <url>
-        <loc>http://nexthost.tech/hostmgr/api/v1</loc>
+        <loc>http://nexthost.tech/api/v1</loc>
     </url>
     <url>
         <loc>http://nexthost.tech/swagger</loc>
