@@ -10,10 +10,10 @@ app_name = 'hostmgr'
 
 urlpatterns = [
 
-    path('', TemplateView.as_view(template_name='hostmgr/index.html'), name="index"),
-    path('default', TemplateView.as_view(template_name='hostmgr/index.html'), name="default"),
-    path('home', TemplateView.as_view(template_name='hostmgr/index.html'), name="home"),
-    path('index', TemplateView.as_view(template_name='hostmgr/index.html'), name="index"),
+    path('', TemplateView.as_view(template_name='hostmgr/index.html'), name='index'),
+    path('default', TemplateView.as_view(template_name='hostmgr/index.html'), name='default'),
+    path('home', TemplateView.as_view(template_name='hostmgr/index.html'), name='home'),
+    path('index', TemplateView.as_view(template_name='hostmgr/index.html'), name='index'),
 
     # list views
     path('list_owners/', gui.ListOwners.as_view(), name='list_owners'),

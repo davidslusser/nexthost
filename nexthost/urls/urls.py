@@ -25,18 +25,18 @@ urlpatterns = [
     path('accounts/', include('django.contrib.auth.urls')),
 
     # home page
-    path('', TemplateView.as_view(template_name='landing.html')),
-    path('default', TemplateView.as_view(template_name='landing.html'), name="default"),
-    path('home', TemplateView.as_view(template_name='landing.html'), name="home"),
-    path('index', TemplateView.as_view(template_name='landing.html'), name="index"),
+    path('', TemplateView.as_view(template_name='landing/landing.html')),
+    path('default', TemplateView.as_view(template_name='landing/landing.html'), name='default'),
+    path('home', TemplateView.as_view(template_name='landing/landing.html'), name='home'),
+    path('index', TemplateView.as_view(template_name='landing/landing.html'), name='index'),
 
     # project-level
-    path('about', TemplateView.as_view(template_name='landing.html'), name="about"),
+    path('about', TemplateView.as_view(template_name='landing/landing.html'), name='about'),
+    path('faq', TemplateView.as_view(template_name='landing/faq.html'), name='faq'),
+
     path('register', views.RegisterUser.as_view(), name='register'),
-    # path('dashboard', views.ShowDashboard.as_view(), name='dashboard'),
-    path('robots.txt', TemplateView.as_view(template_name='custom/robots.txt'), name="robots"),
-    path('sitemap.xml', TemplateView.as_view(template_name='custom/sitemap.xml'), name="sitemap"),
-    path('test', TemplateView.as_view(template_name='custom/test.html'), name='test'),
+    path('robots.txt', TemplateView.as_view(template_name='custom/robots.txt'), name='robots'),
+    path('sitemap.xml', TemplateView.as_view(template_name='custom/sitemap.xml'), name='sitemap'),
 
     # app urls
     path('userextensions/', include('userextensions.urls'), ),
@@ -44,7 +44,7 @@ urlpatterns = [
     path('landing/', include('landing.urls'), ),
 
     # swagger API docs
-    path('swagger', views.schema_view, name="swagger"),
+    path('swagger', views.schema_view, name='swagger'),
     path('swagger/', views.schema_view),
 
     # api redirect
