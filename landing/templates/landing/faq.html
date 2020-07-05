@@ -1,0 +1,321 @@
+{% load staticfiles %}
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <meta name="og:title" property="og:title" content="NextHost is a service designed for complete hostname management">
+        <meta name="description" content="NextHost Frequently Asked Questions (FAQs)" />
+        <meta name="author" content="nexthost.tech" />
+
+        <title>NextHost - Hostname Management - FAQs</title>
+
+        <!-- Favicon-->
+        <link rel="icon" type="image/x-icon" href="../../nexthost/static/landing/assets/img/favicon.ico" />
+
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.min.css" integrity="sha256-HtCCUh9Hkh//8U1OwcbD8epVEUdBvuI8wj1KtqMhNkI=" crossorigin="anonymous" />
+
+        <link href="{% static 'landing/css/styles.css' %}" rel="stylesheet">
+        <link href="{% static 'nexthost/css/default.css' %}" rel="stylesheet">
+        <link href="{% static 'landing/css/nexthost_faq.css' %}" rel="stylesheet">
+    </head>
+
+    <body id="page-top">
+
+        <nav class="navbar navbar-expand-sm bg-primary navbar-dark fixed-top animated fadeIn" style="animation-delay: .25s;">
+            <a class="navbar-brand font-weight-bold" href="{% url 'home' %}">NextHost</a>
+        </nav>
+        <section class="page-section bg-grey" id="about">
+            <div class="container mt-n4 animated fadeIn">
+                <div class="row justify-content-center mb-3">
+                    <div class="col-sm-12 text-center">
+                        <h1 class="text-primary font-weight-bold mt-0">NextHost FAQ's</h1>
+                        <hr class="divider text-secondary my-4" />
+                    </div>
+                </div>
+
+                <div class="row mb-3 animated fadeIn" style="animation-delay: .25s;">
+                    <div class="col-lg-12">
+                        <div class="nav nav-pills faq-nav" id="faq-tabs" role="tablist" aria-orientation="vertical">
+                            <a href="#tab1" class="nav-link active" data-toggle="pill" role="tab" aria-controls="tab1" aria-selected="true">General</a>
+                            <a href="#tab2" class="nav-link" data-toggle="pill" role="tab" aria-controls="tab2" aria-selected="false">Projects & Patterns</a>
+                            <a href="#tab4" class="nav-link" data-toggle="pill" role="tab" aria-controls="tab4" aria-selected="false">Hostnames</a>
+                            <a href="#tab5" class="nav-link" data-toggle="pill" role="tab" aria-controls="tab5" aria-selected="false">APIs</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row animated fadeIn" style="animation-delay: .5s;">
+                    <div class="col-sm-12">
+                        <div class="tab-content" id="faq-tab-content">
+
+                            <!-- general faqs -->
+                            <div class="tab-pane show active" id="tab1" role="tabpanel" aria-labelledby="tab1">
+                                <div class="accordion" id="accordion-tab-1">
+                                    <div class="card">
+                                        <div class="card-header" id="accordion-tab-1-heading-1">
+                                            <h5>
+                                                <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#accordion-tab-1-content-1" aria-expanded="false" aria-controls="accordion-tab-1-content-1">What is NextHost?</button>
+                                            </h5>
+                                        </div>
+                                        <div class="collapse show" id="accordion-tab-1-content-1" aria-labelledby="accordion-tab-1-heading-1" data-parent="#accordion-tab-1">
+                                            <div class="card-body">
+                                                <p>NextHost is a service designed to manage the creation, use, and status of hostnames.
+                                                    Hostnames are generated based on rules defined in the pattern.
+                                                    Once created, hostnames are available for use and can be assigned, reserved, or released.
+                                                </p>
+                                                <p>
+                                                    Think of NextHost as an <span class="font-italic">IPAM but for hostnames</span>.
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="card">
+                                        <div class="card-header" id="accordion-tab-1-heading-2">
+                                            <h5>
+                                                <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#accordion-tab-1-content-2" aria-expanded="false" aria-controls="accordion-tab-1-content-2">What tech stack does NextHost use?</button>
+                                            </h5>
+                                        </div>
+                                        <div class="collapse" id="accordion-tab-1-content-2" aria-labelledby="accordion-tab-1-heading-2" data-parent="#accordion-tab-1">
+                                            <div class="card-body">
+                                                <p>
+                                                    NextHost is build on python3, django2.2, and bootstrap 4.
+                                                    Components such as the database powering it are configurable.
+                                                    The demo uses MySql.
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="card">
+                                        <div class="card-header" id="accordion-tab-1-heading-3">
+                                            <h5>
+                                                <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#accordion-tab-1-content-3" aria-expanded="false" aria-controls="accordion-tab-1-content-3">Where would I use NextHost?</button>
+                                            </h5>
+                                        </div>
+                                        <div class="collapse" id="accordion-tab-1-content-3" aria-labelledby="accordion-tab-1-heading-3" data-parent="#accordion-tab-1">
+                                            <div class="card-body">
+                                                <p>
+                                                    The best use of NextHost is likely in your host provisioning workflow.
+                                                    An example workflow could be creating a project and one or more patterns in NextHost, which automatically generates
+                                                    pools of hostnames (per pattern). Next your automation can get/assign the 'next available hostname' from NextHost
+                                                    via API call. (you can also assign a hostname through the web GUI)
+                                                    When a host is de-provisioned, another call can release the hostname back to the pool, making it available for future use.
+                                                </p>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="card">
+                                        <div class="card-header" id="accordion-tab-1-heading-4">
+                                            <h5>
+                                                <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#accordion-tab-1-content-4" aria-expanded="false" aria-controls="accordion-tab-1-content-4">Is this like a DNS?</button>
+                                            </h5>
+                                        </div>
+                                        <div class="collapse" id="accordion-tab-1-content-4" aria-labelledby="accordion-tab-1-heading-4" data-parent="#accordion-tab-1">
+                                            <div class="card-body">
+                                                <p>
+                                                    NextHost is not a DNS. NextHost is a database of hostnames that tracks which hostnames are available, assigned, and reserved.
+                                                    The best analogy is that of an IPAM, but instead of tracking use and available IP address per subnet, NextHost tracks
+                                                    used and available hostnames per pattern in a project.
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- project faqs -->
+                            <div class="tab-pane" id="tab2" role="tabpanel" aria-labelledby="tab2">
+                                <div class="accordion" id="accordion-tab-2">
+                                    <div class="card">
+                                        <div class="card-header" id="accordion-tab-2-heading-1">
+                                            <h5>
+                                                <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#accordion-tab-2-content-1" aria-expanded="false" aria-controls="accordion-tab-2-content-1">What are projects?</button>
+                                            </h5>
+                                        </div>
+                                        <div class="collapse show" id="accordion-tab-2-content-1" aria-labelledby="accordion-tab-2-heading-1" data-parent="#accordion-tab-2">
+                                            <div class="card-body">
+                                                <p>A project in NextHost is an organizational construct used to group similar hosts with defined ownership. Say, for example, you have a fleet of Redis servers.
+                                                These could all live under a 'Redis' project where a particular group is responsible for ownership. All projects must have a owner.</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="card">
+                                        <div class="card-header" id="accordion-tab-2-heading-2">
+                                            <h5>
+                                                <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#accordion-tab-2-content-2" aria-expanded="false" aria-controls="accordion-tab-2-content-2">What are patterns?</button>
+                                            </h5>
+                                        </div>
+                                        <div class="collapse" id="accordion-tab-2-content-2" aria-labelledby="accordion-tab-2-heading-2" data-parent="#accordion-tab-2">
+                                            <div class="card-body">
+                                                <p>Patterns are pools of hosts under a project. This creates differentiation based on things like environment, location, zone, or whatever is applicable.</p>
+                                                <p>Let's say for our Redis project we have dev, staging, and prod environments. We can reflect this with patterns such as redis_dev, redis_staging, redis_prod.
+                                                    Patterns include rules to generate hostnames, which are generated when a pattern is created.
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="card">
+                                        <div class="card-header" id="accordion-tab-2-heading-3">
+                                            <h5>
+                                                <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#accordion-tab-2-content-3" aria-expanded="false" aria-controls="accordion-tab-2-content-3">How many projects and patterns can I have?</button>
+                                            </h5>
+                                        </div>
+                                        <div class="collapse" id="accordion-tab-2-content-3" aria-labelledby="accordion-tab-2-heading-3" data-parent="#accordion-tab-2">
+                                            <div class="card-body">
+                                                <p>There is no limit to the number of projects or patterns in NextHost.</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="card">
+                                        <div class="card-header" id="accordion-tab-2-heading-4">
+                                            <h5>
+                                                <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#accordion-tab-2-content-4" aria-expanded="false" aria-controls="accordion-tab-2-content-4">Can I edit patterns after creation?</button>
+                                            </h5>
+                                        </div>
+                                        <div class="collapse" id="accordion-tab-2-content-4" aria-labelledby="accordion-tab-2-heading-4" data-parent="#accordion-tab-2">
+                                            <div class="card-body">
+                                                <p>Yes. Projects and patterns can be updated at anytime. If the count of hostnames in a pattern increases, new hostnames will be created. If the number decreases, unassigned hostnames will be removed.</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- hostname faqs -->
+                            <div class="tab-pane" id="tab4" role="tabpanel" aria-labelledby="tab4">
+                                <div class="accordion" id="accordion-tab-4">
+                                    <div class="card">
+                                        <div class="card-header" id="accordion-tab-4-heading-1">
+                                            <h5>
+                                                <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#accordion-tab-4-content-1" aria-expanded="false" aria-controls="accordion-tab-4-content-1">How do I create a hostname?</button>
+                                            </h5>
+                                        </div>
+                                        <div class="collapse show" id="accordion-tab-4-content-1" aria-labelledby="accordion-tab-4-heading-1" data-parent="#accordion-tab-4">
+                                            <div class="card-body">
+                                                <p>Hostnames are generated when a pattern is created. The pattern sets rules,
+                                                   such as the structure of the hostnames, count of hostnames allowed, and interable definitions.
+                                                   Based on these rules, hostnames are generated and set to an initial status of <i>available</i>.
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="card">
+                                        <div class="card-header" id="accordion-tab-4-heading-2">
+                                            <h5>
+                                                <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#accordion-tab-4-content-2" aria-expanded="false" aria-controls="accordion-tab-4-content-2">Can I manually create a hostname?</button>
+                                            </h5>
+                                        </div>
+                                        <div class="collapse" id="accordion-tab-4-content-2" aria-labelledby="accordion-tab-4-heading-2" data-parent="#accordion-tab-4">
+                                            <div class="card-body">
+                                                <p>No; this is by design.</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="card">
+                                        <div class="card-header" id="accordion-tab-4-heading-3">
+                                            <h5>
+                                                <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#accordion-tab-4-content-3" aria-expanded="false" aria-controls="accordion-tab-4-content-3">How do I change the status of a hostname?</button>
+                                            </h5>
+                                        </div>
+                                        <div class="collapse" id="accordion-tab-4-content-3" aria-labelledby="accordion-tab-4-heading-3" data-parent="#accordion-tab-4">
+                                            <div class="card-body">
+                                                <p>You can assign, reserve, or release a hostname via RESTful API of web GUI. For the API, the endpoint consists of the hostname and the desired action; such as:
+                                                    &lt;server_address&gt;/api/v1/hostname/&lt;hostname&gt;/release/</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="card">
+                                        <div class="card-header" id="accordion-tab-4-heading-4">
+                                            <h5>
+                                                <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#accordion-tab-4-content-4" aria-expanded="false" aria-controls="accordion-tab-4-content-4">Are duplicate hostnames allowed?</button>
+                                            </h5>
+                                        </div>
+                                        <div class="collapse" id="accordion-tab-4-content-4" aria-labelledby="accordion-tab-4-heading-4" data-parent="#accordion-tab-4">
+                                            <div class="card-body">
+                                                <p>No. All hostnames are unique and no duplicates are allowed.</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- API faqs -->
+                            <div class="tab-pane" id="tab5" role="tabpanel" aria-labelledby="tab5">
+                                <div class="accordion" id="accordion-tab-5">
+                                    <div class="card">
+                                        <div class="card-header" id="accordion-tab-5-heading-1">
+                                            <h5>
+                                                <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#accordion-tab-5-content-1" aria-expanded="false" aria-controls="accordion-tab-5-content-1">What APIs are available?</button>
+                                            </h5>
+                                        </div>
+                                        <div class="collapse show" id="accordion-tab-5-content-1" aria-labelledby="accordion-tab-5-heading-1" data-parent="#accordion-tab-5">
+                                            <div class="card-body">
+                                                <p>NextHost provides a full set of RESTful APIs for managing owner, projects, patterns and hostnames.</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="card">
+                                        <div class="card-header" id="accordion-tab-5-heading-2">
+                                            <h5>
+                                                <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#accordion-tab-5-content-2" aria-expanded="false" aria-controls="accordion-tab-5-content-2">What documentation is available for APIs?</button>
+                                            </h5>
+                                        </div>
+                                        <div class="collapse" id="accordion-tab-5-content-2" aria-labelledby="accordion-tab-5-heading-2" data-parent="#accordion-tab-5">
+                                            <div class="card-body">
+                                                <p>API documentation is provided by swagger. In swagger you can see all available API endpoints, methods, parameters, and even execute the API
+                                                    to see output and response. Additionally, APIs are accessible via the Django Rest Framework (DRF) browsable interface.
+                                                    Checkout the <a href="{% url 'hostmgr:home' %}">live demo</a> to view swagger and the DRF interface.</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="card">
+                                        <div class="card-header" id="accordion-tab-5-heading-3">
+                                            <h5>
+                                                <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#accordion-tab-5-content-3" aria-expanded="false" aria-controls="accordion-tab-5-content-3">What permissions/authorizations are required?</button>
+                                            </h5>
+                                        </div>
+                                        <div class="collapse" id="accordion-tab-5-content-3" aria-labelledby="accordion-tab-5-heading-3" data-parent="#accordion-tab-5">
+                                            <div class="card-body">
+                                                <p>NextHost uses token authentication for all APIs. Read-only operations (all GET requests) are unrestricted and do not require any permissions.
+                                                Other operations, such as reserving or releasing a hostname, are RBAC restricted. For example, a user would have to be an owner of the project
+                                                containing the hostname change a hostname status.</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="card">
+                                        <div class="card-header" id="accordion-tab-5-heading-4">
+                                            <h5>
+                                                <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#accordion-tab-5-content-4" aria-expanded="false" aria-controls="accordion-tab-5-content-4">How do I get an API token?</button>
+                                            </h5>
+                                        </div>
+                                        <div class="collapse" id="accordion-tab-5-content-4" aria-labelledby="accordion-tab-5-heading-4" data-parent="#accordion-tab-5">
+                                            <div class="card-body">
+                                                <p>Every user has an API token. You can view and reset yours in the user profile page. In NextHost, click your username in the
+                                                    right hand corner of the navigation bar and select <i><b>Profile</b></i> in the dropdown.</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </section>
+
+        <section class="text-primary text-center mb-3" id="contact">
+            <div class="container mt-n4 animated fadeIn" style="animation-delay: .75s;">
+                Need more help? <br/>Reach out to <b>info@nexthost.tech</b>
+            </div>
+        </section>
+
+    </body>
+</html>

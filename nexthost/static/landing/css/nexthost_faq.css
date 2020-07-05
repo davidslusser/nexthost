@@ -1,0 +1,81 @@
+.navbar {
+    box-shadow: 2px 2px 5px rgba(85, 85, 85, 0.75);
+}
+
+.faq-nav {
+    flex-direction: row;
+    margin: 0 0 32px;
+    justify-content: center;
+}
+.faq-nav .nav-link {
+    position: relative;
+    display: flex;
+    margin: 5px;
+    padding: 13px 16px;
+    background-color: var(--light);
+    border-radius: 0;
+    color: #616161;
+    transition: background-color 0.2s ease;
+    box-shadow: 2px 2px 5px rgba(85, 85, 85, 0.75);
+}
+.faq-nav .nav-link:hover {
+    background-color: var(--secondary);
+    color: var(--primary);
+}
+.faq-nav .nav-link.active {
+    background-color: var(--primary);
+    color: var(--light);
+    font-weight: 700;
+}
+.faq-nav .nav-link:last-of-type {
+    border-bottom-left-radius: 2px;
+    border-bottom-right-radius: 2px;
+    border-bottom: 0;
+}
+.faq-nav .nav-link i.mdi {
+    margin-right: 5px;
+    font-size: 18px;
+    position: relative;
+}
+
+.tab-content .card {
+    border-radius: 0;
+    margin-bottom: 10px;
+    background-color: var(--light);
+    box-shadow: 2px 2px 5px rgba(85, 85, 85, 0.75);
+}
+.tab-content .card-header {
+    padding: 15px 16px;
+    border-radius: 0;
+}
+.tab-content .card-header h5 {
+    margin: 0;
+}
+.tab-content .card-header h5 button {
+    display: block;
+    width: 100%;
+    padding: 0;
+    border: 0;
+    font-weight: 700;
+    color: var(--primary);
+    text-align: left;
+    white-space: normal;
+}
+.tab-content .card-header h5 button:hover, .tab-content .card-header h5 button:focus, .tab-content .card-header h5 button:active, .tab-content .card-header h5 button:hover:active {
+    text-decoration: none;
+}
+.tab-content .card-body p {
+    color: var(--dark);
+}
+.tab-content .card-body p:last-of-type {
+    margin: 0;
+}
+
+.accordion > .card:not(:first-child) {
+    border-top: 0;
+}
+
+.collapse.show .card-body {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.125);
+    text-align: left;
+}
