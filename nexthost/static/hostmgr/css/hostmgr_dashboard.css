@@ -75,6 +75,9 @@
             "icon . count"
             "title title title";
     grid-gap: 2px;
+    grid-template-columns: auto auto;  /* grid has two columns; content defines width */
+    justify-content: space-between;    /* horizontal alignment of grid tracks */
+    align-content: space-between;      /* vertical alignment of grid tracks */
 }
 
 .icon {
