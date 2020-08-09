@@ -17,12 +17,14 @@ from django.urls import path, include
 from django.views.generic import TemplateView
 from django.conf import settings
 from django.contrib import admin
+from django.contrib.auth.views import logout_then_login
 from nexthost import views
 
 
 urlpatterns = [
     path('admin/', admin.site.urls, name='admin'),
     path('accounts/', include('django.contrib.auth.urls')),
+    path('logout/', logout_then_login, name="logout"),
 
     # home page
     path('', TemplateView.as_view(template_name='landing/landing.html')),

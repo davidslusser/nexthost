@@ -80,10 +80,10 @@
     </head>
 {% endblock mainheader %}
 
-    <body>
+    <body class="d-flex flex-column min-vh-100">
 
     {% block mainnavbar %}
-        <nav class="navbar navbar-expand-md navbar-dark bg-primary">
+        <nav class="navbar navbar-expand-md navbar-dark bg-primary mb-3">
             <a class="navbar-brand mr-5" href="{% url 'hostmgr:index' %}"><b>Next<span class="text-secondary">Host</span></b></a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -115,41 +115,12 @@
                             <div class="dropdown-menu ml-md-n5 ml-lg-n5 ml-sm-0" aria-labelledby="navbarDropdown">
                                 <a class="dropdown-item" href="{% url 'logout' %}"><b class="fa fa-sign-out-alt fw mr-3"></b>Log out</a>
                                 <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="{% url 'userextensions:detail_user' %}"><i class="fa fa-address-card fw mr-3"></i>Profile</a>
-                                <a class="dropdown-item" href="#"><b class="fa fa-cogs fw mr-3 text-greyout"></b>Settings</a>
-                                <a class="dropdown-item" href="{% url 'userextensions:list_recents' %}"><b class="far fa-clock fw mr-3"></b>Recents</a>
-                                <a class="dropdown-item" href="{% url 'userextensions:list_favorites' %}"><i class="far fa-heart mr-3"></i>Favorites</a>
-                                <div class="dropdown-divider"></div>
-                                <div class="dropdown-item">
-                                    {% is_favorite request as favorite_id %}
-                                    {% if favorite_id %}
-                                        <form name="addFavoriteForm" method="POST" action="{% url 'userextensions:delete_favorite' favorite_id %}">
-                                            {% csrf_token %}
-                                            <input type="hidden" name="name" value="">
-                                            <a href="javascript:document.addFavoriteForm.submit()"><i class="fas fa-heart-broken mr-3"></i></b>Remove Favorite</a>
-                                        </form>
-                                    {% else %}
-                                        <form name="deleteFavoriteForm" method="POST" action="{% url 'userextensions:add_favorite' %}">
-                                            {% csrf_token %}
-                                            <input type="hidden" name="name" value="">
-                                            <a href="javascript:document.deleteFavoriteForm.submit()"><b class="fas fa-heart mr-3"></b>Add Favorite</a>
-                                        </form>
-                                    {% endif %}
-                                </div>
-                                <div class="dropdown-item">
-                                    {# set page a user start page #}
-                                    <form name="startPageForm" method="POST" action="{% url 'userextensions:set_start_page' %}">
-                                        {% csrf_token %}
-                                        <input type="hidden" name="name" value="">
-                                        <a href="javascript:document.startPageForm.submit()"><b class="fas fa-sign-in-alt mr-3"></b>Set start page</a>
-                                    </form>
-                                </div>
-
+                                {% include 'userextensions/snippets/user_extensions_nav_menu.htm' %}
                             </div>
                         </li>
                     {% else %}
                         <li class="nav-item">
-                            <a class="nav-link" href="{% url 'login' %}"><b class="fa fa-sign-in fw margin-right-20"></b> Log In </a>
+                            <a class="nav-link" href="/accounts/login/"><b class="fa fa-sign-in fw margin-right-20"></b> Log In </a>
                         </li>
                     {% endif %}
                 </ul>
@@ -160,7 +131,7 @@
     {% endblock mainnavbar %}
 
     {% block messages %}
-        {% include 'component/show_messages.htm' %}
+        {% include 'handyhelpers/component/show_messages.htm' %}
     {% endblock messages %}
 
     <div id='page-container' class="container-fluid"> <!-- start "page-container" -->
@@ -170,6 +141,13 @@
     </div>  <!-- end "page-container" -->
 
     {% block mainfooter %}
+        <footer class="mt-auto mb-3">
+            <div class="text-center">
+                <div class="text-sm-center text-secondary">
+                    <small>© 2019 NextHost.tech</small>
+                </div>
+            </div>
+        </footer>
     {% endblock mainfooter%}
 
     </body>

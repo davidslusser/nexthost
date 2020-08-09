@@ -1,5 +1,4 @@
 from django.urls import path
-from django.views.generic import TemplateView
 
 # import views
 import hostmgr.views.views_gui as gui
@@ -10,10 +9,10 @@ app_name = 'hostmgr'
 
 urlpatterns = [
 
-    path('', TemplateView.as_view(template_name='hostmgr/index.html'), name='index'),
-    path('default', TemplateView.as_view(template_name='hostmgr/index.html'), name='default'),
-    path('home', TemplateView.as_view(template_name='hostmgr/index.html'), name='home'),
-    path('index', TemplateView.as_view(template_name='hostmgr/index.html'), name='index'),
+    path('', gui.IndexHostmgr.as_view(), name=''),
+    path('default', gui.IndexHostmgr.as_view(), name='default'),
+    path('home', gui.IndexHostmgr.as_view(), name='home'),
+    path('index', gui.IndexHostmgr.as_view(), name='index'),
 
     # list views
     path('list_owners/', gui.ListOwners.as_view(), name='list_owners'),
@@ -35,7 +34,7 @@ urlpatterns = [
     path('detail_pattern/<int:pk>/', gui.DetailPattern.as_view(), name='detail_pattern'),
 
     # custom views
-    path('dashboard', gui.ShowDashboard.as_view(), name='show_dashboard'),
+    path('show_dashboard', gui.ShowDashboard.as_view(), name='show_dashboard'),
     path('show_admin_panel/', gui.ShowAdminPanel.as_view(), name='show_admin_panel'),
     path('show_api_guide/', gui.ShowApiGuideIndex.as_view(), name='show_api_guide'),
     path('show_api_guide_v1_owner/', gui.ShowApiGuideV1Owner.as_view(), name='show_api_guide_v1_owner'),
