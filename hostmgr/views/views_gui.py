@@ -2,17 +2,14 @@ from django.shortcuts import render, redirect, reverse
 from django.conf import settings
 from django.utils import timezone
 from django.views.generic import (View, ListView, DetailView, TemplateView)
-from djangohelpers.views import HandyHelperBaseListView, HandyHelperBaseCreateListView
+from handyhelpers.views import (HandyHelperBaseListView, HandyHelperBaseListPlusCreateView, HandyHelperIndexView)
 from rest_framework.authtoken.models import Token
 from braces.views import LoginRequiredMixin
 from django.contrib import messages
 from django.db.models import Q, Count, Sum
 import datetime
 
-from hostmgr.helpers.queryset_helpers import get_hr_trend_data, get_hr_trend_labels
-
 # import models
-from django.contrib.auth.models import Group, Permission, User
 from hostmgr.models import (Owner, Project, Pattern, AssetIdType, Hostname)
 
 # import forms
@@ -21,7 +18,59 @@ from hostmgr.forms import (OwnerForm, ProjectForm, PatternForm)
 from hostmgr.helpers.queryset_helpers import get_hr_trend_data
 
 
-class ListOwners(HandyHelperBaseCreateListView):
+class IndexHostmgr(HandyHelperIndexView):
+    title = 'Welcome to <span class="text-primary">Next</span><span class="text-secondary">Host</span>!'
+    subtitle = 'Select an option below to get started!'
+    item_list = [
+        {
+            'url': '/hostmgr/show_dashboard',
+            'icon': 'fas fa-chart-line',
+            'title': 'Dashboard',
+            'description': 'View counts, stats, and trends',
+        },
+        {
+            'url': '/hostmgr/list_owners',
+            'icon': 'fas fa-users',
+            'title': 'Owners',
+            'description': 'List all owners',
+        },
+        {
+            'url': '/hostmgr/list_projects',
+            'icon': 'fas fa-project-diagram',
+            'title': 'Projects',
+            'description': 'List all projects',
+        },
+        {
+            'url': '/hostmgr/list_patterns',
+            'icon': 'fas fa-swatchbook',
+            'title': 'Patterns',
+            'description': 'List all patterns',
+        },
+        {
+            'url': '/hostmgr/list_hostnames',
+            'icon': 'fas fa-server',
+            'title': 'Hostnames',
+            'description': 'List all hostnames',
+        },
+    ]
+    protected_item_list = [
+        {
+            'url': '/hostmgr/show_admin_panel',
+            'icon': 'fas fa-id-card-alt',
+            'title': 'Admin Panel',
+            'description': 'Manage owners, projects, and patterns',
+        },
+        {
+            'url': '/admin',
+            'icon': 'fab fa-python',
+            'title': 'Django Console',
+            'description': 'Access the django administrator console',
+        },
+    ]
+    protected_group_name = 'admins'
+
+
+class ListOwners(HandyHelperBaseListPlusCreateView):
     """ list available Owner entries """
     queryset = Owner.objects.all().select_related('group').prefetch_related('project_set').order_by('-created_at')
     title = "Owners"
@@ -34,7 +83,7 @@ class ListOwners(HandyHelperBaseCreateListView):
     create_form_link_title = "add owner"
 
 
-class ListProjects(HandyHelperBaseCreateListView):
+class ListProjects(HandyHelperBaseListPlusCreateView):
     """ list available Project entries """
     queryset = Project.objects.all().select_related('owner').prefetch_related('pattern_set')
     title = "Projects"
@@ -47,7 +96,7 @@ class ListProjects(HandyHelperBaseCreateListView):
     create_form_link_title = "add project"
 
 
-class ListPatterns(HandyHelperBaseCreateListView):
+class ListPatterns(HandyHelperBaseListPlusCreateView):
     """ list available Pattern entries """
     queryset = Pattern.objects.all().select_related('project').prefetch_related('hostname_set')
     title = "Patterns"

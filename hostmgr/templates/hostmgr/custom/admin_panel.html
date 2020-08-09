@@ -3,7 +3,7 @@
 {% load user_tags %}
 
 {% block local_head %}
-    {% include 'component/card_group_components.htm' %}
+    {% include 'handyhelpers/component/zoom_cards.htm' %}
 {% endblock local_head %}
 
 {% block content %}
@@ -14,60 +14,45 @@
                 <div class="container mb-5">
                     <h1 class="text-primary"><b>Next<span class="text-secondary">Host</span> Administer Panel</b></h1>
                     <h5 class="text-secondary">&nbsp;</h5>
-
                 </div>
             </div>
         </header>
     </section>
 
     <section class="animated fadeIn" style="animation-delay: .25s;">
-{#        <div class="container-fluid card-group-container">#}
-            <div class="d-flex flex-wrap align-items-center justify-content-center">
+        <div class="zoom-card-flex-container">
 
-                <div class="card-group-item action-card">
-                    <a href="#" data-toggle="modal" data-target="#modal_{{ form_add_owner.modal_name }}">
-                        <div class="card-body">
-                            <h2 class="icon"><i class="fas fa-user"></i></h2>
-                            <p class="title mt-3">Add owner</p>
-                        </div>
-                    </a>
-                </div>
+            <a href="#" class="zoom-card zoom-admin-card" data-toggle="modal" data-target="#modal_{{ form_add_owner.modal_name }}">
+                <div class="icon"><i class="fas fa-user"></i></div>
+                <div class="title">Add owner</div>
+            </a>
 
-                <div class="card-group-item action-card">
-                    <a href="#" data-toggle="modal" data-target="#modal_{{ form_add_project.modal_name }}">
-                        <div class="card-body">
-                            <h2 class="icon"><i class="fas fa-project-diagram"></i></h2>
-                            <p class="title mt-3">Add project</p>
-                        </div>
-                    </a>
-                </div>
+            <a href="#" class="zoom-card zoom-admin-card" data-toggle="modal" data-target="#modal_{{ form_add_project.modal_name }}">
+                <div class="icon"><i class="fas fa-project-diagram"></i></div>
+                <div class="title">Add project</div>
+            </a>
 
-                <div class="card-group-item action-card">
-                    <a href="#" data-toggle="modal" data-target="#modal_{{ form_add_pattern.modal_name }}">
-                        <div class="card-body">
-                            <h2 class="icon"><i class="fas fa-swatchbook"></i></h2>
-                            <p class="title mt-3">Add pattern</p>
-                        </div>
-                    </a>
-                </div>
+            <a href="#" class="zoom-card zoom-admin-card" data-toggle="modal" data-target="#modal_{{ form_add_pattern.modal_name }}">
+                <div class="icon"><i class="fas fa-swatchbook"></i></div>
+                <div class="title">Add pattern blah blah</div>
+            </a>
 
-            </div>
         </div>
 
     </section>
 
     {% with form_add_owner as form_data %}
-        {% include 'generic/generic_modal_form.htm' %}
+        {% include 'handyhelpers/generic/generic_modal_form.htm' %}
     {% endwith %}
 
     {% with form_add_project as form_data %}
-        {% include 'generic/generic_modal_form.htm' %}
+        {% include 'handyhelpers/generic/generic_modal_form.htm' %}
     {% endwith %}
 
     {% with form_add_pattern as form_data %}
-        {% include 'generic/generic_modal_form.htm' %}
+        {% include 'handyhelpers/generic/generic_modal_form.htm' %}
     {% endwith %}
 
-    {% include 'component/modals.htm' %}
+    {% include 'handyhelpers/component/modals.htm' %}
 
 {% endblock content %}
