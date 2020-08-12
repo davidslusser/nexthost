@@ -15,7 +15,7 @@ from hostmgr.models import (Owner, Project, Pattern, AssetIdType, Hostname)
 # import forms
 from hostmgr.forms import (OwnerForm, ProjectForm, PatternForm)
 
-from hostmgr.helpers.queryset_helpers import get_hr_trend_data
+from hostmgr.helpers.queryset_helpers import get_hr_trend_data, get_hr_trend_labels
 
 
 class IndexHostmgr(HandyHelperIndexView):

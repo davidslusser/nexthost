@@ -9,7 +9,7 @@ from operator import itemgetter
 
 # import third party modules
 from auditlog.registry import auditlog
-from djangohelpers.managers import HandyHelperModelManager
+from handyhelpers.managers import HandyHelperModelManager
 
 # import project modules
 from hostmgr.exceptions import (UserNotAuthorized, HostnameInactive, InvalidStateTransition, InvalidAssetIdType,
