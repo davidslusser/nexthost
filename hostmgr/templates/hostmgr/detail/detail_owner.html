@@ -3,7 +3,7 @@
 
 {% block local_head %}
     {% include 'component/chart_components.htm' %}
-    {% include 'component/table_components.htm' %}
+    {% include 'handyhelpers/component/table_components.htm' %}
     <link href="{% static 'hostmgr/nexthost_dashboard.css' %}" rel="stylesheet">
 {% endblock local_head %}
 
@@ -155,6 +155,6 @@
     </div>
 </section>
 
+    {% include 'handyhelpers/component/modals.htm' %}
 
-    {% include 'component/modals.htm' %}
 {% endblock content %}

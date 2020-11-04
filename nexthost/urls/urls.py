@@ -42,6 +42,7 @@ urlpatterns = [
 
     # app urls
     path('userextensions/', include('userextensions.urls'), ),
+    path('handyhelpers/', include('handyhelpers.urls'), ),
     path('hostmgr/', include('hostmgr.urls'), ),
     path('landing/', include('landing.urls'), ),
 

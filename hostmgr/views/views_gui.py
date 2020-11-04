@@ -2,7 +2,8 @@ from django.shortcuts import render, redirect, reverse
 from django.conf import settings
 from django.utils import timezone
 from django.views.generic import (View, ListView, DetailView, TemplateView)
-from handyhelpers.views import (HandyHelperBaseListView, HandyHelperBaseListPlusCreateView, HandyHelperIndexView)
+from handyhelpers.views import (HandyHelperListView, HandyHelperListPlusCreateView, HandyHelperIndexView,
+                                HandyHelperListPlusCreateAndFilterView)
 from rest_framework.authtoken.models import Token
 from braces.views import LoginRequiredMixin
 from django.contrib import messages
@@ -13,7 +14,8 @@ import datetime
 from hostmgr.models import (Owner, Project, Pattern, AssetIdType, Hostname)
 
 # import forms
-from hostmgr.forms import (OwnerForm, ProjectForm, PatternForm)
+from hostmgr.forms import (OwnerForm, ProjectForm, PatternForm,
+                           FilterOwnerForm, FilterProjectForm, FilterPatternForm)
 
 from hostmgr.helpers.queryset_helpers import get_hr_trend_data, get_hr_trend_labels
 
@@ -70,46 +72,64 @@ class IndexHostmgr(HandyHelperIndexView):
     protected_group_name = 'admins'
 
 
-class ListOwners(HandyHelperBaseListPlusCreateView):
+class ListOwners(HandyHelperListPlusCreateAndFilterView):
     """ list available Owner entries """
     queryset = Owner.objects.all().select_related('group').prefetch_related('project_set').order_by('-created_at')
     title = "Owners"
     page_description = ""
     table = "hostmgr/table/table_owners.htm"
+
     create_form_obj = OwnerForm
     create_form_url = '/hostmgr/create_owner/'
     create_form_title = "<b>Add Owner: </b><small> </small>"
     create_form_modal = "add_owner"
-    create_form_link_title = "add owner"
+    create_form_tool_tip = 'add a new owner'
+
+    filter_form_obj = FilterOwnerForm
+    filter_form_title = "<b>Filter Owners: </b><small> </small>"
+    filter_form_modal = "filter_owners"
+    filter_form_tool_tip = 'filter patterns'
 
 
-class ListProjects(HandyHelperBaseListPlusCreateView):
+class ListProjects(HandyHelperListPlusCreateAndFilterView):
     """ list available Project entries """
     queryset = Project.objects.all().select_related('owner').prefetch_related('pattern_set')
     title = "Projects"
     page_description = ""
     table = "hostmgr/table/table_projects.htm"
+
     create_form_obj = ProjectForm
     create_form_url = '/hostmgr/create_project/'
     create_form_title = "<b>Add Project: </b><small> </small>"
     create_form_modal = "add_project"
-    create_form_link_title = "add project"
+    create_form_tool_tip = 'add a new project'
+
+    filter_form_obj = FilterProjectForm
+    filter_form_title = "<b>Filter Projects: </b><small> </small>"
+    filter_form_modal = "filter_projects"
+    filter_form_tool_tip = 'filter patterns'
 
 
-class ListPatterns(HandyHelperBaseListPlusCreateView):
+class ListPatterns(HandyHelperListPlusCreateAndFilterView):
     """ list available Pattern entries """
     queryset = Pattern.objects.all().select_related('project').prefetch_related('hostname_set')
     title = "Patterns"
     page_description = ""
     table = "hostmgr/table/table_patterns.htm"
+
     create_form_obj = PatternForm
     create_form_url = '/hostmgr/create_pattern/'
     create_form_title = "<b>Add Pattern: </b><small> </small>"
     create_form_modal = "add_pattern"
-    create_form_link_title = "add pattern"
+    create_form_tool_tip = 'add a new pattern'
+
+    filter_form_obj = FilterPatternForm
+    filter_form_title = "<b>Filter Patterns: </b><small> </small>"
+    filter_form_modal = "filter_patterns"
+    filter_form_tool_tip = 'filter patterns'
 
 
-class ListHostnames(HandyHelperBaseListView):
+class ListHostnames(HandyHelperListView):
     """ list available Hostname entries """
     queryset = Hostname.objects.all().select_related('pattern', 'pattern__project', 'pattern__project__owner'
                                                      ).order_by('hostname')
