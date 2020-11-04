@@ -6,7 +6,7 @@ django-environ==0.4.4
 django-extensions==2.2.5
 djangorestframework==3.11.0
 django-filter==2.2.0
-django-handyhelpers==0.0.26
+django-handyhelpers==0.0.27
 django-userextensions==0.0.11
 drf-dynamic-fields==0.3.1
 djangorestframework-filters==1.0.0.dev0

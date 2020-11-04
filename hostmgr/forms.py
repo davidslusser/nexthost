@@ -52,8 +52,10 @@ class PatternForm(forms.ModelForm):
             'description': forms.TextInput(attrs={'class': 'form-control'}),
             'project': forms.Select(attrs={'class': 'form-control'}),
             'prefix': forms.TextInput(attrs={'class': 'form-control'}),
-            'delimiter': forms.TextInput(attrs={'class': 'form-control'}),
-            'max_hosts': forms.NumberInput(attrs={'class': 'form-control'}),
+            'prefix_delimiter': forms.TextInput(attrs={'class': 'form-control'}),
+            'suffix': forms.TextInput(attrs={'class': 'form-control'}),
+            'suffix_delimiter': forms.TextInput(attrs={'class': 'form-control'}),
+            'host_count': forms.NumberInput(attrs={'class': 'form-control'}),
             'increment': forms.NumberInput(attrs={'class': 'form-control'}),
             'start_from': forms.NumberInput(attrs={'class': 'form-control'}),
         }
@@ -64,3 +66,57 @@ class PatternForm(forms.ModelForm):
             self.fields['project'].queryset = Project.objects.filter(owner__group__user__username=username)
         if project:
             self.fields['project'].queryset = Project.objects.filter(id=project['project'].id)
+
+
+class FilterOwnerForm(forms.Form):
+    """ Form class used to filter Owner list view """
+    def __init__(self, *args, **kwargs):
+        super(FilterOwnerForm, self).__init__(*args, **kwargs)
+
+    active = forms.ChoiceField(widget=forms.Select(attrs={'class': 'form-control'}),
+                               choices=((True, True), (False, False)),
+                               required=False)
+    name__icontains = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control'}),
+                                      required=False,
+                                      label='name')
+    group = forms.ModelChoiceField(queryset=Group.objects.all(),
+                                   widget=forms.Select(attrs={'class': 'form-control'}),
+                                   required=False)
+
+
+class FilterProjectForm(forms.Form):
+    """ Form class used to filter Project list view """
+    def __init__(self, *args, **kwargs):
+        super(FilterProjectForm, self).__init__(*args, **kwargs)
+
+    active = forms.ChoiceField(widget=forms.Select(attrs={'class': 'form-control'}),
+                               choices=((True, True), (False, False)),
+                               required=False)
+    name__icontains = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control'}),
+                                      required=False,
+                                      label='name')
+    owner = forms.ModelChoiceField(queryset=Owner.objects.all(),
+                                   widget=forms.Select(attrs={'class': 'form-control'}),
+                                   required=False)
+
+
+class FilterPatternForm(forms.Form):
+    """ Form class used to filter Pattern list view """
+    def __init__(self, *args, **kwargs):
+        super(FilterPatternForm, self).__init__(*args, **kwargs)
+
+    active = forms.ChoiceField(widget=forms.Select(attrs={'class': 'form-control'}),
+                               choices=((True, True), (False, False)),
+                               required=False)
+    name__icontains = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control'}),
+                                      required=False,
+                                      label='name')
+    project = forms.ModelChoiceField(queryset=Project.objects.all(),
+                                     widget=forms.Select(attrs={'class': 'form-control'}),
+                                     required=False)
+    prefix__icontains = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control'}),
+                                        required=False,
+                                        label='prefix')
+    suffix__icontains = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control'}),
+                                        required=False,
+                                        label='suffix')
