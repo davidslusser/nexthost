@@ -42,7 +42,7 @@ class AssignHostname(LoginRequiredMixin, View):
         try:
             hostname.assign_hostname(user=request.user, asset_id=asset_id,
                                      asset_id_type_name=asset_id_type_name, persistent=persistent)
-            messages.add_message(request, messages.INFO, "{} set to 'assigned'".format(hostname.hostname),
+            messages.add_message(request, messages.INFO, f'{hostname.hostname} set to \'assigned\'',
                                  extra_tags='alert-success')
         except Exception as err:
             messages.add_message(request, messages.ERROR, err, extra_tags='alert-danger')
@@ -58,7 +58,7 @@ class ReleaseHostname(LoginRequiredMixin, View):
         hostname = Hostname.objects.get_object_or_none(id=obj_id)
         try:
             hostname.release_hostname(user=request.user)
-            messages.add_message(request, messages.INFO, "assignment on {} has been released".format(hostname.hostname),
+            messages.add_message(request, messages.INFO, f'assignment on {hostname.hostname} has been released',
                                  extra_tags='alert-success')
         except Exception as err:
             messages.add_message(request, messages.ERROR, err, extra_tags='alert-danger')
@@ -74,11 +74,11 @@ class CreateOwner(LoginRequiredMixin, View):
         if form.is_valid():
             new_record = form.cleaned_data['name']
             form.save()
-            messages.add_message(self.request, messages.INFO, "Owner '{}' created!".format(new_record),
+            messages.add_message(self.request, messages.INFO, f'Owner \'{new_record}\' created!',
                                  extra_tags='alert-info', )
         else:
             for error in form.errors:
-                messages.add_message(self.request, messages.ERROR, "Input error: {}".format(error),
+                messages.add_message(self.request, messages.ERROR, f'Input error: {error}',
                                      extra_tags='alert-danger', )
         return redirect(redirect_url)
 
@@ -92,11 +92,11 @@ class CreateProject(LoginRequiredMixin, View):
         if form.is_valid():
             new_record = form.cleaned_data['name']
             form.save()
-            messages.add_message(self.request, messages.INFO, "Project '{}' created!".format(new_record),
+            messages.add_message(self.request, messages.INFO, f'Project \'{new_record}\' created!',
                                  extra_tags='alert-info', )
         else:
             for error in form.errors:
-                messages.add_message(self.request, messages.ERROR, "Input error: {}".format(error),
+                messages.add_message(self.request, messages.ERROR, f'Input error: {error}',
                                      extra_tags='alert-danger', )
         return redirect(redirect_url)
 
@@ -110,10 +110,10 @@ class CreatePattern(LoginRequiredMixin, View):
         if form.is_valid():
             new_record = form.cleaned_data['name']
             form.save()
-            messages.add_message(self.request, messages.INFO, "Pattern '{}' created!".format(new_record),
+            messages.add_message(self.request, messages.INFO, f'Pattern \'{new_record}\' created!',
                                  extra_tags='alert-info', )
         else:
             for error in form.errors:
-                messages.add_message(self.request, messages.ERROR, "Input error: {}".format(error),
+                messages.add_message(self.request, messages.ERROR, f'Input error: {error}',
                                      extra_tags='alert-danger', )
         return redirect(redirect_url)

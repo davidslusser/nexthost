@@ -10,26 +10,23 @@ https://docs.djangoproject.com/en/2.2/ref/settings/
 
 import os
 import environ
-from redislite import Redis
-
 
 env = environ.Env()
+env.read_env(env.str('ENV_PATH', './env/.env-local'))
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.environ.get('SECRET_KEY', 'CHANGEME')
+SECRET_KEY = env.str('SECRET_KEY', default='CHANGEME')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = env.bool('DEBUG', default=True)
 
-ALLOWED_HOSTS = ['127.0.0.1', 'www.nexthost.tech']
-
+ALLOWED_HOSTS = env.list('ALLOWED_HOSTS',  default=['127.0.0.1', 'www.nexthost.tech'])
 
 # Application definition
 
@@ -52,14 +49,13 @@ INSTALLED_APPS = [
     'rest_framework.authtoken',
     'rest_framework_filters',
     'userextensions',
-    'django_celery_beat',
 
     # project apps
     'hostmgr',
     'landing',
 ]
 
-INTERNAL_IPS = ['127.0.0.1', ]
+INTERNAL_IPS = env.list('INTERNAL_IPS',  default=['127.0.0.1',])
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -99,8 +95,8 @@ WSGI_APPLICATION = 'nexthost.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': env.str('DATABASE_ENGINE', default='django.db.backends.sqlite3'),
+        'NAME': env.str('DATABASE_NAME', default='db.sqlite3'),
     }
 }
 
@@ -153,7 +149,7 @@ LOGIN_REDIRECT_URL_DEFAULT = '/hostmgr/'
 SESSION_COOKIE_AGE = 28800
 
 
-SKIP_FIXED_URL_LIST = ["/list_recents/"]
+SKIP_FIXED_URL_LIST = ['/list_recents/']
 
 
 # drf configuration
@@ -175,35 +171,5 @@ REST_FRAMEWORK = {
     'PAGE_SIZE': 100,
     'DEFAULT_SCHEMA_CLASS': 'rest_framework.schemas.coreapi.AutoSchema',
 }
-
-# settings for redislite
-
-# # Create a Redis instance using redislite
-# REDIS_DB_PATH = os.path.join('/tmp/my_redis.db')
-# rdb = Redis(REDIS_DB_PATH)
-# REDIS_SOCKET_PATH = 'redis+socket://%s' % (rdb.socket_file, )
-#
-# # Use redislite for the Celery broker
-# BROKER_URL = REDIS_SOCKET_PATH
-#
-# # (Optionally) use redislite for the Celery result backend
-# CELERY_RESULT_BACKEND = REDIS_SOCKET_PATH
-
-
-# celery configuration
-BROKER_USE_SSL = True
-CELERYBEAT_SCHEDULER = 'django_celery_beat.schedulers:DatabaseScheduler'
-BROKER_URL = env.str('CELERY_BROKER_URL', default='redis://localhost:6379')
-CELERY_RESULT_BACKEND = env.str('CELERY_RESULT_BACKEND', default='redis://localhost:6379')
-CELERY_ACCEPT_CONTENT = ['application/json']
-CELERY_TASK_SERIALIZER = 'json'
-CELERY_RESULT_SERIALIZER = 'json'
-CELERYD_TASK_TIME_LIMIT = 60 * 30
-CELERYD_TASK_SOFT_TIME_LIMIT = 60 * 29
-CELERY_TASK_RESULT_EXPIRES = 60 * 60
-BROKER_CONNECTION_TIMEOUT = 30
-CELERY_EVENT_QUEUE_EXPIRES = 60
-CELERYD_POOL_RESTARTS = True
-CELERY_ALWAYS_EAGER = True
 
 BASE_TEMPLATE = 'base.htm'

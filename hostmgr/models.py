@@ -364,9 +364,6 @@ class Hostname(HostManagerBase):
     def __str__(self):
         return self.hostname
 
-    # class Meta:
-    #     unique_together = (("asset_id", "asset_id_type"), )
-
     def get_manageability(self, user):
         """
         Determine if user can manage this object. All admins can manage all hostnames.

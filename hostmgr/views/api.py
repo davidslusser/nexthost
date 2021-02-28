@@ -4,6 +4,7 @@ from rest_framework.decorators import action
 from rest_framework.response import Response
 from rest_framework import status
 from handyhelpers.mixins.viewset_mixins import InvalidLookupMixin
+from userextensions.mixins import ServiceAccountControlMixin
 
 # import models
 from hostmgr.models import (Owner, Project, Pattern, AssetIdType, Hostname)
@@ -13,7 +14,7 @@ from hostmgr.serializers import (OwnerSerializer, ProjectSerializer, PatternSeri
                                  AssetIdTypeSerializer, HostnameSerializer)
 
 
-class HostmgrBaseViewSet(InvalidLookupMixin, viewsets.ReadOnlyModelViewSet):
+class HostmgrBaseViewSet(InvalidLookupMixin, ServiceAccountControlMixin, viewsets.ReadOnlyModelViewSet):
     filter_backends = (DjangoFilterBackend, )
 
 
@@ -25,7 +26,7 @@ class OwnerViewSet(HostmgrBaseViewSet):
     model = Owner
     queryset = model.objects.all().select_related()
     serializer_class = OwnerSerializer
-    filter_fields = ["id", "created_at", "updated_at", "active", "name", "group", "email", ]
+    filter_fields = ['id', 'created_at', 'updated_at', 'active', 'name', 'group', 'email', ]
     search_fields = filter_fields
     lookup_field = 'name'
 
@@ -154,7 +155,7 @@ class ProjectViewSet(HostmgrBaseViewSet):
     model = Project
     queryset = model.objects.all().select_related('owner').prefetch_related('pattern_set', 'pattern_set__hostname_set')
     serializer_class = ProjectSerializer
-    filter_fields = ["id", "created_at", "updated_at", "active", "name", "owner", "description", ]
+    filter_fields = ['id', 'created_at', 'updated_at', 'active', 'name', 'owner', 'description', ]
     search_fields = filter_fields
     lookup_field = 'name'
 
@@ -259,8 +260,8 @@ class PatternViewSet(HostmgrBaseViewSet):
     model = Pattern
     queryset = model.objects.all().select_related()
     serializer_class = PatternSerializer
-    filter_fields = ["id", "name", "description", "project", "prefix", "prefix_delimiter", "suffix", "suffix_delimiter",
-                     "host_count", "increment", "start_from", "created_at", "updated_at"]
+    filter_fields = ['id', 'name', 'description', 'project', 'prefix', 'prefix_delimiter', 'suffix', 'suffix_delimiter',
+                     'host_count', 'increment', 'start_from', 'created_at', 'updated_at']
     search_fields = filter_fields
     lookup_field = 'name'
 
@@ -359,7 +360,7 @@ class AssetIdTypeViewSet(HostmgrBaseViewSet):
     model = AssetIdType
     queryset = model.objects.all().select_related()
     serializer_class = AssetIdTypeSerializer
-    filter_fields = ["id", "created_at", "updated_at", "active", "name", "description", ]
+    filter_fields = ['id', 'created_at', 'updated_at', 'active', 'name', 'description', ]
     search_fields = filter_fields
     lookup_field = 'name'
 
@@ -371,14 +372,14 @@ class HostnameViewSet(HostmgrBaseViewSet):
     model = Hostname
     queryset = model.objects.all().select_related()
     serializer_class = HostnameSerializer
-    filter_fields = ["id", "created_at", "updated_at", "active", "pattern", "hostname", "asset_id", "asset_id_type",
-                     "persistent", "status", "reservation_expires", "assignment_expires", ]
+    filter_fields = ['id', 'created_at', 'updated_at', 'active', 'pattern', 'hostname', 'asset_id', 'asset_id_type',
+                     'persistent', 'status', 'reservation_expires', 'assignment_expires', ]
     search_fields = filter_fields
     lookup_field = 'hostname'
 
     @action(detail=True, methods=['patch'])
     def assign(self):
-        """ set a hostname to assigned; requires fields: asset_id, asset_id_type; optional fields: persistent"""
+        """ set a hostname to assigned; requires fields: asset_id, asset_id_type; optional fields: persistent """
         try:
             hostname = self.get_object()
             hostname.assign_hostname(user=self.request.user)

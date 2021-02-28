@@ -18,7 +18,7 @@ var/
 *.egg-info/
 .installed.cfg
 *.egg
-
+/venv/
 
 # PyInstaller
 #  Usually these files are written by a python script from a template
@@ -63,3 +63,7 @@ local_test
 
 # Apple garbage
 *.DS_Store
+
+#
+/env/.env-local
+/nexthost.sqlite3
