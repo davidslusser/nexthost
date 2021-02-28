@@ -120,3 +120,38 @@ class FilterPatternForm(forms.Form):
     suffix__icontains = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control'}),
                                         required=False,
                                         label='suffix')
+
+
+class FilterHostnameForm(forms.Form):
+    """ Form class used to filter Hostname list view """
+    def __init__(self, *args, **kwargs):
+        super(FilterHostnameForm, self).__init__(*args, **kwargs)
+
+    HOST_STATUS_CHOICES = ((None, '---------'), ('available', 'available'), ('assigned', 'assigned'),
+                           ('reserved', 'reserved'), ('expired', 'expired'), ('unavailable', 'unavailable'))
+
+    active = forms.ChoiceField(widget=forms.Select(attrs={'class': 'form-control'}),
+                               choices=((None, '---------'), (True, True), (False, False)),
+                               required=False)
+    status = forms.ChoiceField(widget=forms.Select(attrs={'class': 'form-control'}),
+                               choices=HOST_STATUS_CHOICES,
+                               required=False)
+    pattern = forms.ModelChoiceField(queryset=Pattern.objects.all(),
+                                     widget=forms.Select(attrs={'class': 'form-control'}),
+                                     required=False)
+    pattern__project = forms.ModelChoiceField(queryset=Project.objects.all(),
+                                              widget=forms.Select(attrs={'class': 'form-control'}),
+                                              required=False,
+                                              label='project')
+    pattern__project__owner = forms.ModelChoiceField(queryset=Owner.objects.all(),
+                                                     widget=forms.Select(attrs={'class': 'form-control'}),
+                                                     required=False,
+                                                     label='owner')
+    hostname__icontains = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control'}),
+                                          required=False,
+                                          label='hostname')
+    persistent = forms.ChoiceField(widget=forms.Select(attrs={'class': 'form-control'}),
+                                   choices=((None, '---------'), (True, True), (False, False)),
+                                   required=False)
+
+

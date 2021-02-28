@@ -1,9 +1,10 @@
 from django.urls import path
 
 # import views
-import hostmgr.views.views_gui as gui
-import hostmgr.views.views_ajax as ajax
-import hostmgr.views.views_action as action
+from hostmgr.views import action
+from hostmgr.views import ajax
+from hostmgr.views import gui
+
 
 app_name = 'hostmgr'
 

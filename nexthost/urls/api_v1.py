@@ -3,7 +3,7 @@ from django.conf.urls import include
 from rest_framework.routers import DefaultRouter
 
 # import views
-import hostmgr.views.views_api as api
+import hostmgr.views.api as api
 
 
 app_name = 'api'
