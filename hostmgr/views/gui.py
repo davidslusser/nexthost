@@ -54,6 +54,12 @@ class IndexHostmgr(HandyHelperIndexView):
             'title': 'Hostnames',
             'description': 'List all hostnames',
         },
+        {
+            'url': '/api/v1/',
+            'icon': 'fas fa-download',
+            'title': 'APIs',
+            'description': 'List available RESTful APIs',
+        },
     ]
     protected_item_list = [
         {
@@ -313,7 +319,7 @@ class ShowApiGuideIndex(LoginRequiredMixin, View):
     """ display index page for api help docs """
     @staticmethod
     def get(request):
-        template = 'custom/api_guide_index.html'
+        template = 'hostmgr/custom/api_guide_index.html'
         context = dict()
         context['title'] = 'API Guide'
         context['sub_title'] = 'Hostname endpoints'
@@ -325,7 +331,7 @@ class ShowApiGuideV1Owner(LoginRequiredMixin, View):
     """ display api documentation for Owner apis (v1) """
     @staticmethod
     def get(request):
-        template = 'custom/api_guide_v1_owner.html'
+        template = 'hostmgr/custom/api_guide_v1_owner.html'
         context = dict()
         context['title'] = 'Owner APIs'
         context['sub_title'] = 'v1'
@@ -337,7 +343,7 @@ class ShowApiGuideV1Project(LoginRequiredMixin, View):
     """ display api documentation for Project apis (v1) """
     @staticmethod
     def get(request):
-        template = 'custom/api_guide_v1_project.html'
+        template = 'hostmgr/custom/api_guide_v1_project.html'
         context = dict()
         context['title'] = 'Project APIs'
         context['sub_title'] = 'v1'
@@ -349,7 +355,7 @@ class ShowApiGuideV1Pattern(LoginRequiredMixin, View):
     """ display api documentation for Pattern apis (v1) """
     @staticmethod
     def get(request):
-        template = 'custom/api_guide_v1_pattern.html'
+        template = 'hostmgr/custom/api_guide_v1_pattern.html'
         context = dict()
         context['title'] = 'Pattern APIs'
         context['sub_title'] = 'v1'
@@ -361,7 +367,7 @@ class ShowApiGuideV1Hostname(LoginRequiredMixin, View):
     """ display api documentation for Hostname apis (v1) """
     @staticmethod
     def get(request):
-        template = 'custom/api_guide_v1_hostname.html'
+        template = 'hostmgr/custom/api_guide_v1_hostname.html'
         context = dict()
         context['title'] = 'Hostname APIs'
         context['sub_title'] = 'v1'
