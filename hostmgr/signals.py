@@ -4,6 +4,7 @@ from django.dispatch import receiver
 from django.conf import settings
 import sys
 import random
+import logging
 
 # import models
 from django.contrib.auth.models import (Group, User)
@@ -37,13 +38,13 @@ def add_groups_to_new_user(sender, instance, created, **kwargs):
         suffix = getattr(settings, 'SRV_ACCOUNT_SUFFIX', '')
         if prefix:
             if instance.username.startswith(prefix):
-                print('found a service account; do not add groups')
+                logging.debug('found a service account; do not add groups')
         elif suffix:
             if instance.username.endswith(suffix):
-                print('found a service account; do not add groups')
+                logging.debug('found a service account; do not add groups')
         else:
             if instance.username.endswith('_srv'):
-                print('found a service account; do not add groups')
+                logging.debug('found a service account; do not add groups')
 
         group_list = Group.objects.all()
         if not group_list:

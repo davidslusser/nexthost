@@ -5,6 +5,8 @@ from rest_framework.response import Response
 from rest_framework import status
 from handyhelpers.mixins.viewset_mixins import InvalidLookupMixin
 from userextensions.mixins import ServiceAccountControlMixin
+from drf_renderer_xlsx.mixins import XLSXFileMixin
+from rest_flex_fields import is_expanded
 
 # import models
 from hostmgr.models import (Owner, Project, Pattern, AssetIdType, Hostname)
@@ -14,7 +16,11 @@ from hostmgr.serializers import (OwnerSerializer, ProjectSerializer, PatternSeri
                                  AssetIdTypeSerializer, HostnameSerializer)
 
 
-class HostmgrBaseViewSet(InvalidLookupMixin, ServiceAccountControlMixin, viewsets.ReadOnlyModelViewSet):
+# import filtersets
+from hostmgr.filters import (OwnerFilter, ProjectFilter, PatternFilter, AssetIdTypeFilter, HostnameFilter)
+
+
+class HostmgrBaseViewSet(InvalidLookupMixin, ServiceAccountControlMixin, XLSXFileMixin, viewsets.ReadOnlyModelViewSet):
     filter_backends = (DjangoFilterBackend, )
 
 
@@ -22,12 +28,10 @@ class OwnerViewSet(HostmgrBaseViewSet):
     """
     API endpoint that allows Owners to be viewed or edited.
     """
-
     model = Owner
-    queryset = model.objects.all().select_related()
+    queryset = model.objects.all()
     serializer_class = OwnerSerializer
-    filter_fields = ['id', 'created_at', 'updated_at', 'active', 'name', 'group', 'email', ]
-    search_fields = filter_fields
+    filterset_fields = ['id', 'created_at', 'updated_at', 'active', 'name', 'group', 'email', ]
     lookup_field = 'name'
 
     @action(detail=True, methods=['get'])
@@ -153,11 +157,15 @@ class ProjectViewSet(HostmgrBaseViewSet):
     API endpoint that allows Projects to be viewed or edited.
     """
     model = Project
-    queryset = model.objects.all().select_related('owner').prefetch_related('pattern_set', 'pattern_set__hostname_set')
     serializer_class = ProjectSerializer
-    filter_fields = ['id', 'created_at', 'updated_at', 'active', 'name', 'owner', 'description', ]
-    search_fields = filter_fields
+    filterset_class = ProjectFilter
     lookup_field = 'name'
+
+    def get_queryset(self):
+        queryset = self.model.objects.all().select_related('owner')
+        if is_expanded(self.request, 'owner'):
+            queryset = queryset.select_related('owner__group')
+        return queryset
 
     @action(detail=True, methods=['get'])
     def stats(self, request, *args, **kwargs):
@@ -260,9 +268,7 @@ class PatternViewSet(HostmgrBaseViewSet):
     model = Pattern
     queryset = model.objects.all().select_related()
     serializer_class = PatternSerializer
-    filter_fields = ['id', 'name', 'description', 'project', 'prefix', 'prefix_delimiter', 'suffix', 'suffix_delimiter',
-                     'host_count', 'increment', 'start_from', 'created_at', 'updated_at']
-    search_fields = filter_fields
+    filterset_class = PatternFilter
     lookup_field = 'name'
 
     @action(detail=True, methods=['get'])
@@ -360,8 +366,7 @@ class AssetIdTypeViewSet(HostmgrBaseViewSet):
     model = AssetIdType
     queryset = model.objects.all().select_related()
     serializer_class = AssetIdTypeSerializer
-    filter_fields = ['id', 'created_at', 'updated_at', 'active', 'name', 'description', ]
-    search_fields = filter_fields
+    filterset_class = AssetIdTypeFilter
     lookup_field = 'name'
 
 
@@ -370,12 +375,15 @@ class HostnameViewSet(HostmgrBaseViewSet):
     API endpoint that allows Hostnames to be viewed or edited.
     """
     model = Hostname
-    queryset = model.objects.all().select_related()
     serializer_class = HostnameSerializer
-    filter_fields = ['id', 'created_at', 'updated_at', 'active', 'pattern', 'hostname', 'asset_id', 'asset_id_type',
-                     'persistent', 'status', 'reservation_expires', 'assignment_expires', ]
-    search_fields = filter_fields
+    filterset_class = HostnameFilter
     lookup_field = 'hostname'
+
+    def get_queryset(self):
+        queryset = self.model.objects.all().select_related('pattern', 'asset_id_type')
+        if is_expanded(self.request, 'pattern'):
+            queryset = queryset.select_related('pattern__project')
+        return queryset
 
     @action(detail=True, methods=['patch'])
     def assign(self):
