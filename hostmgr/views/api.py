@@ -3,10 +3,11 @@ from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.decorators import action
 from rest_framework.response import Response
 from rest_framework import status
-from handyhelpers.mixins.viewset_mixins import InvalidLookupMixin
+from handyhelpers.mixins.viewset_mixins import InvalidLookupMixin, PaginationControlMixin
 from userextensions.mixins import ServiceAccountControlMixin
 from drf_renderer_xlsx.mixins import XLSXFileMixin
 from rest_flex_fields import is_expanded
+
 
 # import models
 from hostmgr.models import (Owner, Project, Pattern, AssetIdType, Hostname)
@@ -20,7 +21,8 @@ from hostmgr.serializers import (OwnerSerializer, ProjectSerializer, PatternSeri
 from hostmgr.filters import (OwnerFilter, ProjectFilter, PatternFilter, AssetIdTypeFilter, HostnameFilter)
 
 
-class HostmgrBaseViewSet(InvalidLookupMixin, ServiceAccountControlMixin, XLSXFileMixin, viewsets.ReadOnlyModelViewSet):
+class HostmgrBaseViewSet(InvalidLookupMixin, ServiceAccountControlMixin, XLSXFileMixin, PaginationControlMixin,
+                         viewsets.ReadOnlyModelViewSet):
     filter_backends = (DjangoFilterBackend, )
 
 
@@ -31,7 +33,7 @@ class OwnerViewSet(HostmgrBaseViewSet):
     model = Owner
     queryset = model.objects.all()
     serializer_class = OwnerSerializer
-    filterset_fields = ['id', 'created_at', 'updated_at', 'active', 'name', 'group', 'email', ]
+    filterset_class = OwnerFilter
     lookup_field = 'name'
 
     @action(detail=True, methods=['get'])
